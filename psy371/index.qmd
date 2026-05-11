@@ -7,3 +7,4 @@ Welcome to PSY 371. This site contains R tutorials, datasets, and code for the c
 ## Materials
 
 -   [R Basics — Descriptives, Correlation & Regression](r_basics_psych.qmd)
+-   \[Download dataset: psych_study_data.csv\](psych_study_data.csv)

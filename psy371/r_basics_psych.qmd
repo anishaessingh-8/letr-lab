@@ -1,0 +1,207 @@
+---
+title: "R Basics for Psychological Research"
+subtitle: "Descriptives, Correlation, and Multiple Regression"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+    embed-resources: true
+---
+
+## Overview
+
+In this session we will work through a complete data analysis workflow using a simulated dataset from psychological research. The dataset contains the following variables for **150 students**:
+
+| Variable | Description | Scale |
+|---|---|---|
+| `student_id` | Participant identifier | ID only |
+| `study_hours` | Average daily study hours | 0-12 hours |
+| `sleep_hours` | Average nightly sleep | 3-11 hours |
+| `anxiety_score` | Trait anxiety (adapted from STAI) | 20-80 (higher = more anxiety) |
+| `exam_score` | Final exam performance | 0-100 |
+
+**Research question:** Do study hours, sleep hours, and anxiety predict exam performance?
+
+---
+
+## Step 1: Load Libraries
+
+Use `install.packages("psych")` once if you have not installed it yet. Then load it each session:
+
+```{r}
+#| label: load-libraries
+#| message: false
+#| warning: false
+
+library(psych)   # for the describe() function
+```
+
+A library (package) is a collection of pre-written functions that extend base R. Load with `library()` at the top of every script.
+
+---
+
+## Step 2: Import the Dataset
+
+```{r}
+#| label: import-data
+
+df <- read.csv("psych_study_data.csv")
+head(df)     # first 6 rows
+dim(df)      # rows x columns
+names(df)    # variable names
+```
+
+Always inspect your data after importing to confirm row counts and variable names look correct.
+
+---
+
+## Step 3: Descriptive Statistics
+
+### 3a. Mean and Standard Deviation (base R)
+
+```{r}
+#| label: means
+
+mean(df$exam_score)
+mean(df$study_hours)
+mean(df$sleep_hours)
+mean(df$anxiety_score)
+```
+
+```{r}
+#| label: sds
+
+sd(df$exam_score)
+sd(df$study_hours)
+sd(df$sleep_hours)
+sd(df$anxiety_score)
+```
+
+A larger SD indicates more variability around the mean; a smaller SD means scores cluster tightly.
+
+### 3b. Rich Descriptives with psych::describe()
+
+```{r}
+#| label: describe
+
+# Drop column 1 (student_id) before describing
+describe(df[, -1])
+```
+
+Key columns: n (sample size), mean, sd, median, min, max, skew (0 = symmetric), kurtosis (0 = normal), se (standard error of the mean).
+
+---
+
+## Step 4: Correlation with cor.test()
+
+`cor.test()` returns Pearson r and tests whether it differs significantly from zero.
+
+### Study Hours and Exam Score
+
+```{r}
+#| label: cor-study
+
+cor.test(df$study_hours, df$exam_score)
+```
+
+### Anxiety Score and Exam Score
+
+```{r}
+#| label: cor-anxiety
+
+cor.test(df$anxiety_score, df$exam_score)
+```
+
+### Sleep Hours and Exam Score
+
+```{r}
+#| label: cor-sleep
+
+cor.test(df$sleep_hours, df$exam_score)
+```
+
+Reading the output:
+- cor: Pearson r (range -1 to +1)
+- t: test statistic
+- df: degrees of freedom (n - 2)
+- p-value: probability of this result if the true r = 0
+- 95 percent confidence interval: plausible range for the true r
+
+Effect size convention (Cohen, 1988): |r| < .10 = negligible; .10-.29 = small; .30-.49 = moderate; >= .50 = large.
+
+---
+
+## Step 5: Multiple Regression
+
+Multiple regression estimates how several predictors jointly explain an outcome and the unique contribution of each predictor controlling for the others.
+
+```{r}
+#| label: regression
+
+model <- lm(exam_score ~ study_hours + sleep_hours + anxiety_score, data = df)
+summary(model)
+```
+
+Reading the output:
+
+Coefficients table:
+- Estimate: regression slope (B)
+- Std. Error: precision of the estimate
+- t value: test statistic (H0: B = 0)
+- Pr(>|t|): p-value; *** <= .001, ** <= .01, * <= .05
+
+Model fit:
+- Multiple R-squared: proportion of variance in exam score explained by all predictors combined
+- Adjusted R-squared: R-squared penalized for number of predictors (preferred for comparisons)
+- F-statistic: tests whether the overall model is significant
+
+Interpreting a slope: for every one-unit increase in a predictor, exam score changes by B points holding all other predictors constant.
+
+---
+
+## Step 6: Scatterplot (Bonus)
+
+```{r}
+#| label: plot
+#| fig-width: 6
+#| fig-height: 4
+
+plot(df$study_hours, df$exam_score,
+     xlab = "Study Hours (per day)",
+     ylab = "Exam Score",
+     main = "Study Hours and Exam Performance",
+     pch = 19, col = "steelblue", cex = 0.7)
+abline(lm(exam_score ~ study_hours, data = df),
+       col = "firebrick", lwd = 2)
+```
+
+---
+
+## Function Quick Reference
+
+```{r}
+#| eval: false
+
+library(psych)
+df <- read.csv("psych_study_data.csv")
+head(df)
+dim(df)
+names(df)
+mean(df$variable)
+sd(df$variable)
+describe(df[, -1])
+cor.test(df$x, df$y)
+model <- lm(y ~ x1 + x2 + x3, data = df)
+summary(model)
+```
+
+---
+
+## References
+
+Cohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd ed.). Lawrence Erlbaum Associates.
+
+Revelle, W. (2023). psych: Procedures for psychological, psychometric, and personality research. R package version 2.3.6.

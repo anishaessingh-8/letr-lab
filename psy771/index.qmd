@@ -1,0 +1,10 @@
+---
+title: "PSY 771 — ANOVA and Experimental Design"
+---
+
+Welcome to PSY 771. This site contains R tutorials and materials 
+for the graduate statistics course.
+
+## Materials
+
+*Coming soon.*

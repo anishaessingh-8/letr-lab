@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "psy771/index.html",
+    "href": "psy771/index.html",
+    "title": "PSY 771 — ANOVA and Experimental Design",
+    "section": "",
+    "text": "Welcome to PSY 771. This site contains R tutorials and materials for the graduate statistics course."
+  },
+  {
+    "objectID": "psy771/index.html#materials",
+    "href": "psy771/index.html#materials",
+    "title": "PSY 771 — ANOVA and Experimental Design",
+    "section": "Materials",
+    "text": "Materials\nComing soon."
+  },
+  {
+    "objectID": "psy371/index.html",
+    "href": "psy371/index.html",
+    "title": "PSY 371 — Psychological Statistics",
+    "section": "",
+    "text": "Welcome to PSY 371. This site contains R tutorials, datasets, and code for the course."
+  },
+  {
+    "objectID": "psy371/index.html#materials",
+    "href": "psy371/index.html#materials",
+    "title": "PSY 371 — Psychological Statistics",
+    "section": "Materials",
+    "text": "Materials\n\nR Basics — Descriptives, Correlation & Regression"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "psych-stats-courses",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html",
+    "href": "psy371/r_basics_psych.html",
+    "title": "R Basics for Psychological Research",
+    "section": "",
+    "text": "In this session we will work through a complete data analysis workflow using a simulated dataset from psychological research. The dataset contains the following variables for 150 students:\n\n\n\n\n\n\n\n\nVariable\nDescription\nScale\n\n\n\n\nstudent_id\nParticipant identifier\nID only\n\n\nstudy_hours\nAverage daily study hours\n0-12 hours\n\n\nsleep_hours\nAverage nightly sleep\n3-11 hours\n\n\nanxiety_score\nTrait anxiety (adapted from STAI)\n20-80 (higher = more anxiety)\n\n\nexam_score\nFinal exam performance\n0-100\n\n\n\nResearch question: Do study hours, sleep hours, and anxiety predict exam performance?"
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#overview",
+    "href": "psy371/r_basics_psych.html#overview",
+    "title": "R Basics for Psychological Research",
+    "section": "",
+    "text": "In this session we will work through a complete data analysis workflow using a simulated dataset from psychological research. The dataset contains the following variables for 150 students:\n\n\n\n\n\n\n\n\nVariable\nDescription\nScale\n\n\n\n\nstudent_id\nParticipant identifier\nID only\n\n\nstudy_hours\nAverage daily study hours\n0-12 hours\n\n\nsleep_hours\nAverage nightly sleep\n3-11 hours\n\n\nanxiety_score\nTrait anxiety (adapted from STAI)\n20-80 (higher = more anxiety)\n\n\nexam_score\nFinal exam performance\n0-100\n\n\n\nResearch question: Do study hours, sleep hours, and anxiety predict exam performance?"
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#step-1-load-libraries",
+    "href": "psy371/r_basics_psych.html#step-1-load-libraries",
+    "title": "R Basics for Psychological Research",
+    "section": "Step 1: Load Libraries",
+    "text": "Step 1: Load Libraries\nUse install.packages(\"psych\") once if you have not installed it yet. Then load it each session:\n\nlibrary(psych)   # for the describe() function\n\nA library (package) is a collection of pre-written functions that extend base R. Load with library() at the top of every script."
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#step-2-import-the-dataset",
+    "href": "psy371/r_basics_psych.html#step-2-import-the-dataset",
+    "title": "R Basics for Psychological Research",
+    "section": "Step 2: Import the Dataset",
+    "text": "Step 2: Import the Dataset\n\ndf &lt;- read.csv(\"psych_study_data.csv\")\nhead(df)     # first 6 rows\n\n  student_id study_hours sleep_hours anxiety_score exam_score\n1          1         5.7         6.8            49       66.4\n2          2         5.7         5.2            53       54.3\n3          3         5.6         7.1            52       69.1\n4          4         7.3         7.1            43       62.5\n5          5         6.5         8.6            50       66.4\n6          6         7.1         5.3            47       69.0\n\ndim(df)      # rows x columns\n\n[1] 150   5\n\nnames(df)    # variable names\n\n[1] \"student_id\"    \"study_hours\"   \"sleep_hours\"   \"anxiety_score\"\n[5] \"exam_score\"   \n\n\nAlways inspect your data after importing to confirm row counts and variable names look correct."
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#step-3-descriptive-statistics",
+    "href": "psy371/r_basics_psych.html#step-3-descriptive-statistics",
+    "title": "R Basics for Psychological Research",
+    "section": "Step 3: Descriptive Statistics",
+    "text": "Step 3: Descriptive Statistics\n\n3a. Mean and Standard Deviation (base R)\n\nmean(df$exam_score)\n\n[1] 63.14267\n\nmean(df$study_hours)\n\n[1] 6.115333\n\nmean(df$sleep_hours)\n\n[1] 6.925333\n\nmean(df$anxiety_score)\n\n[1] 50.58667\n\n\n\nsd(df$exam_score)\n\n[1] 12.09133\n\nsd(df$study_hours)\n\n[1] 1.904595\n\nsd(df$sleep_hours)\n\n[1] 1.252926\n\nsd(df$anxiety_score)\n\n[1] 10.21197\n\n\nA larger SD indicates more variability around the mean; a smaller SD means scores cluster tightly.\n\n\n3b. Rich Descriptives with psych::describe()\n\n# Drop column 1 (student_id) before describing\ndescribe(df[, -1])\n\n              vars   n  mean    sd median trimmed   mad  min  max range  skew\nstudy_hours      1 150  6.12  1.90   6.00    6.13  1.93  0.8 10.6   9.8 -0.08\nsleep_hours      2 150  6.93  1.25   7.00    6.91  1.11  3.9  9.8   5.9  0.04\nanxiety_score    3 150 50.59 10.21  51.00   50.62  8.90 27.0 80.0  53.0  0.07\nexam_score       4 150 63.14 12.09  62.35   63.29 11.93 33.8 97.0  63.2 -0.02\n              kurtosis   se\nstudy_hours      -0.20 0.16\nsleep_hours      -0.17 0.10\nanxiety_score     0.24 0.83\nexam_score       -0.25 0.99\n\n\nKey columns: n (sample size), mean, sd, median, min, max, skew (0 = symmetric), kurtosis (0 = normal), se (standard error of the mean)."
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#step-4-correlation-with-cor.test",
+    "href": "psy371/r_basics_psych.html#step-4-correlation-with-cor.test",
+    "title": "R Basics for Psychological Research",
+    "section": "Step 4: Correlation with cor.test()",
+    "text": "Step 4: Correlation with cor.test()\ncor.test() returns Pearson r and tests whether it differs significantly from zero.\n\nStudy Hours and Exam Score\n\ncor.test(df$study_hours, df$exam_score)\n\n\n    Pearson's product-moment correlation\n\ndata:  df$study_hours and df$exam_score\nt = 10.014, df = 148, p-value &lt; 2.2e-16\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.5291560 0.7222259\nsample estimates:\n     cor \n0.635523 \n\n\n\n\nAnxiety Score and Exam Score\n\ncor.test(df$anxiety_score, df$exam_score)\n\n\n    Pearson's product-moment correlation\n\ndata:  df$anxiety_score and df$exam_score\nt = -3.9774, df = 148, p-value = 0.0001087\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n -0.4486713 -0.1583807\nsample estimates:\n       cor \n-0.3107545 \n\n\n\n\nSleep Hours and Exam Score\n\ncor.test(df$sleep_hours, df$exam_score)\n\n\n    Pearson's product-moment correlation\n\ndata:  df$sleep_hours and df$exam_score\nt = 3.2379, df = 148, p-value = 0.001486\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.1011083 0.4009372\nsample estimates:\n      cor \n0.2572022 \n\n\nReading the output: - cor: Pearson r (range -1 to +1) - t: test statistic - df: degrees of freedom (n - 2) - p-value: probability of this result if the true r = 0 - 95 percent confidence interval: plausible range for the true r\nEffect size convention (Cohen, 1988): |r| &lt; .10 = negligible; .10-.29 = small; .30-.49 = moderate; &gt;= .50 = large."
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#step-5-multiple-regression",
+    "href": "psy371/r_basics_psych.html#step-5-multiple-regression",
+    "title": "R Basics for Psychological Research",
+    "section": "Step 5: Multiple Regression",
+    "text": "Step 5: Multiple Regression\nMultiple regression estimates how several predictors jointly explain an outcome and the unique contribution of each predictor controlling for the others.\n\nmodel &lt;- lm(exam_score ~ study_hours + sleep_hours + anxiety_score, data = df)\nsummary(model)\n\n\nCall:\nlm(formula = exam_score ~ study_hours + sleep_hours + anxiety_score, \n    data = df)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-17.801  -5.827  -0.101   5.199  17.417 \n\nCoefficients:\n              Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   36.66864    5.35935   6.842 2.00e-10 ***\nstudy_hours    4.19120    0.33653  12.454  &lt; 2e-16 ***\nsleep_hours    2.82049    0.51175   5.511 1.57e-07 ***\nanxiety_score -0.36945    0.06265  -5.897 2.47e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 7.805 on 146 degrees of freedom\nMultiple R-squared:  0.5917,    Adjusted R-squared:  0.5833 \nF-statistic: 70.53 on 3 and 146 DF,  p-value: &lt; 2.2e-16\n\n\nReading the output:\nCoefficients table: - Estimate: regression slope (B) - Std. Error: precision of the estimate - t value: test statistic (H0: B = 0) - Pr(&gt;|t|): p-value; *** &lt;= .001, ** &lt;= .01, * &lt;= .05\nModel fit: - Multiple R-squared: proportion of variance in exam score explained by all predictors combined - Adjusted R-squared: R-squared penalized for number of predictors (preferred for comparisons) - F-statistic: tests whether the overall model is significant\nInterpreting a slope: for every one-unit increase in a predictor, exam score changes by B points holding all other predictors constant."
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#step-6-scatterplot-bonus",
+    "href": "psy371/r_basics_psych.html#step-6-scatterplot-bonus",
+    "title": "R Basics for Psychological Research",
+    "section": "Step 6: Scatterplot (Bonus)",
+    "text": "Step 6: Scatterplot (Bonus)\n\nplot(df$study_hours, df$exam_score,\n     xlab = \"Study Hours (per day)\",\n     ylab = \"Exam Score\",\n     main = \"Study Hours and Exam Performance\",\n     pch = 19, col = \"steelblue\", cex = 0.7)\nabline(lm(exam_score ~ study_hours, data = df),\n       col = \"firebrick\", lwd = 2)"
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#function-quick-reference",
+    "href": "psy371/r_basics_psych.html#function-quick-reference",
+    "title": "R Basics for Psychological Research",
+    "section": "Function Quick Reference",
+    "text": "Function Quick Reference\n\nlibrary(psych)\ndf &lt;- read.csv(\"psych_study_data.csv\")\nhead(df)\ndim(df)\nnames(df)\nmean(df$variable)\nsd(df$variable)\ndescribe(df[, -1])\ncor.test(df$x, df$y)\nmodel &lt;- lm(y ~ x1 + x2 + x3, data = df)\nsummary(model)"
+  },
+  {
+    "objectID": "psy371/r_basics_psych.html#references",
+    "href": "psy371/r_basics_psych.html#references",
+    "title": "R Basics for Psychological Research",
+    "section": "References",
+    "text": "References\nCohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd ed.). Lawrence Erlbaum Associates.\nRevelle, W. (2023). psych: Procedures for psychological, psychometric, and personality research. R package version 2.3.6."
+  }
+]

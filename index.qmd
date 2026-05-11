@@ -1,11 +1,107 @@
 ---
-title: "psych-stats-courses"
+title: ' '
+page-layout: full
 ---
 
-This is a Quarto website.
+```{=html}
+<style>
+  .hero { background: #04342C; border-radius: 12px; padding: 3rem 2.5rem 2.5rem; margin-bottom: 2rem; position: relative; overflow: hidden; }
+  .hero-geo-1 { position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: #0F6E56; opacity: 0.5; }
+  .hero-geo-2 { position: absolute; bottom: -50px; right: 80px; width: 120px; height: 120px; border-radius: 50%; background: #085041; opacity: 0.6; }
+  .hero-geo-3 { position: absolute; top: 20px; right: 160px; width: 60px; height: 60px; border-radius: 50%; background: #1D9E75; opacity: 0.35; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 2px; color: #5DCAA5; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-title { font-size: 42px; font-weight: 700; color: #ffffff; line-height: 1.2; margin-bottom: 1rem; max-width: 500px; }
+  .hero-title span { color: #5DCAA5; }
+  .hero-desc { font-size: 15px; color: #9FE1CB; line-height: 1.7; max-width: 460px; margin-bottom: 1.75rem; }
+  .hero-meta { display: flex; align-items: center; gap: 1rem; }
+  .hero-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1D9E75; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #E1F5EE; flex-shrink: 0; }
+  .hero-meta-text { font-size: 13px; color: #9FE1CB; line-height: 1.5; }
+  .hero-meta-name { color: #ffffff; font-weight: 600; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #888780; text-transform: uppercase; margin-bottom: 1rem; }
+  .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 2rem; }
+  .course-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; position: relative; overflow: hidden; }
+  .card-accent-371 { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #1D9E75; }
+  .card-accent-771 { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #7F77DD; }
+  .card-inner { padding-left: 0.75rem; }
+  .card-num { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .num-371 { color: #1D9E75; }
+  .num-771 { color: #7F77DD; }
+  .card-title { font-size: 17px; font-weight: 600; color: #2C2C2A; margin-bottom: 0.5rem; line-height: 1.3; }
+  .card-desc { font-size: 13px; color: #5F5E5A; line-height: 1.6; margin-bottom: 1rem; }
+  .card-links { display: flex; flex-direction: column; gap: 6px; }
+  .card-link { font-size: 13px; color: #5F5E5A; display: flex; align-items: center; gap: 6px; text-decoration: none; }
+  .card-link:hover { color: #2C2C2A; }
+  .icon-371 { color: #1D9E75; font-size: 15px; }
+  .icon-771 { color: #7F77DD; font-size: 15px; }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 2rem; }
+  .stat-card { background: #F1EFE8; border-radius: 8px; padding: 1rem; text-align: center; }
+  .stat-num { font-size: 24px; font-weight: 700; color: #2C2C2A; }
+  .stat-label { font-size: 11px; color: #888780; margin-top: 2px; }
+  .footer-note { text-align: center; font-size: 12px; color: #888780; padding-top: 1rem; border-top: 0.5px solid #e0e0e0; }
+</style>
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+<div class="hero">
+  <div class="hero-geo-1"></div>
+  <div class="hero-geo-2"></div>
+  <div class="hero-geo-3"></div>
+  <p class="hero-eyebrow">San Francisco State University</p>
+  <h1 class="hero-title">PSY <span>Statistics</span> Courses</h1>
+  <p class="hero-desc">R tutorials, annotated code, and datasets for undergraduate and graduate psychology statistics — all in one place.</p>
+  <div class="hero-meta">
+    <div class="hero-avatar">AS</div>
+    <div class="hero-meta-text">
+      <span class="hero-meta-name">Dr. Anisha Singh</span><br>
+      Assistant Professor · LETR Lab · SFSU
+    </div>
+  </div>
+</div>
 
-```{r}
-1 + 1
+<p class="section-label">Courses</p>
+<div class="courses-grid">
+  <div class="course-card">
+    <div class="card-accent-371"></div>
+    <div class="card-inner">
+      <p class="card-num num-371">PSY 371</p>
+      <p class="card-title">Statistical Methods in Psychology</p>
+      <p class="card-desc">Undergraduate introduction to statistics. Covers descriptives, correlation, and regression in R using real psychological data.</p>
+      <div class="card-links">
+        <a class="card-link" href="psy371/index.html">
+          <svg class="icon-371" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          Go to PSY 371 materials
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="course-card">
+    <div class="card-accent-771"></div>
+    <div class="card-inner">
+      <p class="card-num num-771">PSY 771</p>
+      <p class="card-title">ANOVA</p>
+      <p class="card-desc">Graduate-level analysis of variance. Covers one-way, factorial, repeated measures, and mixed ANOVA designs in R.</p>
+      <div class="card-links">
+        <a class="card-link" href="psy771/index.html">
+          <svg class="icon-771" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          Go to PSY 771 materials
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <p class="stat-num">2</p>
+    <p class="stat-label">Courses</p>
+  </div>
+  <div class="stat-card">
+    <p class="stat-num">R</p>
+    <p class="stat-label">Primary tool</p>
+  </div>
+  <div class="stat-card">
+    <p class="stat-num">LETR</p>
+    <p class="stat-label">Lab</p>
+  </div>
+</div>
+
+<p class="footer-note">College of Science and Engineering · San Francisco State University</p>
 ```

@@ -48,7 +48,7 @@ page-layout: full
         <div class="contact-title">Questions?</div>
         <p class="contact-desc">Reach out with any questions about course materials or to discuss teaching collaborations.</p>
         <div class="contact-detail">
-          <a href="mailto:asingh56@sfsu.edu">asingh56@sfsu.edu</a> &nbsp;·&nbsp; ESP Building, Room 319
+          <a href="mailto:asingh56@sfsu.edu">asingh56@sfsu.edu</a> &nbsp;·&nbsp; EP Building, Room 319
         </div>
       </div>
       <a href="mailto:asingh56@sfsu.edu" class="btn-primary" style="white-space: nowrap;">Contact →</a>

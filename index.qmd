@@ -110,7 +110,7 @@ page-layout: full
         <div class="contact-title">Get in Touch</div>
         <p class="contact-desc">We are located in the Ethnic Studies and Psychology Building at San Francisco State University. Prospective students and collaborators are welcome to reach out.</p>
         <div class="contact-detail">
-          <a href="mailto:asingh56@sfsu.edu">asingh56@sfsu.edu</a> &nbsp;·&nbsp; ESP Building, Room 319, 1600 Holloway Ave, San Francisco, CA 94132
+          <a href="mailto:asingh56@sfsu.edu">asingh56@sfsu.edu</a> &nbsp;·&nbsp; EP Building, Room 319, 1600 Holloway Ave, San Francisco, CA 94132
         </div>
       </div>
       <a href="team.html" class="btn-primary" style="white-space: nowrap;">Meet the Team →</a>

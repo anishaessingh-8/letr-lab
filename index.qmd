@@ -1,44 +1,52 @@
 ---
-title: ' '
+title: ""
 page-layout: full
 ---
 
 ```{=html}
-<div class="lab-hero">
-  <div class="hero-geo-1"></div>
-  <div class="hero-geo-2"></div>
-  <div class="hero-geo-3"></div>
-  <div class="hero-inner">
-    <p class="hero-eyebrow">San Francisco State University · Department of Psychology</p>
-    <h1 class="hero-title">Learning &amp; Educational<br><em>Technology Research</em></h1>
-    <p class="hero-tagline">We investigate how people learn — across formats, languages, and contexts — to understand and improve educational outcomes for all learners.</p>
-    <div class="hero-actions">
-      <a href="research.html" class="btn-primary">Our Research →</a>
-      <a href="team.html" class="btn-ghost">Meet the Team</a>
+<style>
+@keyframes letrRise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.letr-hero h1 span { display: block; animation: letrRise .8s cubic-bezier(.2,.7,.3,1) both; }
+.letr-hero h1 span:nth-child(1){ animation-delay:.06s } .letr-hero h1 span:nth-child(2){ animation-delay:.16s }
+.letr-hero h1 span:nth-child(3){ animation-delay:.26s } .letr-hero h1 span:nth-child(4){ animation-delay:.36s }
+.letr-hero .letr-eyebrow { animation: letrRise .7s cubic-bezier(.2,.7,.3,1) both; }
+.letr-hero .letr-sub { animation: letrRise .8s cubic-bezier(.2,.7,.3,1) both .5s; }
+.letr-hero .letr-cta:hover { transform: translateY(-2px); opacity: .85; }
+.letr-hero .letr-cta-out:hover { background: #f3eaf0; color: #1a1320; }
+.letr-stat-grid > div { border-right: 1px solid rgba(243,234,240,.12); }
+.letr-stat-grid > div:last-child { border-right: none; }
+</style>
+
+<header class="letr-hero" style="font-family:'Space Grotesk',sans-serif; color:#f3eaf0; padding:96px 48px 60px; max-width:1180px; margin:0 auto;">
+  <div class="letr-eyebrow" style="display:flex; align-items:center; gap:14px; margin-bottom:38px;">
+    <span style="width:8px; height:8px; background:#ff5ea8; border-radius:50%;"></span>
+    <span style="font-size:12.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#b3a4b8;">San Francisco State University · Dept. of Psychology</span>
+  </div>
+  <h1 style="font-family:'Newsreader',serif; font-weight:300; font-size:clamp(48px,8.5vw,124px); line-height:.96; letter-spacing:-.025em; max-width:14ch; margin:0 0 36px;">
+    <span><em style="font-style:italic; color:#ff5ea8;">Learning</em> &amp;</span>
+    <span>Educational</span>
+    <span>Technology</span>
+    <span>Research</span>
+  </h1>
+  <div class="letr-sub" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:40px;">
+    <p style="font-size:19px; line-height:1.55; color:#c3b6c8; max-width:48ch; margin:0;">We investigate how people learn — across formats, languages, and contexts — to understand and improve educational outcomes for all learners.</p>
+    <div style="display:flex; gap:14px;">
+      <a class="letr-cta" href="research.html" style="text-decoration:none; color:#1a1320; background:#ff5ea8; padding:15px 26px; border-radius:999px; font-size:14.5px; font-weight:600; white-space:nowrap; transition:transform .25s,opacity .25s;">Our Research →</a>
+      <a class="letr-cta-out" href="team.html" style="text-decoration:none; color:#f3eaf0; border:1px solid rgba(243,234,240,.28); padding:15px 26px; border-radius:999px; font-size:14.5px; font-weight:600; white-space:nowrap; transition:background .25s,color .25s;">Meet the Team</a>
     </div>
   </div>
-</div>
+</header>
+
+<section style="max-width:1180px; margin:0 auto; padding:30px 48px 80px; font-family:'Space Grotesk',sans-serif;">
+  <div class="letr-stat-grid" style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid rgba(243,234,240,.18);">
+    <div style="padding:28px 24px 28px 0;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#ff5ea8;">10+</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Publications</div></div>
+    <div style="padding:28px 24px;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#f3eaf0;">3</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Research Areas</div></div>
+    <div style="padding:28px 24px;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#f3eaf0;">5</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Collaborators</div></div>
+    <div style="padding:28px 0 28px 24px;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#f3eaf0;">2021</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Established</div></div>
+  </div>
+</section>
 
 <div class="page-content">
-
-  <div class="stats-strip">
-    <div class="stat-item">
-      <div class="stat-num">10+</div>
-      <div class="stat-label">Publications</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Research Areas</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">5</div>
-      <div class="stat-label">Collaborators</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">SFSU</div>
-      <div class="stat-label">Since 2021</div>
-    </div>
-  </div>
 
   <p class="section-label">Research</p>
   <h2 class="section-heading">What We Study</h2>
@@ -73,7 +81,7 @@ page-layout: full
     <div class="recent-pub-item">
       <div class="recent-pub-year">2025</div>
       <div class="recent-pub-content">
-        <div class="recent-pub-title">Bayesian network modeling of how college students construct argumentative essays using multiple online sources</div>
+        <div class="recent-pub-title"><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1560088/full" target="_blank">Bayesian network modeling of how college students construct argumentative essays using multiple online sources</a></div>
         <div class="recent-pub-venue">Frontiers in Psychology · Singh et al.</div>
       </div>
     </div>
@@ -87,7 +95,7 @@ page-layout: full
     <div class="recent-pub-item">
       <div class="recent-pub-year">2022</div>
       <div class="recent-pub-content">
-        <div class="recent-pub-title">Audiobooks, print and comprehension: What we know, what we don't, and what we need to find out</div>
+        <div class="recent-pub-title"><a href="https://link.springer.com/article/10.1007/s10648-021-09653-2" target="_blank">Audiobooks, print and comprehension: What we know, what we don't, and what we need to find out</a></div>
         <div class="recent-pub-venue">Educational Psychology Review · Singh &amp; Alexander</div>
       </div>
     </div>

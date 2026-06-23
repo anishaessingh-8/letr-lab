@@ -6,8 +6,8 @@ website:
   title: "LETR Lab"
   description: "Learning & Educational Technology Research Lab — San Francisco State University"
   navbar:
-    background: light
-    foreground: dark
+    background: "#1a1320"
+    foreground: light
     left:
       - href: research.qmd
         text: Research
@@ -23,15 +23,22 @@ website:
         aria-label: Email
   search: false
   page-footer:
-    background: light
+    background: dark
     left: "© 2025 LETR Lab · Department of Psychology, San Francisco State University"
     right: "[asingh56@sfsu.edu](mailto:asingh56@sfsu.edu)"
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - custom.scss
     css: styles.css
     toc: false
     embed-resources: false
+    include-in-header:
+      text: |
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 editor: visual

@@ -1,0 +1,87 @@
+/*-- scss:defaults --*/
+
+// Fonts
+$font-family-sans-serif: "Space Grotesk", system-ui, sans-serif;
+$headings-font-family:   "Newsreader", Georgia, serif;
+$headings-font-weight:   300;
+
+// Palette
+$aubergine:      #1a1320;
+$aubergine-deep: #120d17;
+$aubergine-hi:   #1f1526;
+$magenta:        #ff5ea8;
+$ink-light:      #f3eaf0;
+$muted:          #9d8aa3;
+$muted-2:        #c3b6c8;
+
+// Bootstrap / Quarto roles
+$body-bg:          $aubergine;
+$body-color:       $ink-light;
+$primary:          $magenta;
+$link-color:       $magenta;
+$link-hover-color: $magenta;
+$headings-color:   $ink-light;
+$border-color:     rgba(243, 234, 240, .16);
+
+// Cards & code
+$card-bg:           $aubergine-deep;
+$card-border-color: rgba(243, 234, 240, .12);
+$card-cap-bg:       $aubergine-deep;
+$code-color:        $magenta;
+$code-bg:           $aubergine-deep;
+
+// Navbar
+$navbar-bg: rgba(26, 19, 32, .82);
+$navbar-fg: $ink-light;
+$navbar-hl: $magenta;
+
+// Pills
+$border-radius-pill: 999px;
+
+
+/*-- scss:rules --*/
+
+::selection { background: #ff5ea8; color: #1a1320; }
+
+body { -webkit-font-smoothing: antialiased; }
+
+h1, h2, h3, h4, .quarto-title h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+em { color: #ff5ea8; font-style: italic; }
+
+.eyebrow {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #ff5ea8;
+}
+
+.navbar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(243, 234, 240, .1);
+}
+.navbar-brand { font-family: "Newsreader", serif; font-weight: 500; letter-spacing: -.01em; }
+
+.btn { border-radius: 999px; font-weight: 600; padding: .72rem 1.45rem; transition: transform .25s, opacity .25s, background .25s, color .25s; }
+.btn-primary { background: #ff5ea8; border-color: #ff5ea8; color: #1a1320; }
+.btn-primary:hover { background: #ff5ea8; color: #1a1320; opacity: .85; transform: translateY(-2px); }
+.btn-outline-primary, .btn-secondary {
+  background: transparent; border: 1px solid rgba(243, 234, 240, .28); color: #f3eaf0;
+}
+.btn-outline-primary:hover, .btn-secondary:hover { background: #f3eaf0; color: #1a1320; }
+
+.card { border-radius: 4px; }
+.card:hover { background: #1f1526; }
+
+a:not(.btn):not(.nav-link):not(.navbar-brand) { text-decoration: none; }
+a:not(.btn):not(.nav-link):not(.navbar-brand):hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.text-muted, .muted { color: #9d8aa3 !important; }
+hr { border-color: rgba(243, 234, 240, .16); }
+blockquote { border-left-color: #ff5ea8; color: #c3b6c8; }

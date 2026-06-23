@@ -37,7 +37,7 @@ page-layout: full
 
     <div class="pub-item">
       <div class="pub-authors"><strong>Singh, A.</strong>, et al.</div>
-      <div class="pub-title">Bayesian network modeling of how college students construct argumentative essays using multiple online sources.</div>
+      <div class="pub-title"><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1560088/full" target="_blank">Bayesian network modeling of how college students construct argumentative essays using multiple online sources.</a></div>
       <div class="pub-venue">Frontiers in Psychology.</div>
       <div class="pub-tags">
         <span class="pub-tag pub-tag-featured">Featured</span>
@@ -70,7 +70,7 @@ page-layout: full
 
     <div class="pub-item">
       <div class="pub-authors"><strong>Singh, A.</strong>, &amp; Alexander, P.</div>
-      <div class="pub-title">Audiobooks, print and comprehension: What we know, what we don't, and what we need to find out.</div>
+      <div class="pub-title"><a href="https://link.springer.com/article/10.1007/s10648-021-09653-2" target="_blank">Audiobooks, print and comprehension: What we know, what we don't, and what we need to find out.</a></div>
       <div class="pub-venue">Educational Psychology Review.</div>
       <div class="pub-tags">
         <span class="pub-tag pub-tag-featured">Featured</span>

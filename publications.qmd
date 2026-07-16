@@ -8,7 +8,7 @@ page-layout: full
   <div class="page-header-inner">
     <p class="page-header-eyebrow">LETR Lab</p>
     <h1 class="page-header-title">Publications</h1>
-    <p class="page-header-subtitle">Journal articles and preprints from the lab. Lab members are <strong style="color: #ff5ea8;">bolded</strong>.</p>
+    <p class="page-header-subtitle">Journal articles and preprints from the lab.</p>
   </div>
 </div>
 

@@ -79,17 +79,17 @@ page-layout: full
 
   <div class="recent-pubs">
     <div class="recent-pub-item">
-      <div class="recent-pub-year">2025</div>
+      <div class="recent-pub-year">2026</div>
       <div class="recent-pub-content">
-        <div class="recent-pub-title"><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1560088/full" target="_blank">Bayesian network modeling of how college students construct argumentative essays using multiple online sources</a></div>
-        <div class="recent-pub-venue">Frontiers in Psychology · Singh et al.</div>
+        <div class="recent-pub-title"><a href="https://www.sciencedirect.com/science/article/pii/S0361476X2600041X" target="_blank">Text comprehension across print and audio: A person-centered mixed methods study of learner profiles</a></div>
+        <div class="recent-pub-venue">Contemporary Educational Psychology · Singh et al.</div>
       </div>
     </div>
     <div class="recent-pub-item">
-      <div class="recent-pub-year">2023</div>
+      <div class="recent-pub-year">2025</div>
       <div class="recent-pub-content">
-        <div class="recent-pub-title">Undergraduate argumentation challenges within a "Learning How to Learn" course</div>
-        <div class="recent-pub-venue">Written Communication · Alexander et al.</div>
+        <div class="recent-pub-title"><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1560088/full" target="_blank">Componential modeling of argumentative essay writing from multiple online sources: A Bayesian network approach</a></div>
+        <div class="recent-pub-venue">Frontiers in Psychology · Singh, Sun, Alexander, &amp; Zhao</div>
       </div>
     </div>
     <div class="recent-pub-item">

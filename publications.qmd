@@ -16,7 +16,7 @@ page-layout: full
 
   <!-- Preprint -->
   <div class="pub-year-group">
-    <div class="pub-year-header">Preprint</div>
+    <div class="pub-year-header">Preprints &amp; Working Papers</div>
 
     <div class="pub-item">
       <div class="pub-authors"><strong>Singh, A.</strong>, &amp; <strong>King, K.</strong></div>
@@ -26,6 +26,17 @@ page-layout: full
         <span class="pub-tag pub-tag-in-press">Preprint</span>
         <span class="pub-tag">Reading Habits</span>
         <span class="pub-tag">Digital Literacy</span>
+      </div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong></div>
+      <div class="pub-title">Data storytelling intervention to promote climate change and justice awareness and attitudes in college students.</div>
+      <div class="pub-venue">Working paper.</div>
+      <div class="pub-tags">
+        <span class="pub-tag pub-tag-in-press">Working Paper</span>
+        <span class="pub-tag">Climate Change</span>
+        <span class="pub-tag">Data Storytelling</span>
       </div>
     </div>
 

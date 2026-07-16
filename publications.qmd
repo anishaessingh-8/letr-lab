@@ -117,7 +117,7 @@ page-layout: full
 
     <div class="pub-item">
       <div class="pub-authors">Bharaj, P., &amp; <strong>Singh, A.</strong></div>
-      <div class="pub-title">Educational stakeholder experiences during COVID-19.</div>
+      <div class="pub-title"><a href="https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2021.727494/full" target="_blank">Educational stakeholder experiences during COVID-19.</a></div>
       <div class="pub-venue">Frontiers in Education.</div>
       <div class="pub-tags">
         <span class="pub-tag">COVID-19</span>

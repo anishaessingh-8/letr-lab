@@ -38,20 +38,20 @@ page-layout: full
 
   <hr class="section-divider" style="margin-top: 0.5rem;">
 
-  <p class="section-label">Graduate Students</p>
-  <h2 class="section-heading" style="margin-bottom: 1.5rem;">Current Members</h2>
+  <p class="section-label">Lab Alumni</p>
+  <h2 class="section-heading" style="margin-bottom: 1.5rem;">Alumni</h2>
 
   <div class="team-grid">
     <div class="team-card">
       <div class="team-avatar">KK</div>
       <div class="team-name">Kayla King</div>
-      <div class="team-role">Graduate Student</div>
+      <div class="team-role">Graduate Student Alumni</div>
       <p class="team-bio">Program: Social Personality and Affective Science. Research interests include reading habits and digital listening behaviors among college students.</p>
     </div>
     <div class="team-card">
       <div class="team-avatar">DM</div>
       <div class="team-name">Dylan (Sophia) Mattioda</div>
-      <div class="team-role">Graduate Student</div>
+      <div class="team-role">Graduate Student Alumni</div>
       <p class="team-bio">Program: Social Personality and Affective Science.</p>
     </div>
   </div>

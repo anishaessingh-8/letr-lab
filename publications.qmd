@@ -141,8 +141,149 @@ page-layout: full
   <hr class="section-divider">
 
   <p class="section-label">Presentations</p>
-  <h2 class="section-heading">Conference Activity</h2>
-  <p class="section-subheading" style="margin-bottom: 1.5rem;">Lab members have presented at major venues including the American Educational Research Association (AERA), American Psychological Association (APA), and the Society for the Scientific Study of Reading (SSSR). Key topics include multilingual reading, audiobook comprehension, collaborative learning, and STEM career engagement.</p>
+  <h2 class="section-heading">Selected Conference Presentations</h2>
+  <p class="section-subheading" style="margin-bottom: 1.5rem;">* denotes student author</p>
+
+  <!-- 2026 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2026</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong>, &amp; Javadizadeh, B.</div>
+      <div class="pub-title">Mental health in pre-tenure faculty: Identity, mindset, and self-beliefs [Poster accepted for presentation].</div>
+      <div class="pub-venue">American Psychological Association Annual Convention, Washington, DC, United States. (August 6–8)</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>King, K.*</strong>, &amp; <strong>Singh, A.</strong></div>
+      <div class="pub-title">Reading by ear or eye: Examining comprehension, self-efficacy, and reading habits across audio and print [Poster presentation].</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Los Angeles, CA, United States. (April 8–12)</div>
+    </div>
+  </div>
+
+  <!-- 2025 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2025</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Mattioda, S.*</strong>, <strong>Singh, A.</strong>, &amp; <strong>King, K.*</strong></div>
+      <div class="pub-title">Transforming knowledge, attitudes, and beliefs: The impact of a climate justice intervention. Conference roundtable presented.</div>
+      <div class="pub-venue">European Association for Research on Learning and Instruction, Graz, Austria. (August 25–29)</div>
+    </div>
+  </div>
+
+  <!-- 2024 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2024</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong></div>
+      <div class="pub-title">Mixed methods exploration of text processing in print and audio. Poster presented.</div>
+      <div class="pub-venue">Annual meeting of the American Psychological Association, Seattle, WA, United States. (August 8–10)</div>
+    </div>
+  </div>
+
+  <!-- 2023 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2023</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Zhao, H.Z., Sayers, R., <strong>Singh, A.</strong>, &amp; Chow, J.C.</div>
+      <div class="pub-title">Empirically based mean effect size distributions for writing interventions. Poster presented.</div>
+      <div class="pub-venue">Annual meeting of the American Psychological Association, Washington, DC, United States. (August 3–5)</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong>, &amp; Alexander, P.A.</div>
+      <div class="pub-title">Text comprehension across print and audio: A person-centered study. Poster presented.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Virtual. (May 4–5)</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Schoute, E.C., van Meerten, J.E., Sun, Y., &amp; <strong>Singh, A.</strong></div>
+      <div class="pub-title">Validating students' behavioral profiles in classroom-based multiple source use tasks: Lessons learned, remaining challenges. Paper presented.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Chicago, United States. (April 13–16)</div>
+    </div>
+  </div>
+
+  <!-- 2022 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2022</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Sayers, R., Chow, J.C., Morse, A.†, <strong>Singh, A.†</strong>, &amp; Burrows-Doerr, M.†</div>
+      <div class="pub-title">Drawings of teacher-child relationships for children at risk for language and behavior disorders. Poster presented. (Authors with † equally contributed)</div>
+      <div class="pub-venue">Annual meeting of the American Psychological Association, Minneapolis, MN, United States. (August)</div>
+    </div>
+  </div>
+
+  <!-- 2021 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2021</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong>, &amp; Alexander, P.A.</div>
+      <div class="pub-title">Audiobooks, print and comprehension: What we know and what we need to know. Poster presented.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Virtual. (April)</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Piety, P.J., <strong>Singh, A.</strong>, Makowski, T., Mir, D., &amp; Balzotti, J.</div>
+      <div class="pub-title">Textual ecology, collaborative tasks, and genre systems: Using Productive Disciplinary Engagement to teach STEM career awareness and intent. In A. Singh (Chair), Promoting Productive Disciplinary Engagement through textual practices. Symposium presented.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Virtual. (April)</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong>, Liu, C., Naik, R., &amp; Piety, P.J.</div>
+      <div class="pub-title">Developing effective visualizations to understand and scaffold collaborative textual practices. Poster presented.</div>
+      <div class="pub-venue">Learning Analytics and Knowledge Conference, Society for Learning Analytics Research, Virtual. (April)</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Schoute, E.C., van Meerten, J.E., Sun, Y., &amp; <strong>Singh, A.</strong></div>
+      <div class="pub-title">Search logs, argumentative essays, and performance profiles: Positioning multiple source use in a classroom context. In J. Braasch (Chair), Synergy of reading and writing within multiple source tasks: Novel approaches and innovative techniques. Symposium presented.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Virtual. (April) PsychArchives. https://dx.doi.org/10.23668/psycharchives.8170</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong> (Co-Chair)</div>
+      <div class="pub-title">Educational innovation in times of crisis. Presidential session.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Virtual. (April)</div>
+    </div>
+  </div>
+
+  <!-- 2020 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2020</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Sun, Y., Alexander, P.A., <strong>Singh, A.</strong>, &amp; Zhao, H.</div>
+      <div class="pub-title">Characterizing college students' multiple source use in an argumentative essay task: A profile analysis. Poster presented.</div>
+      <div class="pub-venue">Annual meeting of the American Psychological Association, Washington, D.C. (August)</div>
+    </div>
+  </div>
+
+  <!-- 2019 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2019</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong>, Sun, Y., Alexander, P.A., &amp; Zhao, H.</div>
+      <div class="pub-title">Defining and assessing integration in the context of argumentative essays based on multiple sources. In L. M. S. Trakhman (Chair), Integration: A critical competency for the digital age. Symposium presented.</div>
+      <div class="pub-venue">Annual meeting of the American Educational Research Association, Toronto, Canada. (April)</div>
+    </div>
+  </div>
+
+  <!-- 2017 presentations -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">2017</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><strong>Singh, A.</strong>, Wang, M., &amp; Faroqi-Shah, Y.</div>
+      <div class="pub-title">Cross-language phonological priming in different scripts: Hindi-English bilinguals. Poster presented.</div>
+      <div class="pub-venue">Annual meeting of the Society for the Scientific Study of Reading conference, Halifax, Canada. (July)</div>
+    </div>
+  </div>
 
 </div>
 ```

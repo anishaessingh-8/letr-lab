@@ -36,7 +36,7 @@ page-layout: full
     <div class="pub-year-header">2026</div>
 
     <div class="pub-item">
-      <div class="pub-authors"><strong>Singh, A.</strong>, et al.</div>
+      <div class="pub-authors"><strong>Singh, A.</strong></div>
       <div class="pub-title"><a href="https://www.sciencedirect.com/science/article/pii/S0361476X2600041X" target="_blank">Text comprehension across print and audio: A person-centered mixed methods study of learner profiles.</a></div>
       <div class="pub-venue">Contemporary Educational Psychology.</div>
       <div class="pub-tags">
@@ -72,7 +72,7 @@ page-layout: full
 
     <div class="pub-item">
       <div class="pub-authors">Alexander, P. A., et al. (incl. <strong>Singh, A.</strong>)</div>
-      <div class="pub-title">Undergraduate argumentation challenges within a "Learning How to Learn" course.</div>
+      <div class="pub-title"><a href="https://www.researchgate.net/publication/369239392_Confronting_the_Challenges_of_Undergraduates'_Argumentation_Writing_in_a_Learning_How_to_Learn_Course" target="_blank">Undergraduate argumentation challenges within a "Learning How to Learn" course.</a></div>
       <div class="pub-venue">Written Communication.</div>
       <div class="pub-tags">
         <span class="pub-tag">Argumentation</span>
@@ -100,7 +100,7 @@ page-layout: full
 
     <div class="pub-item">
       <div class="pub-authors"><strong>Singh, A.</strong>, et al.</div>
-      <div class="pub-title">How romanized orthography influences Hindi-English bilingual word recognition.</div>
+      <div class="pub-title"><a href="https://link.springer.com/article/10.1007/s11145-021-10241-7" target="_blank">How romanized orthography influences Hindi-English bilingual word recognition.</a></div>
       <div class="pub-venue">Reading and Writing.</div>
       <div class="pub-tags">
         <span class="pub-tag">Multilingual</span>

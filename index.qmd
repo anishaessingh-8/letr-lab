@@ -37,14 +37,6 @@ page-layout: full
   </div>
 </header>
 
-<section style="max-width:1180px; margin:0 auto; padding:30px 48px 80px; font-family:'Space Grotesk',sans-serif;">
-  <div class="letr-stat-grid" style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid rgba(243,234,240,.18);">
-    <div style="padding:28px 24px 28px 0;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#ff5ea8;">10+</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Publications</div></div>
-    <div style="padding:28px 24px;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#f3eaf0;">3</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Research Areas</div></div>
-    <div style="padding:28px 24px;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#f3eaf0;">5</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Collaborators</div></div>
-    <div style="padding:28px 0 28px 24px;"><div style="font-family:'Newsreader',serif; font-size:52px; font-weight:300; line-height:1; color:#f3eaf0;">2021</div><div style="margin-top:10px; font-size:13px; color:#b3a4b8; font-weight:500;">Established</div></div>
-  </div>
-</section>
 
 <div class="page-content">
 
@@ -102,7 +94,7 @@ page-layout: full
     <div class="recent-pub-item">
       <div class="recent-pub-year">2022</div>
       <div class="recent-pub-content">
-        <div class="recent-pub-title">How romanized orthography influences Hindi-English bilingual word recognition</div>
+        <div class="recent-pub-title"><a href="https://link.springer.com/article/10.1007/s11145-021-10241-7" target="_blank">How romanized orthography influences Hindi-English bilingual word recognition</a></div>
         <div class="recent-pub-venue">Reading and Writing · Singh et al.</div>
       </div>
     </div>

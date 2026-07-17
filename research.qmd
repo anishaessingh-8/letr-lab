@@ -72,6 +72,13 @@ page-layout: full
 
   <hr class="section-divider">
 
+  <p class="section-label">Join the Lab</p>
+  <h2 class="section-heading">Working with Students</h2>
+  <p class="section-subheading" style="max-width: 720px;">I'm always excited to work with students who are genuinely curious about the world and eager to ask meaningful questions. More than prior experience, I value intellectual curiosity, intrinsic motivation, and a willingness to engage with complex, open-ended problems where the answers are not immediately obvious.</p>
+  <p style="font-size: 17px; color: var(--ink-600); line-height: 1.7; max-width: 720px; margin-bottom: 2rem;">Research often begins with big ideas. But meaningful progress comes from carefully breaking those ideas into questions that can be studied systematically. I'm looking for students who enjoy thinking deeply, discussing ideas, and are equally willing to put in the sustained effort required to design studies, analyze data, and refine their thinking. If you enjoy learning, embrace ambiguity, and are excited by the challenge of turning difficult questions into rigorous research, I'd love to hear from you.</p>
+
+  <hr class="section-divider">
+
   <div class="contact-block">
     <div class="contact-block-inner">
       <div>

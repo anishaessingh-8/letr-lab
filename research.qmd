@@ -14,9 +14,37 @@ page-layout: full
 
 <div class="page-content">
 
-  <p class="section-label">Active Projects</p>
-  <h2 class="section-heading">Research Areas</h2>
-  <p class="section-subheading">Our work spans three interconnected areas, united by a commitment to understanding how people learn and how we can support better outcomes.</p>
+  <p class="section-label">Current Focus</p>
+  <h2 class="section-heading">New Projects</h2>
+  <p class="section-subheading">Two new projects launching in the coming year bring eye-tracking and multimodal AI into the lab's research program.</p>
+
+  <div class="research-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 2rem;">
+
+    <div class="research-card" style="border-color: rgba(255,94,168,0.3);">
+      <span class="research-card-icon">👁️</span>
+      <div style="margin-bottom: 0.75rem;"><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(255,94,168,0.13); color: #ff5ea8; padding: 3px 10px; border-radius: 20px;">Patricia Miller Fund</span></div>
+      <div class="research-card-title">Profiling Readers with Eye Tracking</div>
+      <p class="research-card-desc">
+        Readers differ meaningfully in the cognitive, motivational, and knowledge-based resources they bring to a text — yet prior research on reader profiles has relied almost entirely on self-report and performance measures, leaving eye movement data largely absent. This project integrates gaze behavior into a person-centered investigation of reading comprehension, comparing neurotypical readers and readers on the autism spectrum. Using the <strong>Microsoft HoloLens</strong> with VeYezer Graph eye tracking software, participants can move freely during reading — overcoming a key limitation of traditional static trackers that are especially burdensome for individuals with ASD. The study examines fixations, regressions, span of recognition, and fixation duration alongside background knowledge, prior interest, and engagement, asking whether existing reader profiles hold, require refinement, or differ across populations.
+      </p>
+    </div>
+
+    <div class="research-card" style="border-color: rgba(255,94,168,0.3);">
+      <span class="research-card-icon">🤝</span>
+      <div style="margin-bottom: 0.75rem;"><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(255,94,168,0.13); color: #ff5ea8; padding: 3px 10px; border-radius: 20px;">Ken Fong Translational Research Award</span></div>
+      <div class="research-card-title">Vision[AI]ry: Emotion &amp; Attention Analytics for Education</div>
+      <p class="research-card-desc">
+        Students' emotional states directly shape learning — yet instructors in online environments lack the moment-to-moment visibility needed to detect confusion, frustration, or disengagement. In collaboration with <strong>Dr. Sanchita Ghose</strong> (Computer Engineering, AI-LAMP Lab), this project develops <em>Vision[AI]ry</em>, a multimodal platform that fuses facial expression analysis, vocal emotion recognition, and gaze-based attention tracking into real-time engagement scores. The system integrates three components — facial landmark detection via CNN, audio Mel-spectrogram analysis, and posture-based attention tracking — through a novel multimodal fusion algorithm deployed on edge computing hardware with low latency. The psychological component focuses on validating Vision[AI]ry against established self-report measures of learning-relevant affect (confusion, frustration, boredom, engaged concentration), with classroom deployment planned in online psychology and engineering courses. The platform will be released as open-source software for educational institutions.
+      </p>
+    </div>
+
+  </div>
+
+  <hr class="section-divider">
+
+  <p class="section-label">Ongoing Work</p>
+  <h2 class="section-heading">Other Research Areas</h2>
+  <p class="section-subheading">Alongside the new projects, the lab continues work in three areas developed over the past several years.</p>
 
   <div class="research-grid" style="margin-bottom: 3rem;">
 
@@ -24,7 +52,7 @@ page-layout: full
       <span class="research-card-icon">📖</span>
       <div class="research-card-title">Reading Across Mediums</div>
       <p class="research-card-desc">
-        As learners increasingly shift between print, digital screens, and audio formats, we ask: does medium matter? This project examines how different reading formats shape comprehension, engagement, and metacognition. Drawing on work in reading science and cognitive psychology, we investigate the conditions under which format-based differences emerge — and what they mean for educational practice. We have explored audiobook vs. print comprehension and are currently studying how college students navigate multiple digital sources.
+        Does reading format — print, digital screen, or audio — shape what readers take away from a text? This line of work examines comprehension, engagement, and metacognition across formats, with completed studies on audiobook vs. print comprehension and multiple digital source use.
       </p>
     </div>
 
@@ -32,7 +60,7 @@ page-layout: full
       <span class="research-card-icon">🧠</span>
       <div class="research-card-title">Knowledge, Beliefs &amp; Reasoning</div>
       <p class="research-card-desc">
-        How and why do people revise — or resist revising — their beliefs about controversial scientific topics? This line of work investigates knowledge updating, argumentative writing, and the interplay between evidence, emotion, and prior beliefs in the context of socio-scientific issues. We use Bayesian network modeling and qualitative methods to understand the structure of students' reasoning, with implications for science education and scientific literacy.
+        How and why do people revise — or resist revising — their beliefs about controversial scientific topics? This work investigates knowledge updating, argumentative writing, and the interplay between evidence, emotion, and prior beliefs, using Bayesian network modeling and qualitative methods.
       </p>
     </div>
 
@@ -40,7 +68,7 @@ page-layout: full
       <span class="research-card-icon">🌱</span>
       <div class="research-card-title">Mental Health in Academia</div>
       <p class="research-card-desc">
-        Funded by an <strong>American Psychological Foundation (APF) Grant</strong>, this project investigates the mental health and well-being of early career academics. We examine systemic, relational, and individual factors that shape stress, belonging, and career sustainability in academic contexts. The aim is to develop an evidence base that can inform institutional support structures and mentorship practices.
+        Funded by an <strong>American Psychological Foundation (APF) Grant</strong>, this project examines the mental health and well-being of early career academics, investigating systemic, relational, and individual factors that shape stress, belonging, and career sustainability.
       </p>
     </div>
 

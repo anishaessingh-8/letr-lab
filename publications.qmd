@@ -164,8 +164,8 @@ page-layout: full
 
     <div class="pub-item">
       <div class="pub-authors"><strong>Singh, A.</strong>, &amp; Javadizadeh, B.</div>
-      <div class="pub-title">Mental health in pre-tenure faculty: Identity, mindset, and self-beliefs [Poster accepted for presentation].</div>
-      <div class="pub-venue">American Psychological Association Annual Convention, Washington, DC, United States. (August 6–8)</div>
+      <div class="pub-title">Mental health in pre-tenure faculty: Identity, mindset, and self-beliefs.</div>
+      <div class="pub-venue">Poster presented at the American Psychological Association Annual Convention, Washington, DC, United States. (August 6–8)</div>
     </div>
 
     <div class="pub-item">

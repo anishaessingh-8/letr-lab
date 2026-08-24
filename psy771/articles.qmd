@@ -78,7 +78,7 @@ title: "PSY 771 — Research Article Examples"
     <div class="pub-year-header">Mixed ANOVA (Between + Within)</div>
 
     <div class="pub-item">
-      <div class="pub-authors"><!-- ⚠️ Please confirm authors — likely: Roediger, H. L., III, & Karpicke, J. D. (2006). --></div>
+      <div class="pub-authors">Roediger, H. L., III, &amp; Karpicke, J. D. (2006).</div>
       <div class="pub-title">Test-enhanced learning: Taking memory tests improves long-term retention.</div>
       <div class="pub-venue"><em>Psychological Science, 17</em>(3), 249–255.</div>
     </div>

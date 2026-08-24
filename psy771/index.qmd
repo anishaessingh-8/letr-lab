@@ -2,9 +2,9 @@
 title: "PSY 771 — ANOVA and Experimental Design"
 ---
 
-Welcome to PSY 771. This site contains R tutorials and materials 
-for the graduate statistics course.
+Welcome to PSY 771. This site contains R scripts, reading materials, and resources for the graduate ANOVA and Experimental Design course.
 
 ## Materials
 
-- [Research Article Examples](articles.html) — Published studies illustrating t-tests, one-way ANOVA, factorial ANOVA, repeated measures, and mixed designs.
+- [Research Article Examples](articles.html) — Published studies organized by statistical model
+- [R Scripts](rscripts.html) — Weekly R code files for all topics covered

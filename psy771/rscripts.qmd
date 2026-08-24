@@ -1,0 +1,23 @@
+---
+title: "PSY 771 — R Scripts"
+---
+
+```{=html}
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">R Scripts</h1>
+    <p class="page-header-subtitle">R code files for all topics covered in the course. New scripts will be added each week.</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <p class="section-label">Course Scripts</p>
+  <h2 class="section-heading">Weekly R Code</h2>
+  <p class="section-subheading">Scripts will be posted here as we progress through the course. Check back each week.</p>
+
+  <p style="font-size: 17px; color: var(--ink-400); font-style: italic;">Coming soon.</p>
+
+</div>
+```

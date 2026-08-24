@@ -1,0 +1,95 @@
+---
+title: "PSY 771 — Research Article Examples"
+---
+
+```{=html}
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">Research Article Examples</h1>
+    <p class="page-header-subtitle">Published studies that illustrate the statistical models covered in this course. Use these to see how real researchers design studies, report results, and interpret findings.</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <!-- Independent Samples t-test -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">Independent Samples t-test</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Johns, M., Schmader, T., &amp; Martens, A. (2005).</div>
+      <div class="pub-title"><a href="https://doi.org/10.1111/j.0956-7976.2005.00799.x" target="_blank">Knowing is half the battle: Teaching stereotype threat as a means of improving women's math performance.</a></div>
+      <div class="pub-venue"><em>Psychological Science, 16</em>(3), 175–179.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Zhang, T., Kim, T., Brooks, A. W., Gino, F., &amp; Norton, M. I. (2014).</div>
+      <div class="pub-title"><a href="https://doi.org/10.1177/0956797614542274" target="_blank">A "present" for the future: The unexpected value of rediscovery.</a></div>
+      <div class="pub-venue"><em>Psychological Science, 25</em>(10), 1851–1860.</div>
+    </div>
+
+  </div>
+
+  <!-- One-way ANOVA -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">One-way ANOVA</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Loftus, E. F., &amp; Palmer, J. C. (1974).</div>
+      <div class="pub-title">Reconstruction of automobile destruction: An example of the interaction between language and memory.</div>
+      <div class="pub-venue"><em>Journal of Verbal Learning and Verbal Behavior, 13</em>(5), 585–589.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Mehr, S. A., Song, L. A., &amp; Spelke, E. S. (2016).</div>
+      <div class="pub-title"><a href="https://doi.org/10.1177/0956797615626691" target="_blank">For 5-month-old infants, melodies are social.</a></div>
+      <div class="pub-venue"><em>Psychological Science, 27</em>(4), 486–501.</div>
+    </div>
+
+  </div>
+
+  <!-- Factorial ANOVA -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">Factorial ANOVA</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Maglio, S. J., &amp; Polman, E. (2014).</div>
+      <div class="pub-title"><a href="https://doi.org/10.1177/0956797614530571" target="_blank">Spatial orientation shrinks and expands psychological distance.</a></div>
+      <div class="pub-venue"><em>Psychological Science, 25</em>(7), 1345–1352.</div>
+    </div>
+
+  </div>
+
+  <!-- Repeated Measures ANOVA -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">Repeated Measures ANOVA</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Fan, J., et al. (2016).</div>
+      <div class="pub-title">Dissociable early attentional control mechanisms underlying cognitive and affective conflicts.</div>
+      <div class="pub-venue"><em>Scientific Reports.</em></div>
+    </div>
+
+  </div>
+
+  <!-- Mixed ANOVA -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">Mixed ANOVA (Between + Within)</div>
+
+    <div class="pub-item">
+      <div class="pub-authors"><!-- ⚠️ Please confirm authors — likely: Roediger, H. L., III, & Karpicke, J. D. (2006). --></div>
+      <div class="pub-title">Test-enhanced learning: Taking memory tests improves long-term retention.</div>
+      <div class="pub-venue"><em>Psychological Science, 17</em>(3), 249–255.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Sidney, P. G., Hattikudur, S., &amp; Alibali, M. W. (2015).</div>
+      <div class="pub-title">How do contrasting cases and self-explanation promote learning? Evidence from fraction division.</div>
+      <div class="pub-venue"><em>Learning and Instruction, 40</em>, 29–38.</div>
+    </div>
+
+  </div>
+
+</div>
+```

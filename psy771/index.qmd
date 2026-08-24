@@ -7,4 +7,4 @@ for the graduate statistics course.
 
 ## Materials
 
-*Coming soon.*
+- [Research Article Examples](articles.html) — Published studies illustrating t-tests, one-way ANOVA, factorial ANOVA, repeated measures, and mixed designs.

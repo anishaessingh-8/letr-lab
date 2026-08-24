@@ -18,16 +18,30 @@ title: "PSY 771 — Research Article Examples"
     <div class="pub-year-header">Independent Samples t-test</div>
 
     <div class="pub-item">
-      <div class="pub-authors">Johns, M., Schmader, T., &amp; Martens, A. (2005).</div>
-      <div class="pub-title"><a href="https://doi.org/10.1111/j.0956-7976.2005.00799.x" target="_blank">Knowing is half the battle: Teaching stereotype threat as a means of improving women's math performance.</a></div>
-      <div class="pub-venue"><em>Psychological Science, 16</em>(3), 175–179.</div>
-      <div class="pub-tags"><a href="readings/JohnsSchmaderMartens2005_stereotype.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
-    </div>
-
-    <div class="pub-item">
       <div class="pub-authors">Zhang, T., Kim, T., Brooks, A. W., Gino, F., &amp; Norton, M. I. (2014).</div>
       <div class="pub-title"><a href="https://doi.org/10.1177/0956797614542274" target="_blank">A "present" for the future: The unexpected value of rediscovery.</a></div>
       <div class="pub-venue"><em>Psychological Science, 25</em>(10), 1851–1860.</div>
+      <div class="pub-tags"><a href="readings/ZhangKimBrooks2014_rediscovery.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
+    </div>
+
+  </div>
+
+  <!-- Paired Samples t-test -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">Paired Samples t-test</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Mehr, S. A., Song, L. A., &amp; Spelke, E. S. (2016).</div>
+      <div class="pub-title"><a href="https://doi.org/10.1177/0956797615626691" target="_blank">For 5-month-old infants, melodies are social.</a></div>
+      <div class="pub-venue"><em>Psychological Science, 27</em>(4), 486–501.</div>
+      <div class="pub-tags"><a href="readings/MehrSongSpelke2016_melodies.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Störmer, V. S., &amp; Alvarez, G. A. (2016).</div>
+      <div class="pub-title">Attention alters perceived attractiveness.</div>
+      <div class="pub-venue"><em>Psychological Science.</em></div>
+      <div class="pub-tags"><a href="readings/StormerAlvarez2016_attractiveness.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
 
   </div>
@@ -44,10 +58,10 @@ title: "PSY 771 — Research Article Examples"
     </div>
 
     <div class="pub-item">
-      <div class="pub-authors">Mehr, S. A., Song, L. A., &amp; Spelke, E. S. (2016).</div>
-      <div class="pub-title"><a href="https://doi.org/10.1177/0956797615626691" target="_blank">For 5-month-old infants, melodies are social.</a></div>
-      <div class="pub-venue"><em>Psychological Science, 27</em>(4), 486–501.</div>
-      <div class="pub-tags"><a href="readings/MehrSongSpelke2016_melodies.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
+      <div class="pub-authors">Johns, M., Schmader, T., &amp; Martens, A. (2005).</div>
+      <div class="pub-title"><a href="https://doi.org/10.1111/j.0956-7976.2005.00799.x" target="_blank">Knowing is half the battle: Teaching stereotype threat as a means of improving women's math performance.</a></div>
+      <div class="pub-venue"><em>Psychological Science, 16</em>(3), 175–179.</div>
+      <div class="pub-tags"><a href="readings/JohnsSchmaderMartens2005_stereotype.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
 
   </div>
@@ -68,13 +82,6 @@ title: "PSY 771 — Research Article Examples"
   <!-- Repeated Measures ANOVA -->
   <div class="pub-year-group">
     <div class="pub-year-header">Repeated Measures ANOVA</div>
-
-    <div class="pub-item">
-      <div class="pub-authors">Störmer, V. S., &amp; Alvarez, G. A. (2016).</div>
-      <div class="pub-title">Attention alters perceived attractiveness.</div>
-      <div class="pub-venue"><em>Psychological Science.</em></div>
-      <div class="pub-tags"><a href="readings/StormerAlvarez2016_attractiveness.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
-    </div>
 
     <div class="pub-item">
       <div class="pub-authors">Chen, T., et al. (2016).</div>

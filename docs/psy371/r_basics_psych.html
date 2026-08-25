@@ -2815,6 +2815,59 @@ font-family: var(--font) !important;
 .page-header { padding: 2.25rem 1.5rem 2rem; }
 }
 </style>
+<style>
+/* Light theme override for R script pages */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+div.sourceCode code { color: #1a0a2e !important; }
+div.sourceCode .co { color: #7a6a8a !important; }
+div.sourceCode .fu { color: #7b2fbe !important; }
+div.sourceCode .st { color: #b5440e !important; }
+div.sourceCode .dv { color: #0057ae !important; }
+div.sourceCode .ot { color: #b5440e !important; }
+div.sourceCode .kw { color: #7b2fbe !important; }
+pre:not(.sourceCode) {
+  background: #ede8f2 !important;
+  color: #2a1a3a !important;
+  border-left: 3px solid #a89df5 !important;
+  border-top: 1px solid #c8b8d8 !important;
+  border-right: 1px solid #c8b8d8 !important;
+  border-bottom: 1px solid #c8b8d8 !important;
+}
+pre:not(.sourceCode) code { background: transparent !important; color: inherit !important; }
+table { color: #1a1320 !important; }
+thead { background: #f0eaf7 !important; }
+.callout { background: #f5f0f7 !important; border-radius: 6px; }
+.callout-note { background: rgba(0,140,200,0.08) !important; border-left-color: #1a9fd4 !important; }
+.callout-note .callout-title, .callout-note p { color: #0a3a50 !important; }
+.callout-tip { background: rgba(0,150,80,0.08) !important; border-left-color: #009650 !important; }
+.callout-tip .callout-title, .callout-tip p { color: #00401f !important; }
+.callout-warning { background: rgba(180,100,0,0.08) !important; border-left-color: #b46400 !important; }
+.callout-warning .callout-title, .callout-warning p { color: #5a2f00 !important; }
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">

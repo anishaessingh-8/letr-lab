@@ -154,31 +154,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r">What is R?</a></li>
-  <li><a href="#why-r" id="toc-why-r" class="nav-link" data-scroll-target="#why-r">Why R?</a></li>
-  <li><a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link" data-scroll-target="#downloading-r-and-rstudio">Downloading R and RStudio</a></li>
+  <li><a href="#why-use-r" id="toc-why-use-r" class="nav-link" data-scroll-target="#why-use-r">Why Use R?</a></li>
+  <li><a href="#installing-r-and-rstudio" id="toc-installing-r-and-rstudio" class="nav-link" data-scroll-target="#installing-r-and-rstudio">Installing R and RStudio</a>
+  <ul class="collapse">
+  <li><a href="#the-rstudio-interface" id="toc-the-rstudio-interface" class="nav-link" data-scroll-target="#the-rstudio-interface">The RStudio Interface</a></li>
+  </ul></li>
   <li><a href="#r-as-a-calculator" id="toc-r-as-a-calculator" class="nav-link" data-scroll-target="#r-as-a-calculator">R as a Calculator</a></li>
   <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects">Objects</a>
   <ul class="collapse">
   <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors">Vectors</a></li>
   <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices</a></li>
   </ul></li>
-  <li><a href="#data-frames-and-classes" id="toc-data-frames-and-classes" class="nav-link" data-scroll-target="#data-frames-and-classes">Data Frames and Classes</a>
-  <ul class="collapse">
-  <li><a href="#checking-classes" id="toc-checking-classes" class="nav-link" data-scroll-target="#checking-classes">Checking Classes</a></li>
-  </ul></li>
-  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a>
-  <ul class="collapse">
-  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations">Correlations</a></li>
-  <li><a href="#summary-your-best-friend" id="toc-summary-your-best-friend" class="nav-link" data-scroll-target="#summary-your-best-friend"><code>summary()</code> — your best friend</a></li>
-  </ul></li>
-  <li><a href="#basic-plots" id="toc-basic-plots" class="nav-link" data-scroll-target="#basic-plots">Basic Plots</a>
-  <ul class="collapse">
-  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram">Histogram</a></li>
-  <li><a href="#boxplot" id="toc-boxplot" class="nav-link" data-scroll-target="#boxplot">Boxplot</a></li>
-  <li><a href="#scatterplot" id="toc-scatterplot" class="nav-link" data-scroll-target="#scatterplot">Scatterplot</a></li>
-  </ul></li>
+  <li><a href="#classes" id="toc-classes" class="nav-link" data-scroll-target="#classes">Classes</a></li>
+  <li><a href="#a-first-look-at-data" id="toc-a-first-look-at-data" class="nav-link" data-scroll-target="#a-first-look-at-data">A First Look at Data</a></li>
   <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting Help</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next</a></li>
   </ul>
 </nav>
     </div>
@@ -214,70 +204,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="page-header-inner">
     <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
     <h1 class="page-header-title">Introduction to R</h1>
-    <p class="page-header-subtitle">Getting started with R: objects, data types, descriptive statistics, and basic plotting.</p>
+    <p class="page-header-subtitle">What R is, how to install it, and the core building blocks: arithmetic, objects, and data types.</p>
   </div>
 </div>
 <section id="what-is-r" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-r">What is R?</h2>
-<p>R is a free, open-source programming language and environment designed for statistical computing and graphics. It is widely used in psychology, education, biology, economics, and virtually every other field that involves data.</p>
-<p>Unlike point-and-click software such as SPSS, R is a scripting language — you write code that tells R exactly what to do, step by step. This takes a little more effort to learn at first, but it pays off quickly: your analyses are reproducible, flexible, and well-documented.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Why code instead of click?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A script is a permanent record of every decision you made in your analysis. When you (or a reviewer) want to know exactly what you did — and in what order — the script tells you. Point-and-click software does not.</p>
-</div>
-</div>
+<p>R is a free, open-source programming language and computing environment built for statistics and data analysis. It is widely used across psychology, education, public health, and the social sciences — and it is what we will use throughout this course.</p>
+<p>Unlike point-and-click software such as SPSS, R is a scripting language. You write a sequence of instructions, and R executes them in order. This takes practice at first, but the payoff is significant: your analyses are reproducible, shareable, and easy to modify.</p>
 <hr>
 </section>
-<section id="why-r" class="level2">
-<h2 class="anchored" data-anchor-id="why-r">Why R?</h2>
+<section id="why-use-r" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-r">Why Use R?</h2>
 <ul>
-<li><strong>Free and open source.</strong> R costs nothing and runs on Mac, Windows, and Linux.</li>
-<li><strong>Reproducible.</strong> Your entire analysis lives in a script you can re-run, share, or modify.</li>
-<li><strong>Publication quality.</strong> R produces clean, customizable figures ready for journals and presentations.</li>
-<li><strong>Community.</strong> Thousands of user-contributed packages extend R’s capabilities. Whatever analysis you need, there is almost certainly a package for it.</li>
-<li><strong>Industry and academia.</strong> R is used in research labs, tech companies, public health agencies, and psychology departments worldwide. Learning it now is a career-long investment.</li>
+<li><strong>Free.</strong> R costs nothing and runs on Mac, Windows, and Linux.</li>
+<li><strong>Reproducible.</strong> Your entire analysis lives in a script you can re-run, share, or hand to a reviewer.</li>
+<li><strong>Powerful and flexible.</strong> From t-tests to multilevel models to machine learning — R handles it all.</li>
+<li><strong>Standard in research.</strong> R is the dominant tool in academic psychology and education research. Learning it now is an investment you will use throughout your career.</li>
 </ul>
 <hr>
 </section>
-<section id="downloading-r-and-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="downloading-r-and-rstudio">Downloading R and RStudio</h2>
-<p>You need two things: <strong>R</strong> (the language) and <strong>RStudio</strong> (the editor that makes R easier to use). Think of R as the engine and RStudio as the dashboard.</p>
-<ol type="1">
-<li>Download <strong>R</strong> from <a href="https://cran.r-project.org">cran.r-project.org</a>
-<ul>
-<li>Choose your operating system (Mac or Windows)</li>
-<li>Install the most recent version</li>
-</ul></li>
-<li>Download <strong>RStudio Desktop</strong> (free) from <a href="https://posit.co/download/rstudio-desktop/">posit.co/download/rstudio-desktop</a>
-<ul>
-<li>Install after R is installed</li>
-<li>Always open RStudio, not R directly</li>
-</ul></li>
-</ol>
+<section id="installing-r-and-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="installing-r-and-rstudio">Installing R and RStudio</h2>
+<p>You need two things. Install them in order.</p>
+<dl>
+<dt><strong>1. R</strong> — the language itself</dt>
+<dd>
+Download from <a href="https://cran.r-project.org">cran.r-project.org</a>. Choose your operating system and install the current release.
+</dd>
+<dt><strong>2. RStudio</strong> — the editor that makes R easier to use</dt>
+<dd>
+Download the free RStudio Desktop from <a href="https://posit.co/download/rstudio-desktop/">posit.co/download/rstudio-desktop</a>. Always open RStudio, not R directly.
+</dd>
+</dl>
+<p>Think of R as the engine and RStudio as the dashboard.</p>
+<section id="the-rstudio-interface" class="level3">
+<h3 class="anchored" data-anchor-id="the-rstudio-interface">The RStudio Interface</h3>
 <p>When RStudio opens you will see four panes:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 31%">
-<col style="width: 68%">
+<col style="width: 40%">
+<col style="width: 60%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Pane</th>
-<th>What it does</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Source</strong> (top-left)</td>
-<td>Where you write and save scripts</td>
+<td>Write and save your scripts here</td>
 </tr>
 <tr class="even">
 <td><strong>Console</strong> (bottom-left)</td>
@@ -285,218 +262,135 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td><strong>Environment</strong> (top-right)</td>
-<td>Lists objects currently in memory</td>
+<td>Objects currently stored in memory</td>
 </tr>
 <tr class="even">
 <td><strong>Files / Plots / Help</strong> (bottom-right)</td>
-<td>Browse files, see plots, read documentation</td>
+<td>Browse files, view plots, read documentation</td>
 </tr>
 </tbody>
 </table>
+<p>Write your code in the Source pane and run it with <strong>Ctrl+Enter</strong> (Windows) or <strong>Cmd+Return</strong> (Mac). Results appear in the Console.</p>
 <hr>
+</section>
 </section>
 <section id="r-as-a-calculator" class="level2">
 <h2 class="anchored" data-anchor-id="r-as-a-calculator">R as a Calculator</h2>
-<p>At its simplest, R is a very powerful calculator. Type an expression in the Console and press Enter:</p>
+<p>The simplest thing R can do is arithmetic. Type any expression and press Enter:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 2</code></pre>
-<p>The <code>[1]</code> simply means “this is the first element of the result.” You will see it with every output.</p>
-<p>More examples:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">-</span> <span class="dv">3</span>      <span class="co"># subtraction</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> <span class="dv">5</span>       <span class="co"># multiplication</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="sc">/</span> <span class="dv">4</span>      <span class="co"># division</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">^</span> <span class="dv">8</span>       <span class="co"># exponentiation (2 to the power of 8)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)   <span class="co"># square root</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">100</span>)    <span class="co"># natural log</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>[1]</code> at the start of every output line just means “first element of the result.” You will see it everywhere.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">-</span> <span class="dv">3</span>        <span class="co"># subtraction</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> <span class="dv">5</span>         <span class="co"># multiplication</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="sc">/</span> <span class="dv">4</span>        <span class="co"># division</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">^</span> <span class="dv">8</span>         <span class="co"># exponentiation  →  256</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)     <span class="co"># square root     →  12</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="sc">-</span><span class="dv">7</span>)       <span class="co"># absolute value  →  7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Comments with <code>#</code>
+<span class="screen-reader-only">Tip</span>The <code>#</code> symbol marks a comment
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Anything after a <code>#</code> on a line is a <strong>comment</strong>. R ignores it when running the code. Use comments generously to explain what your code does — your future self will thank you.</p>
+<p>Everything after <code>#</code> on a line is a comment — R ignores it when running the code. Use comments freely to explain what each line does. Your future self will thank you.</p>
 </div>
 </div>
 <hr>
 </section>
 <section id="objects" class="level2">
 <h2 class="anchored" data-anchor-id="objects">Objects</h2>
-<p>In R, you save values by assigning them to <strong>objects</strong>. Use <code>&lt;-</code> (the assignment arrow) to create an object:</p>
+<p>In R, you can store any value in a named <strong>object</strong> using the assignment arrow <code>&lt;-</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="dv">8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now <code>X</code> holds the value <code>8</code>. Type <code>X</code> and press Enter to see it:</p>
+<p>Now <code>X</code> holds the value <code>8</code>. Call it by name to see it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 8</code></pre>
-<p>You can do arithmetic with objects:</p>
+<p>You can use objects in calculations just like raw numbers:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X <span class="sc">+</span> <span class="dv">2</span>       <span class="co"># 10</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>X <span class="sc">*</span> X       <span class="co"># 64</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(X)     <span class="co"># 2.828...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(X)     <span class="co"># 2.828427</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Object names are case-sensitive: <code>X</code> and <code>x</code> are two different objects.</p>
 <section id="vectors" class="level3">
 <h3 class="anchored" data-anchor-id="vectors">Vectors</h3>
-<p>A <strong>vector</strong> is a sequence of values. Create one with <code>c()</code> (short for “combine”):</p>
+<p>A <strong>vector</strong> is a sequence of values stored together. Create one with <code>c()</code> — short for “combine”:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 1 2 3 4 5</code></pre>
-<p>Arithmetic on a vector applies to every element:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Y <span class="sc">*</span> <span class="dv">2</span>       <span class="co"># [1]  2  4  6  8 10</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Y <span class="sc">+</span> <span class="dv">10</span>      <span class="co"># [1] 11 12 13 14 15</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Operations on a vector apply to every element at once:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Y <span class="sc">+</span> <span class="dv">10</span>       <span class="co"># [1] 11 12 13 14 15</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Y <span class="sc">*</span> <span class="dv">2</span>        <span class="co"># [1]  2  4  6  8 10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Vectors can also hold text (called <strong>character</strong> strings):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Carol"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>names</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] "Alice" "Bob"   "Carol"</code></pre>
 </section>
 <section id="matrices" class="level3">
 <h3 class="anchored" data-anchor-id="matrices">Matrices</h3>
-<p>A <strong>matrix</strong> is a two-dimensional array of values. Create one with <code>matrix()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A <strong>matrix</strong> is a two-dimensional table of values — rows and columns. Create one with <code>matrix()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>     [,1] [,2] [,3]
 [1,]    1    4    7
 [2,]    2    5    8
 [3,]    3    6    9</code></pre>
-<p>The numbers fill in column by column by default.</p>
+<p>Values fill in column by column by default. You can transpose with <code>t(Z)</code>.</p>
 <hr>
 </section>
 </section>
-<section id="data-frames-and-classes" class="level2">
-<h2 class="anchored" data-anchor-id="data-frames-and-classes">Data Frames and Classes</h2>
-<p>Real data is usually stored in a <strong>data frame</strong> — a table with rows (observations) and columns (variables). R comes with several built-in datasets for practice.</p>
-<p><code>mtcars</code> is a classic: 32 cars, 11 variables including miles per gallon, cylinders, horsepower, and weight.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)      <span class="co"># first 6 rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Access a single column with <code>$</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>cyl        <span class="co"># the cylinder variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code> [1] 6 6 4 6 8 6 8 4 4 6 6 8 8 8 8 8 8 4 4 4 4 8 8 8 8 4 4 4 8 6 8 4</code></pre>
-<section id="checking-classes" class="level3">
-<h3 class="anchored" data-anchor-id="checking-classes">Checking Classes</h3>
-<p>Every object in R has a <strong>class</strong> — a label that tells R (and you) what type of thing it is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mtcars)        <span class="co"># "data.frame"</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mtcars<span class="sc">$</span>cyl)    <span class="co"># "numeric"</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="st">"hello"</span>)       <span class="co"># "character"</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="cn">TRUE</span>)          <span class="co"># "logical"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The class determines which functions can be applied. Most errors in R trace back to a class mismatch — feeding a character vector to a function that expects numbers, for example.</p>
-<hr>
-</section>
-</section>
-<section id="descriptive-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
-<p>Once data is loaded, computing summary statistics is straightforward. The <code>attach()</code> function lets you refer to a dataset’s columns by name without the <code>$</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(mtcars)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mpg)     <span class="co"># mean</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(mpg)       <span class="co"># standard deviation</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(mpg)      <span class="co"># variance</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(mpg)      <span class="co"># maximum</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(mpg)      <span class="co"># minimum</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(mpg)    <span class="co"># minimum and maximum together</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-warning callout-titled">
+<section id="classes" class="level2">
+<h2 class="anchored" data-anchor-id="classes">Classes</h2>
+<p>Every object in R has a <strong>class</strong> — a label that tells R what kind of thing it is and which operations are valid. You can check it with <code>class()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="dv">8</span>)            <span class="co"># "numeric"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="st">"hello"</span>)      <span class="co"># "character"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="cn">TRUE</span>)         <span class="co"># "logical"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))     <span class="co"># "numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Use <code>attach()</code> carefully
+<span class="screen-reader-only">Note</span>Why classes matter
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>attach()</code> makes column names available globally, which is convenient but can cause confusion if two datasets share column names. For complex scripts, prefer <code>dataset$variable</code> notation or use the <code>with()</code> function.</p>
+<p>Almost every error in R comes down to a class mismatch — trying to do math on a character vector, or passing a data frame to a function that expects a single number. Checking the class of your objects is the first debugging step.</p>
 </div>
 </div>
-<section id="correlations" class="level3">
-<h3 class="anchored" data-anchor-id="correlations">Correlations</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mpg, hp)           <span class="co"># correlation between mpg and horsepower</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mtcars)            <span class="co"># full correlation matrix for all variables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="summary-your-best-friend" class="level3">
-<h3 class="anchored" data-anchor-id="summary-your-best-friend"><code>summary()</code> — your best friend</h3>
-<p><code>summary()</code> gives you a five-number summary plus the mean for every numeric column:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>      mpg             cyl             disp             hp
- Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0
- 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5
- Median :19.20   Median :6.000   Median :196.3   Median :123.0
- Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7
- 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0
- Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0</code></pre>
 <hr>
 </section>
-</section>
-<section id="basic-plots" class="level2">
-<h2 class="anchored" data-anchor-id="basic-plots">Basic Plots</h2>
-<p>R produces publication-quality graphics. The base graphics functions are quick to use and good for exploration.</p>
-<section id="histogram" class="level3">
-<h3 class="anchored" data-anchor-id="histogram">Histogram</h3>
-<p>Visualize the distribution of a single variable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpg,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main  =</span> <span class="st">"Distribution of Miles per Gallon"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab  =</span> <span class="st">"MPG"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">col   =</span> <span class="st">"steelblue"</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">"white"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Key arguments:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Argument</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>main</code></td>
-<td>Plot title</td>
-</tr>
-<tr class="even">
-<td><code>xlab</code></td>
-<td>x-axis label</td>
-</tr>
-<tr class="odd">
-<td><code>col</code></td>
-<td>Bar fill color</td>
-</tr>
-<tr class="even">
-<td><code>breaks</code></td>
-<td>Number of bins (optional)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="boxplot" class="level3">
-<h3 class="anchored" data-anchor-id="boxplot">Boxplot</h3>
-<p>Visualize the distribution of a variable across groups:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mpg <span class="sc">~</span> cyl,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> mtcars,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"MPG by Number of Cylinders"</span>,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Cylinders"</span>,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Miles per Gallon"</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">col  =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"tomato"</span>, <span class="st">"seagreen"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>~</code> (tilde) reads as “by” — <em>MPG by cylinders</em>.</p>
-</section>
-<section id="scatterplot" class="level3">
-<h3 class="anchored" data-anchor-id="scatterplot">Scatterplot</h3>
-<p>Visualize the relationship between two numeric variables:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hp, mpg,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Horsepower vs. MPG"</span>,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Horsepower"</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Miles per Gallon"</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">19</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">"steelblue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>pch = 19</code> gives you solid circles. Try values 1–25 to see different point shapes.</p>
+<section id="a-first-look-at-data" class="level2">
+<h2 class="anchored" data-anchor-id="a-first-look-at-data">A First Look at Data</h2>
+<p>Real datasets in R are stored as <strong>data frames</strong> — tables with rows (observations) and columns (variables). R ships with several built-in datasets for practice.</p>
+<p><code>mtcars</code> has data on 32 cars:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)       <span class="co"># first 6 rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use <code>$</code> to pull out a single column by name:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>cyl         <span class="co"># cylinder counts for all 32 cars</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code> [1] 6 6 4 6 8 6 8 4 4 6 6 8 8 8 8 8 8 4 4 4 4 8 8 8 8 4 4 4 8 6 8 4</code></pre>
+<p>A few useful inspection functions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mtcars)        <span class="co"># rows, columns:  32  11</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mtcars)      <span class="co"># variable names</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mtcars)      <span class="co"># "data.frame"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mtcars<span class="sc">$</span>mpg)  <span class="co"># "numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-</section>
 </section>
 <section id="getting-help" class="level2">
 <h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
-<p>When you are unsure how a function works, use the <code>?</code> operator:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>?mean</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>?hist</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>?lm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The Help pane on the bottom-right will show the function’s documentation: what it does, what arguments it accepts, and examples.</p>
-<p>You can also search by keyword:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>??regression      <span class="co"># searches all documentation for "regression"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you are unsure how a function works, prefix it with <code>?</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>?mean</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>?sqrt</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>?matrix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Help pane opens with the function’s documentation: description, arguments, and worked examples. <code>??keyword</code> searches all installed documentation.</p>
 <hr>
 </section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
-<p>You now have the foundations: objects, data frames, classes, descriptive statistics, and basic plots. The rest of the course builds on these — each week’s R script will introduce the functions needed for the statistical model we cover that week.</p>
-<p>Continue with the <a href="../psy371/r_basics_psych.html">PSY 371 R Basics page</a> for additional exercises including importing data from CSV and working with real datasets.</p>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<p>This page covers R’s core building blocks. When you are comfortable with objects, vectors, and data frames, continue to the applied script:</p>
+<p>→ <strong><a href="../psy371/r_basics_psych.html">Descriptives, Correlation &amp; Regression</a></strong> — loading real data, computing descriptive statistics with <code>psych::describe()</code>, running <code>cor.test()</code>, and fitting a multiple regression with <code>lm()</code>.</p>
+<p>That script uses a real psychology dataset and walks through a complete analysis from import to interpretation.</p>
 
 
 </section>

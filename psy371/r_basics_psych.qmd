@@ -49,6 +49,21 @@ thead { background: #f0eaf7 !important; }
 </style>
 ```
 
+## Dataset
+
+Download the dataset used in this script and save it in the same folder as your R script before running the code.
+
+```{=html}
+<p>
+  <a href="exam_scores_dataset.csv" download style="display:inline-flex; align-items:center; gap:8px; background:#f0eaf7; border:1px solid #c8b8d8; color:#7b2fbe; padding:8px 16px; border-radius:6px; font-weight:600; font-size:14px; text-decoration:none;">
+    ↓ exam_scores_dataset.csv
+  </a>
+</p>
+<p style="font-size:14px; color:#5a4a6a; margin-top:0.5rem;">Variables: <code>Hours_Studied</code>, <code>Exam_Score</code> &nbsp;·&nbsp; 20 observations</p>
+```
+
+---
+
 ## Overview
 
 In this session we will work through a complete data analysis workflow using a simulated dataset from psychological research. The dataset contains the following variables for **150 students**:

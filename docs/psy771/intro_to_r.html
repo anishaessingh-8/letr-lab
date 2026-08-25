@@ -228,12 +228,54 @@ a { color: #7b2fbe !important; }
 a:hover { color: #ff5ea8 !important; }
 /* Inline code */
 p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
-/* R code blocks — already light, just reinforce */
+/* Override ALL Quarto dark syntax highlight variables to dark-on-light values */
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+/* R code blocks */
 div.sourceCode, pre.sourceCode {
   background: #f5f0f7 !important;
   border: 1px solid #c8b8d8 !important;
 }
 div.sourceCode code { color: #1a0a2e !important; }
+div.sourceCode span { color: #1a0a2e; }
+div.sourceCode .co { color: #7a6a8a !important; }
+div.sourceCode .fu { color: #7b2fbe !important; }
+div.sourceCode .st { color: #b5440e !important; }
+div.sourceCode .dv { color: #0057ae !important; }
+div.sourceCode .ot { color: #b5440e !important; }
+div.sourceCode .kw { color: #7b2fbe !important; }
+div.sourceCode .va { color: #1a0a2e !important; }
+div.sourceCode .sc { color: #b5440e !important; }
 /* Output blocks */
 pre:not(.sourceCode) {
   background: #ede8f2 !important;

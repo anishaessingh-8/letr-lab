@@ -6,6 +6,5 @@ Welcome to PSY 771. This site contains R scripts, reading materials, and resourc
 
 ## Materials
 
-- [Introduction to R](intro_to_r.html) — R setup, objects, descriptive stats, and basic plots
 - [R Scripts](rscripts.html) — Weekly R code files for all topics covered
 - [Research Article Examples](articles.html) — Published studies organized by statistical model

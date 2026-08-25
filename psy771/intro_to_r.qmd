@@ -1,0 +1,334 @@
+---
+title: "Introduction to R"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+    code-fold: false
+    code-tools: false
+    theme: default
+---
+
+```{=html}
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">Introduction to R</h1>
+    <p class="page-header-subtitle">Getting started with R: objects, data types, descriptive statistics, and basic plotting.</p>
+  </div>
+</div>
+```
+
+## What is R?
+
+R is a free, open-source programming language and environment designed for statistical computing and graphics. It is widely used in psychology, education, biology, economics, and virtually every other field that involves data.
+
+Unlike point-and-click software such as SPSS, R is a scripting language — you write code that tells R exactly what to do, step by step. This takes a little more effort to learn at first, but it pays off quickly: your analyses are reproducible, flexible, and well-documented.
+
+::: {.callout-note}
+## Why code instead of click?
+
+A script is a permanent record of every decision you made in your analysis. When you (or a reviewer) want to know exactly what you did — and in what order — the script tells you. Point-and-click software does not.
+:::
+
+---
+
+## Why R?
+
+- **Free and open source.** R costs nothing and runs on Mac, Windows, and Linux.
+- **Reproducible.** Your entire analysis lives in a script you can re-run, share, or modify.
+- **Publication quality.** R produces clean, customizable figures ready for journals and presentations.
+- **Community.** Thousands of user-contributed packages extend R's capabilities. Whatever analysis you need, there is almost certainly a package for it.
+- **Industry and academia.** R is used in research labs, tech companies, public health agencies, and psychology departments worldwide. Learning it now is a career-long investment.
+
+---
+
+## Downloading R and RStudio
+
+You need two things: **R** (the language) and **RStudio** (the editor that makes R easier to use). Think of R as the engine and RStudio as the dashboard.
+
+1. Download **R** from [cran.r-project.org](https://cran.r-project.org)
+   - Choose your operating system (Mac or Windows)
+   - Install the most recent version
+
+2. Download **RStudio Desktop** (free) from [posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop/)
+   - Install after R is installed
+   - Always open RStudio, not R directly
+
+When RStudio opens you will see four panes:
+
+| Pane | What it does |
+|------|-------------|
+| **Source** (top-left) | Where you write and save scripts |
+| **Console** (bottom-left) | Where R runs code and shows output |
+| **Environment** (top-right) | Lists objects currently in memory |
+| **Files / Plots / Help** (bottom-right) | Browse files, see plots, read documentation |
+
+---
+
+## R as a Calculator
+
+At its simplest, R is a very powerful calculator. Type an expression in the Console and press Enter:
+
+```r
+1 + 1
+```
+
+```
+[1] 2
+```
+
+The `[1]` simply means "this is the first element of the result." You will see it with every output.
+
+More examples:
+
+```r
+10 - 3      # subtraction
+4 * 5       # multiplication
+20 / 4      # division
+2 ^ 8       # exponentiation (2 to the power of 8)
+sqrt(144)   # square root
+log(100)    # natural log
+```
+
+::: {.callout-tip}
+## Comments with `#`
+
+Anything after a `#` on a line is a **comment**. R ignores it when running the code. Use comments generously to explain what your code does — your future self will thank you.
+:::
+
+---
+
+## Objects
+
+In R, you save values by assigning them to **objects**. Use `<-` (the assignment arrow) to create an object:
+
+```r
+X <- 8
+```
+
+Now `X` holds the value `8`. Type `X` and press Enter to see it:
+
+```r
+X
+```
+
+```
+[1] 8
+```
+
+You can do arithmetic with objects:
+
+```r
+X + 2       # 10
+X * X       # 64
+sqrt(X)     # 2.828...
+```
+
+### Vectors
+
+A **vector** is a sequence of values. Create one with `c()` (short for "combine"):
+
+```r
+Y <- c(1, 2, 3, 4, 5)
+Y
+```
+
+```
+[1] 1 2 3 4 5
+```
+
+Arithmetic on a vector applies to every element:
+
+```r
+Y * 2       # [1]  2  4  6  8 10
+Y + 10      # [1] 11 12 13 14 15
+```
+
+### Matrices
+
+A **matrix** is a two-dimensional array of values. Create one with `matrix()`:
+
+```r
+Z <- matrix(1:9, nrow = 3, ncol = 3)
+Z
+```
+
+```
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9
+```
+
+The numbers fill in column by column by default.
+
+---
+
+## Data Frames and Classes
+
+Real data is usually stored in a **data frame** — a table with rows (observations) and columns (variables). R comes with several built-in datasets for practice.
+
+`mtcars` is a classic: 32 cars, 11 variables including miles per gallon, cylinders, horsepower, and weight.
+
+```r
+head(mtcars)      # first 6 rows
+```
+
+Access a single column with `$`:
+
+```r
+mtcars$cyl        # the cylinder variable
+```
+
+```
+ [1] 6 6 4 6 8 6 8 4 4 6 6 8 8 8 8 8 8 4 4 4 4 8 8 8 8 4 4 4 8 6 8 4
+```
+
+### Checking Classes
+
+Every object in R has a **class** — a label that tells R (and you) what type of thing it is:
+
+```r
+class(mtcars)        # "data.frame"
+class(mtcars$cyl)    # "numeric"
+class("hello")       # "character"
+class(TRUE)          # "logical"
+```
+
+The class determines which functions can be applied. Most errors in R trace back to a class mismatch — feeding a character vector to a function that expects numbers, for example.
+
+---
+
+## Descriptive Statistics
+
+Once data is loaded, computing summary statistics is straightforward. The `attach()` function lets you refer to a dataset's columns by name without the `$`:
+
+```r
+attach(mtcars)
+
+mean(mpg)     # mean
+sd(mpg)       # standard deviation
+var(mpg)      # variance
+max(mpg)      # maximum
+min(mpg)      # minimum
+range(mpg)    # minimum and maximum together
+```
+
+::: {.callout-warning}
+## Use `attach()` carefully
+
+`attach()` makes column names available globally, which is convenient but can cause confusion if two datasets share column names. For complex scripts, prefer `dataset$variable` notation or use the `with()` function.
+:::
+
+### Correlations
+
+```r
+cor(mpg, hp)           # correlation between mpg and horsepower
+cor(mtcars)            # full correlation matrix for all variables
+```
+
+### `summary()` — your best friend
+
+`summary()` gives you a five-number summary plus the mean for every numeric column:
+
+```r
+summary(mtcars)
+```
+
+```
+      mpg             cyl             disp             hp
+ Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0
+ 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5
+ Median :19.20   Median :6.000   Median :196.3   Median :123.0
+ Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7
+ 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0
+ Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0
+```
+
+---
+
+## Basic Plots
+
+R produces publication-quality graphics. The base graphics functions are quick to use and good for exploration.
+
+### Histogram
+
+Visualize the distribution of a single variable:
+
+```r
+hist(mpg,
+     main  = "Distribution of Miles per Gallon",
+     xlab  = "MPG",
+     col   = "steelblue",
+     border = "white")
+```
+
+Key arguments:
+
+| Argument | What it does |
+|----------|-------------|
+| `main` | Plot title |
+| `xlab` | x-axis label |
+| `col` | Bar fill color |
+| `breaks` | Number of bins (optional) |
+
+### Boxplot
+
+Visualize the distribution of a variable across groups:
+
+```r
+boxplot(mpg ~ cyl,
+        data = mtcars,
+        main = "MPG by Number of Cylinders",
+        xlab = "Cylinders",
+        ylab = "Miles per Gallon",
+        col  = c("steelblue", "tomato", "seagreen"))
+```
+
+The `~` (tilde) reads as "by" — *MPG by cylinders*.
+
+### Scatterplot
+
+Visualize the relationship between two numeric variables:
+
+```r
+plot(hp, mpg,
+     main = "Horsepower vs. MPG",
+     xlab = "Horsepower",
+     ylab = "Miles per Gallon",
+     pch  = 19,
+     col  = "steelblue")
+```
+
+`pch = 19` gives you solid circles. Try values 1–25 to see different point shapes.
+
+---
+
+## Getting Help
+
+When you are unsure how a function works, use the `?` operator:
+
+```r
+?mean
+?hist
+?lm
+```
+
+The Help pane on the bottom-right will show the function's documentation: what it does, what arguments it accepts, and examples.
+
+You can also search by keyword:
+
+```r
+??regression      # searches all documentation for "regression"
+```
+
+---
+
+## Next Steps
+
+You now have the foundations: objects, data frames, classes, descriptive statistics, and basic plots. The rest of the course builds on these — each week's R script will introduce the functions needed for the statistical model we cover that week.
+
+Continue with the [PSY 371 R Basics page](../psy371/r_basics_psych.html) for additional exercises including importing data from CSV and working with real datasets.

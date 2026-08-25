@@ -25,21 +25,21 @@
     "href": "psy771/rscripts.html",
     "title": "PSY 771 — R Scripts",
     "section": "",
-    "text": "PSY 771 · ANOVA and Experimental Design\n    R Scripts\n    R code files for all topics covered in the course. New scripts will be added each week.\n  \n\n\n\n\n  Course Scripts\n  Weekly R Code\n  Scripts will be posted here as we progress through the course. Check back each week.\n\n  \n    Getting Started\n\n    \n      Introduction to R\n      What R is, how to install it, working with objects and data frames, descriptive statistics, and basic plots — everything you need before Week 1.\n    \n\n    \n      R Basics for Psychology (PSY 371)\n      Additional exercises: importing CSV data, working with real psychology datasets, and foundational functions covered in the undergraduate statistics course."
+    "text": "PSY 771 · ANOVA and Experimental Design\n    R Scripts\n    R code files for all topics covered in the course. New scripts will be added each week.\n  \n\n\n\n\n  Course Scripts\n  Getting Started\n  Work through these two scripts before the first class session.\n\n  \n    Script 1\n\n    \n      Introduction to R\n      What R is, how to install it, and the core building blocks — arithmetic, objects, vectors, matrices, and data frames. Start here if you are new to R.\n    \n\n  \n\n  \n    Script 2\n\n    \n      Descriptives, Correlation & Regression\n      A complete data analysis workflow: importing a real psychology dataset, computing descriptive statistics with psych::describe(), testing correlations with cor.test(), and fitting a multiple regression with lm().\n    \n\n  \n\n  \n    Weekly Scripts\n\n    \n      Coming soon\n      Scripts for t-tests, one-way ANOVA, factorial ANOVA, repeated measures ANOVA, and mixed ANOVA will be posted here as we progress through the course."
   },
   {
     "objectID": "psy771/intro_to_r.html",
     "href": "psy771/intro_to_r.html",
     "title": "Introduction to R",
     "section": "",
-    "text": "PSY 771 · ANOVA and Experimental Design\n    \n    Getting started with R: objects, data types, descriptive statistics, and basic plotting."
+    "text": "PSY 771 · ANOVA and Experimental Design\n    \n    What R is, how to install it, and the core building blocks: arithmetic, objects, and data types."
   },
   {
     "objectID": "psy771/intro_to_r.html#what-is-r",
     "href": "psy771/intro_to_r.html#what-is-r",
     "title": "Introduction to R",
     "section": "What is R?",
-    "text": "What is R?\nR is a free, open-source programming language and environment designed for statistical computing and graphics. It is widely used in psychology, education, biology, economics, and virtually every other field that involves data.\nUnlike point-and-click software such as SPSS, R is a scripting language — you write code that tells R exactly what to do, step by step. This takes a little more effort to learn at first, but it pays off quickly: your analyses are reproducible, flexible, and well-documented.\n\n\n\n\n\n\nNoteWhy code instead of click?\n\n\n\nA script is a permanent record of every decision you made in your analysis. When you (or a reviewer) want to know exactly what you did — and in what order — the script tells you. Point-and-click software does not."
+    "text": "What is R?\nR is a free, open-source programming language and computing environment built for statistics and data analysis. It is widely used across psychology, education, public health, and the social sciences — and it is what we will use throughout this course.\nUnlike point-and-click software such as SPSS, R is a scripting language. You write a sequence of instructions, and R executes them in order. This takes practice at first, but the payoff is significant: your analyses are reproducible, shareable, and easy to modify."
   },
   {
     "objectID": "psy771/intro_to_r.html#why-r",
@@ -60,14 +60,14 @@
     "href": "psy771/intro_to_r.html#r-as-a-calculator",
     "title": "Introduction to R",
     "section": "R as a Calculator",
-    "text": "R as a Calculator\nAt its simplest, R is a very powerful calculator. Type an expression in the Console and press Enter:\n1 + 1\n[1] 2\nThe [1] simply means “this is the first element of the result.” You will see it with every output.\nMore examples:\n10 - 3      # subtraction\n4 * 5       # multiplication\n20 / 4      # division\n2 ^ 8       # exponentiation (2 to the power of 8)\nsqrt(144)   # square root\nlog(100)    # natural log\n\n\n\n\n\n\nTipComments with #\n\n\n\nAnything after a # on a line is a comment. R ignores it when running the code. Use comments generously to explain what your code does — your future self will thank you."
+    "text": "R as a Calculator\nThe simplest thing R can do is arithmetic. Type any expression and press Enter:\n1 + 1\n[1] 2\nThe [1] at the start of every output line just means “first element of the result.” You will see it everywhere.\n10 - 3        # subtraction\n4 * 5         # multiplication\n20 / 4        # division\n2 ^ 8         # exponentiation  →  256\nsqrt(144)     # square root     →  12\nabs(-7)       # absolute value  →  7\n\n\n\n\n\n\nTipThe # symbol marks a comment\n\n\n\nEverything after # on a line is a comment — R ignores it when running the code. Use comments freely to explain what each line does. Your future self will thank you."
   },
   {
     "objectID": "psy771/intro_to_r.html#objects",
     "href": "psy771/intro_to_r.html#objects",
     "title": "Introduction to R",
     "section": "Objects",
-    "text": "Objects\nIn R, you save values by assigning them to objects. Use &lt;- (the assignment arrow) to create an object:\nX &lt;- 8\nNow X holds the value 8. Type X and press Enter to see it:\nX\n[1] 8\nYou can do arithmetic with objects:\nX + 2       # 10\nX * X       # 64\nsqrt(X)     # 2.828...\n\nVectors\nA vector is a sequence of values. Create one with c() (short for “combine”):\nY &lt;- c(1, 2, 3, 4, 5)\nY\n[1] 1 2 3 4 5\nArithmetic on a vector applies to every element:\nY * 2       # [1]  2  4  6  8 10\nY + 10      # [1] 11 12 13 14 15\n\n\nMatrices\nA matrix is a two-dimensional array of values. Create one with matrix():\nZ &lt;- matrix(1:9, nrow = 3, ncol = 3)\nZ\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\nThe numbers fill in column by column by default."
+    "text": "Objects\nIn R, you can store any value in a named object using the assignment arrow &lt;-:\nX &lt;- 8\nNow X holds the value 8. Call it by name to see it:\nX\n[1] 8\nYou can use objects in calculations just like raw numbers:\nX + 2       # 10\nX * X       # 64\nsqrt(X)     # 2.828427\nObject names are case-sensitive: X and x are two different objects.\n\nVectors\nA vector is a sequence of values stored together. Create one with c() — short for “combine”:\nY &lt;- c(1, 2, 3, 4, 5)\nY\n[1] 1 2 3 4 5\nOperations on a vector apply to every element at once:\nY + 10       # [1] 11 12 13 14 15\nY * 2        # [1]  2  4  6  8 10\nVectors can also hold text (called character strings):\nnames &lt;- c(\"Alice\", \"Bob\", \"Carol\")\nnames\n[1] \"Alice\" \"Bob\"   \"Carol\"\n\n\nMatrices\nA matrix is a two-dimensional table of values — rows and columns. Create one with matrix():\nZ &lt;- matrix(1:9, nrow = 3, ncol = 3)\nZ\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\nValues fill in column by column by default. You can transpose with t(Z)."
   },
   {
     "objectID": "psy771/intro_to_r.html#data-frames-and-classes",
@@ -95,7 +95,7 @@
     "href": "psy771/intro_to_r.html#getting-help",
     "title": "Introduction to R",
     "section": "Getting Help",
-    "text": "Getting Help\nWhen you are unsure how a function works, use the ? operator:\n?mean\n?hist\n?lm\nThe Help pane on the bottom-right will show the function’s documentation: what it does, what arguments it accepts, and examples.\nYou can also search by keyword:\n??regression      # searches all documentation for \"regression\""
+    "text": "Getting Help\nWhen you are unsure how a function works, prefix it with ?:\n?mean\n?sqrt\n?matrix\nThe Help pane opens with the function’s documentation: description, arguments, and worked examples. ??keyword searches all installed documentation."
   },
   {
     "objectID": "psy771/intro_to_r.html#next-steps",
@@ -117,5 +117,40 @@
     "title": "PSY 371 — Psychological Statistics",
     "section": "Materials",
     "text": "Materials\n\nR Basics — Descriptives, Correlation & Regression\nDownload dataset: psych_study_data.csv"
+  },
+  {
+    "objectID": "psy771/intro_to_r.html#why-use-r",
+    "href": "psy771/intro_to_r.html#why-use-r",
+    "title": "Introduction to R",
+    "section": "Why Use R?",
+    "text": "Why Use R?\n\nFree. R costs nothing and runs on Mac, Windows, and Linux.\nReproducible. Your entire analysis lives in a script you can re-run, share, or hand to a reviewer.\nPowerful and flexible. From t-tests to multilevel models to machine learning — R handles it all.\nStandard in research. R is the dominant tool in academic psychology and education research. Learning it now is an investment you will use throughout your career."
+  },
+  {
+    "objectID": "psy771/intro_to_r.html#installing-r-and-rstudio",
+    "href": "psy771/intro_to_r.html#installing-r-and-rstudio",
+    "title": "Introduction to R",
+    "section": "Installing R and RStudio",
+    "text": "Installing R and RStudio\nYou need two things. Install them in order.\n\n1. R — the language itself\n\nDownload from cran.r-project.org. Choose your operating system and install the current release.\n\n2. RStudio — the editor that makes R easier to use\n\nDownload the free RStudio Desktop from posit.co/download/rstudio-desktop. Always open RStudio, not R directly.\n\n\nThink of R as the engine and RStudio as the dashboard.\n\nThe RStudio Interface\nWhen RStudio opens you will see four panes:\n\n\n\n\n\n\n\nPane\nPurpose\n\n\n\n\nSource (top-left)\nWrite and save your scripts here\n\n\nConsole (bottom-left)\nWhere R runs code and shows output\n\n\nEnvironment (top-right)\nObjects currently stored in memory\n\n\nFiles / Plots / Help (bottom-right)\nBrowse files, view plots, read documentation\n\n\n\nWrite your code in the Source pane and run it with Ctrl+Enter (Windows) or Cmd+Return (Mac). Results appear in the Console."
+  },
+  {
+    "objectID": "psy771/intro_to_r.html#classes",
+    "href": "psy771/intro_to_r.html#classes",
+    "title": "Introduction to R",
+    "section": "Classes",
+    "text": "Classes\nEvery object in R has a class — a label that tells R what kind of thing it is and which operations are valid. You can check it with class():\nclass(8)            # \"numeric\"\nclass(\"hello\")      # \"character\"\nclass(TRUE)         # \"logical\"\nclass(c(1,2,3))     # \"numeric\"\n\n\n\n\n\n\nNoteWhy classes matter\n\n\n\nAlmost every error in R comes down to a class mismatch — trying to do math on a character vector, or passing a data frame to a function that expects a single number. Checking the class of your objects is the first debugging step."
+  },
+  {
+    "objectID": "psy771/intro_to_r.html#a-first-look-at-data",
+    "href": "psy771/intro_to_r.html#a-first-look-at-data",
+    "title": "Introduction to R",
+    "section": "A First Look at Data",
+    "text": "A First Look at Data\nReal datasets in R are stored as data frames — tables with rows (observations) and columns (variables). R ships with several built-in datasets for practice.\nmtcars has data on 32 cars:\nhead(mtcars)       # first 6 rows\nUse $ to pull out a single column by name:\nmtcars$cyl         # cylinder counts for all 32 cars\n [1] 6 6 4 6 8 6 8 4 4 6 6 8 8 8 8 8 8 4 4 4 4 8 8 8 8 4 4 4 8 6 8 4\nA few useful inspection functions:\ndim(mtcars)        # rows, columns:  32  11\nnames(mtcars)      # variable names\nclass(mtcars)      # \"data.frame\"\nclass(mtcars$mpg)  # \"numeric\""
+  },
+  {
+    "objectID": "psy771/intro_to_r.html#whats-next",
+    "href": "psy771/intro_to_r.html#whats-next",
+    "title": "Introduction to R",
+    "section": "What’s Next",
+    "text": "What’s Next\nThis page covers R’s core building blocks. When you are comfortable with objects, vectors, and data frames, continue to the applied script:\n→ Descriptives, Correlation & Regression — loading real data, computing descriptive statistics with psych::describe(), running cor.test(), and fitting a multiple regression with lm().\nThat script uses a real psychology dataset and walks through a complete analysis from import to interpretation."
   }
 ]

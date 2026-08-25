@@ -134,6 +134,8 @@ p { margin-bottom: 0.85rem; }
 .pub-item:hover { border-left-color: var(--green-500); box-shadow: var(--shadow-sm); }
 .pub-authors { font-size: 14px; color: var(--ink-400); margin-bottom: 0.3rem; }
 .pub-title { font-family: var(--font-serif) !important; font-size: 20px; font-weight: 500; color: var(--ink-900); line-height: 1.3; margin-bottom: 0.4rem; }
+.pub-title a { color: var(--ink-900) !important; text-decoration: none !important; }
+.pub-title a:hover { color: var(--green-500) !important; text-decoration: underline !important; text-underline-offset: 3px; }
 .pub-venue { font-size: 15px; color: var(--ink-600); font-style: normal; margin-bottom: 0.5rem; }
 .pub-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .pub-tag { font-size: 12.5px; font-weight: 500; padding: 2px 9px; border-radius: 20px; background: var(--sand-200); color: var(--ink-600); border: 1px solid var(--sand-300); }
@@ -207,6 +209,42 @@ p { margin-bottom: 0.85rem; }
 .nav-footer { background: #120d17 !important; border-top: 1px solid var(--sand-300) !important; font-size: 14.5px !important; color: var(--ink-400) !important; padding: 1.25rem 0 !important; }
 .nav-footer a { color: var(--ink-400) !important; }
 .nav-footer a:hover { color: var(--green-500) !important; }
+
+/* ── Code blocks ── */
+/* Syntax-highlighted R code blocks */
+div.sourceCode,
+pre.sourceCode {
+  background: #120d17 !important;
+  border: 1px solid rgba(243,234,240,0.12);
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+div.sourceCode pre { margin: 0; padding: 1rem 1.1rem; background: transparent !important; }
+div.sourceCode code { color: #f3eaf0; font-size: 14px; font-family: "JetBrains Mono", "Fira Mono", "Cascadia Mono", Consolas, monospace; }
+
+/* Plain output blocks (R console output) */
+pre:not(.sourceCode) {
+  background: #0e0a13 !important;
+  border: 1px solid rgba(243,234,240,0.08);
+  border-left: 3px solid rgba(255,94,168,0.4);
+  border-radius: 6px;
+  padding: 0.85rem 1.1rem;
+  color: #c3b6c8 !important;
+  font-size: 13.5px;
+  font-family: "JetBrains Mono", "Fira Mono", "Cascadia Mono", Consolas, monospace;
+  margin: 0.5rem 0 1rem;
+  overflow-x: auto;
+}
+pre:not(.sourceCode) code { background: transparent !important; color: inherit !important; font-size: inherit; padding: 0; }
+
+/* Inline code */
+p code, li code, td code { color: #ff5ea8; background: rgba(255,94,168,0.1); padding: 1px 5px; border-radius: 3px; font-size: 0.88em; }
+
+/* Quarto callout overrides for dark theme */
+.callout { border-radius: 6px; }
+.callout-note    { background: rgba(0,160,220,0.08); border-left-color: #00a0dc; }
+.callout-tip     { background: rgba(0,200,100,0.08); border-left-color: #00c864; }
+.callout-warning { background: rgba(255,165,0,0.08); border-left-color: #ffa500; }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {

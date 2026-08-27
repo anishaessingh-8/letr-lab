@@ -2875,8 +2875,11 @@ div.sourceCode, pre.sourceCode {
   --quarto-hl-vs-color: #b5440e;
   --quarto-hl-wa-color: #b46400;
 }
-div.sourceCode code { color: #1a0a2e !important; }
-div.sourceCode span { color: #1a0a2e; }
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
 div.sourceCode .co { color: #7a6a8a !important; }
 div.sourceCode .fu { color: #7b2fbe !important; }
 div.sourceCode .st { color: #b5440e !important; }

@@ -31,7 +31,11 @@ a { color: #7b2fbe !important; }
 a:hover { color: #ff5ea8 !important; }
 p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
 div.sourceCode, pre.sourceCode { background: #f5f0f7 !important; border: 1px solid #c8b8d8 !important; }
-div.sourceCode code { color: #1a0a2e !important; }
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
 div.sourceCode .co { color: #7a6a8a !important; }
 div.sourceCode .fu { color: #7b2fbe !important; }
 div.sourceCode .st { color: #b5440e !important; }

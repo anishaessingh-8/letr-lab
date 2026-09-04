@@ -92,9 +92,19 @@ pre:not(.sourceCode) {
   color: #2a1a3a !important;
   border-left-color: #a89df5 !important;
 }
-/* Tables */
-table { color: #1a1320 !important; }
-thead { background: #f0eaf7 !important; }
+/* Override Bootstrap dark theme table variables */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: #1a1320;
+  --bs-table-striped-color: #1a1320;
+  --bs-table-active-color: #1a1320;
+  --bs-table-hover-color: #1a1320;
+  --bs-table-border-color: #d8cee3;
+}
+table { color: #1a1320 !important; background: transparent !important; }
+tbody, tbody tr, tbody td, tbody th { background-color: transparent !important; color: #1a1320 !important; }
+thead, thead tr, thead th { background: #f0eaf7 !important; color: #2a1a3a !important; }
+td, th { color: #1a1320 !important; }
 /* Callouts */
 .callout { background: #f5f0f7 !important; border-radius: 6px; }
 .callout-note { background: rgba(0,140,200,0.08) !important; border-left-color: #1a9fd4 !important; }

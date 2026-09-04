@@ -1,0 +1,444 @@
+---
+title: "Z-Scores, Confidence Intervals, and the Z-Test"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+---
+
+```{=html}
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+div.sourceCode .co { color: #7a6a8a !important; }
+div.sourceCode .fu { color: #7b2fbe !important; }
+div.sourceCode .st { color: #b5440e !important; }
+div.sourceCode .dv { color: #0057ae !important; }
+div.sourceCode .ot { color: #b5440e !important; }
+div.sourceCode .kw { color: #7b2fbe !important; }
+div.sourceCode .va { color: #1a0a2e !important; }
+div.sourceCode .sc { color: #b5440e !important; }
+pre:not(.sourceCode) {
+  background: #ede8f2 !important;
+  color: #2a1a3a !important;
+  border-left: 3px solid #a89df5 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre:not(.sourceCode) code { background: transparent !important; color: inherit !important; }
+table { color: #1a1320 !important; }
+thead { background: #f0eaf7 !important; }
+.callout { background: #f5f0f7 !important; border-radius: 6px; }
+.callout-note { background: rgba(0,140,200,0.08) !important; border-left-color: #1a9fd4 !important; }
+.callout-note .callout-title, .callout-note p { color: #0a3a50 !important; }
+.callout-tip { background: rgba(0,150,80,0.08) !important; border-left-color: #009650 !important; }
+.callout-tip .callout-title, .callout-tip p { color: #00401f !important; }
+.callout-warning { background: rgba(180,100,0,0.08) !important; border-left-color: #b46400 !important; }
+.callout-warning .callout-title, .callout-warning p { color: #5a2f00 !important; }
+</style>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">Z-Scores, Confidence Intervals, and the Z-Test</h1>
+    <p class="page-header-subtitle">Standardizing scores, finding areas under the normal curve, constructing confidence intervals, and writing your first R function.</p>
+  </div>
+</div>
+```
+
+## The airquality Dataset
+
+We will use R's built-in `airquality` dataset throughout this script. It contains daily air quality measurements recorded in New York from May to September 1973.
+
+```r
+# Preview the first 6 rows
+head(airquality)
+```
+```
+  Ozone Solar.R Wind Temp Month Day
+1    41     190  7.4   67     5   1
+2    36     118  8.0   72     5   2
+3    12     149 12.6   74     5   3
+4    18     313 11.5   62     5   4
+5    NA      NA 14.3   56     5   5
+6    28      NA 14.9   66     5   6
+```
+
+```r
+# Variable names
+names(airquality)
+```
+```
+[1] "Ozone"   "Solar.R" "Wind"    "Temp"    "Month"   "Day"
+```
+
+```r
+# Quick summary of all variables
+summary(airquality)
+```
+
+Notice that `Ozone` and `Solar.R` contain `NA` values — this is missing data. R will return `NA` for any calculation that includes missing values unless you tell it to skip them.
+
+```r
+mean(airquality$Ozone)           # returns NA because of missing values
+mean(airquality$Ozone, na.rm = TRUE)   # na.rm = TRUE removes NAs before computing
+```
+```
+[1] NA
+[1] 42.12931
+```
+
+::: {.callout-tip}
+## na.rm = TRUE
+
+Most base R summary functions (`mean()`, `sd()`, `median()`) accept `na.rm = TRUE`. Make it a habit when working with real data — missing values are the rule, not the exception.
+:::
+
+---
+
+## Calculating Z-Scores
+
+A **z-score** tells you how many standard deviations a value falls above or below the mean. The formula is:
+
+$$z = \frac{x - \bar{x}}{s}$$
+
+where $x$ is the individual value, $\bar{x}$ is the sample mean, and $s$ is the sample standard deviation.
+
+Let's compute the z-score for the Ozone reading in the first row of `airquality` (41 ppb).
+
+```r
+ozone_value <- airquality$Ozone[1]        # select the first row
+ozone_mean  <- mean(airquality$Ozone, na.rm = TRUE)
+ozone_sd    <- sd(airquality$Ozone,   na.rm = TRUE)
+
+z_score <- (ozone_value - ozone_mean) / ozone_sd
+z_score
+```
+```
+[1] -0.07072
+```
+
+The first ozone reading is 0.07 standard deviations below the mean — close to average.
+
+::: {.callout-note}
+## Interpreting a z-score
+
+| z-score | Interpretation |
+|---------|---------------|
+| 0 | Exactly at the mean |
+| +1 | One SD above the mean (~84th percentile) |
+| −1 | One SD below the mean (~16th percentile) |
+| +2 / −2 | Two SDs from the mean — unusual (~5% of values fall this far or farther) |
+| > ±3 | Rare — flagged as a potential outlier |
+:::
+
+---
+
+## Automating Z-Scores with `scale()`
+
+Writing the formula by hand works for a single value, but `scale()` standardizes an entire column at once.
+
+```r
+ozone_z <- scale(airquality$Ozone)
+head(ozone_z)
+```
+```
+           [,1]
+[1,] -0.0707239
+[2,] -0.2768852
+[3,] -0.9950871
+[4,] -0.7203155
+[5,]          NA
+[6,] -0.5143441
+```
+
+`scale()` returns the same z-score as the manual calculation for the first row. Rows with `NA` in the original column remain `NA` in the output.
+
+::: {.callout-tip}
+## Verify for yourself
+
+Compare the first value in `ozone_z` with the `z_score` you computed manually — they should match. This is a good habit: always verify that a convenience function gives the same result as your hand calculation before trusting it.
+:::
+
+---
+
+## Area Under the Normal Curve
+
+Once you have a z-score, you can find the probability of observing a value at least that extreme using `pnorm()`.
+
+`pnorm(q, mean, sd)` returns the **cumulative probability** — the area under the normal curve to the **left** of the value `q`.
+
+```r
+# Probability of a score LESS than 350
+# in a distribution with mean = 300, sd = 25
+pnorm(350, 300, 25)
+```
+```
+[1] 0.9772499
+```
+
+About 97.7% of scores fall below 350.
+
+```r
+# Probability of a score GREATER than 350
+# lower.tail = FALSE flips to the right-hand tail
+pnorm(350, 300, 25, lower.tail = FALSE)
+```
+```
+[1] 0.02274987
+```
+
+About 2.3% of scores exceed 350.
+
+::: {.callout-note}
+## lower.tail = FALSE
+
+By default, `pnorm()` gives you the left-tail area (P(X ≤ q)). Setting `lower.tail = FALSE` gives you the right-tail area (P(X > q)). These two always sum to 1.
+
+Use `lower.tail = FALSE` when your research question asks *"how likely is a score this high or higher?"*
+:::
+
+---
+
+## Confidence Intervals
+
+A **confidence interval (CI)** gives a plausible range of values for the true population mean, based on sample data. A 95% CI, for example, means: if we repeated this study many times, 95% of the intervals we construct would contain the true population mean.
+
+The formula for a z-based CI is:
+
+$$\bar{x} \pm z^* \cdot \frac{s}{\sqrt{n}}$$
+
+where $z^*$ is the critical value (from the standard normal distribution) corresponding to the desired confidence level.
+
+We will use data from a satisfaction with life study: $\bar{x} = 27$, $s = 6.43$, $n = 176$.
+
+```r
+mean.life <- 27
+sd.life   <- 6.43
+n         <- 176
+```
+
+::: {.callout-note}
+## Why divide alpha by 2?
+
+For a 95% CI, we want to capture the middle 95% of the distribution, leaving 5% in the tails. Because the normal distribution is symmetric, we split that 5% equally: 2.5% in each tail. So we find the z-score that cuts off the top 2.5% — that is, `qnorm(0.025, lower.tail = FALSE)`, which equals 1.96.
+
+In general: **alpha = 1 − confidence level**, and we use **alpha / 2** for each tail.
+:::
+
+### 80% Confidence Interval
+
+Alpha = 1 − .80 = .20 → alpha/2 = .10
+
+```r
+error80 <- qnorm(0.10, lower.tail = FALSE) * sd.life / sqrt(n)
+
+lower80 <- mean.life - error80
+upper80 <- mean.life + error80
+
+lower80
+upper80
+```
+```
+[1] 26.37434
+[1] 27.62566
+```
+
+### 90% Confidence Interval
+
+Alpha = 1 − .90 = .10 → alpha/2 = .05
+
+```r
+error90 <- qnorm(0.05, lower.tail = FALSE) * sd.life / sqrt(n)
+
+lower90 <- mean.life - error90
+upper90 <- mean.life + error90
+
+lower90
+upper90
+```
+```
+[1] 26.20331
+[1] 27.79669
+```
+
+### 95% Confidence Interval
+
+Alpha = 1 − .95 = .05 → alpha/2 = .025
+
+```r
+error95 <- qnorm(0.025, lower.tail = FALSE) * sd.life / sqrt(n)
+
+lower95 <- mean.life - error95
+upper95 <- mean.life + error95
+
+lower95
+upper95
+```
+```
+[1] 26.05122
+[1] 27.94878
+```
+
+### 99% Confidence Interval
+
+Alpha = 1 − .99 = .01 → alpha/2 = .005
+
+```r
+error99 <- qnorm(0.005, lower.tail = FALSE) * sd.life / sqrt(n)
+
+lower99 <- mean.life - error99
+upper99 <- mean.life + error99
+
+lower99
+upper99
+```
+```
+[1] 25.75208
+[1] 28.24792
+```
+
+::: {.callout-tip}
+## What changes as confidence increases?
+
+Notice that wider confidence levels produce wider intervals: the 99% CI is noticeably wider than the 80% CI. There is a trade-off — more confidence requires a wider net. A very wide interval is statistically safe but not very informative. In practice, 95% is the standard in psychology.
+:::
+
+---
+
+## The Z-Test: Writing Your First R Function
+
+A **z-test** asks: given our sample mean, is the population mean plausibly equal to some hypothesized value $\mu_0$? The test statistic is:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
+
+where $\sigma$ is the **known** population standard deviation (unlike the t-test, which estimates $\sigma$ from the sample).
+
+R does not have a built-in z-test function, so we will write one. This is a good introduction to how functions work in R.
+
+```r
+z.test <- function(x, mu, popdev) {
+
+  # Step 1: Calculate the z-score and round to 3 decimal places
+  z.score <- round((mean(x) - mu) / (popdev / sqrt(length(x))), 3)
+
+  # Step 2: Find the one-tailed probability
+  # pnorm(abs(z.score), lower.tail = FALSE) gives the area in the upper tail
+  one.tail.p <- round(pnorm(abs(z.score), lower.tail = FALSE), 3)
+
+  # Step 3: Print the results
+  cat("z =", z.score, "\n",
+      "one-tailed probability =", one.tail.p, "\n",
+      "two-tailed probability =", 2 * one.tail.p)
+}
+```
+
+The function takes three arguments:
+
+| Argument | Meaning |
+|----------|---------|
+| `x` | A vector of sample scores |
+| `mu` | The hypothesized population mean (H₀) |
+| `popdev` | The known population standard deviation |
+
+Now let's test the function using a phonics study dataset. We have 10 scores and want to test whether the population mean could be 72, given a known population SD of 8.
+
+```r
+phonics.data <- c(75.12, 73.82, 74.65, 75.33, 75.01,
+                  74.27, 74.91, 74.63, 73.94, 75.08)
+
+z.test(phonics.data, mu = 72, popdev = 8)
+```
+```
+z = 2.949
+ one-tailed probability = 0.002
+ two-tailed probability = 0.003
+```
+
+::: {.callout-note}
+## Interpreting the output
+
+The sample mean is about 74.68. The z-score of 2.949 tells us the sample mean is nearly 3 standard errors above the hypothesized mean of 72. The two-tailed p-value of .003 is well below the conventional alpha of .05, so we would reject H₀ and conclude that the population mean is significantly different from 72.
+
+The function uses `abs(z.score)` when computing the probability so that the one-tailed result is always the upper-tail area — this works correctly regardless of whether the z-score is positive or negative.
+:::
+
+---
+
+## Practice
+
+Work through these exercises using the `airquality` dataset.
+
+**1.** Compute the mean and standard deviation of `Solar.R`.
+
+**2.** Calculate the z-score for the **first row** of `Solar.R` manually using the formula $z = (x - \bar{x}) / s$. Remember to use `na.rm = TRUE` when computing the mean and SD.
+
+**3.** Use `scale()` to standardize the entire `Solar.R` column. Confirm that the first value matches your manual calculation from Exercise 2.
+
+**4.** Suppose solar radiation follows a normal distribution with mean = 186 and SD = 90. Use `pnorm()` to find:
+   - The probability of a reading **below** 100
+   - The probability of a reading **above** 300
+
+**5.** Suppose a study measured wind speed in a different city and found $\bar{x} = 10.2$ mph, with a known population SD of 3.5 mph and $n = 50$. Test whether the true population mean differs from 9.5 mph using your `z.test()` function. Interpret the result.

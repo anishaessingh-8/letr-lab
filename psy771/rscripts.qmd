@@ -38,6 +38,16 @@ title: "PSY 771 — R Scripts"
   </div>
 
   <div class="pub-year-group">
+    <div class="pub-year-header">Script 3</div>
+
+    <div class="pub-item">
+      <div class="pub-title"><a href="z_scores_ci.html">Z-Scores, Confidence Intervals, and the Z-Test</a></div>
+      <div class="pub-venue">Standardizing scores with the z-score formula and <code>scale()</code>, finding areas under the normal curve with <code>pnorm()</code>, constructing 80/90/95/99% confidence intervals with <code>qnorm()</code>, and writing a custom <code>z.test()</code> function in R.</div>
+    </div>
+
+  </div>
+
+  <div class="pub-year-group">
     <div class="pub-year-header">Weekly Scripts</div>
 
     <div class="pub-item">

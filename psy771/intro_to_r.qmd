@@ -35,6 +35,10 @@ a { color: #7b2fbe !important; }
 a:hover { color: #ff5ea8 !important; }
 /* Inline code */
 p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+/* Page header keeps its dark background — restore light text */
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
 /* Override ALL Quarto dark syntax highlight variables to dark-on-light values */
 :root {
   --quarto-hl-al-color: #e53935;

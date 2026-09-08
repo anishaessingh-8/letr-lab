@@ -427,15 +427,15 @@ phonics.data <- c(75.12, 73.82, 74.65, 75.33, 75.01,
 z.test(phonics.data, mu = 72, popdev = 8)
 ```
 ```
-z = 2.949
- one-tailed probability = 0.002
- two-tailed probability = 0.003
+z = 1.058
+ one-tailed probability = 0.145
+ two-tailed probability = 0.29
 ```
 
 ::: {.callout-note}
 ## Interpreting the output
 
-The sample mean is about 74.68. The z-score of 2.949 tells us the sample mean is nearly 3 standard errors above the hypothesized mean of 72. The two-tailed p-value of .003 is well below the conventional alpha of .05, so we would reject H₀ and conclude that the population mean is significantly different from 72.
+The sample mean is 74.676. The z-score of 1.058 tells us the sample mean is about 1 standard error above the hypothesized mean of 72. The two-tailed p-value of .29 is well above the conventional alpha of .05, so we fail to reject H₀ — the data do not provide sufficient evidence that the population mean differs from 72.
 
 The function uses `abs(z.score)` when computing the probability so that the one-tailed result is always the upper-tail area — this works correctly regardless of whether the z-score is positive or negative.
 :::

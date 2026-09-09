@@ -48,11 +48,21 @@ title: "PSY 771 — R Scripts"
   </div>
 
   <div class="pub-year-group">
+    <div class="pub-year-header">Script 4</div>
+
+    <div class="pub-item">
+      <div class="pub-title"><a href="t_tests.html">All About t-Tests</a></div>
+      <div class="pub-venue">One-sample, independent samples (equal and Welch), and paired t-tests using a reading intervention dataset. Includes Levene's test for homogeneity of variance, bar graphs with error bars, and a demonstration of how the t-distribution converges to z as sample size increases.</div>
+    </div>
+
+  </div>
+
+  <div class="pub-year-group">
     <div class="pub-year-header">Weekly Scripts</div>
 
     <div class="pub-item">
       <div class="pub-title" style="color: var(--ink-400); font-style: italic; font-size: 17px;">Coming soon</div>
-      <div class="pub-venue">Scripts for t-tests, one-way ANOVA, factorial ANOVA, repeated measures ANOVA, and mixed ANOVA will be posted here as we progress through the course.</div>
+      <div class="pub-venue">Scripts for one-way ANOVA, factorial ANOVA, repeated measures ANOVA, and mixed ANOVA will be posted here as we progress through the course.</div>
     </div>
 
   </div>

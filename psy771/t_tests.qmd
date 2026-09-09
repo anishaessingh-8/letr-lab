@@ -1,0 +1,480 @@
+---
+title: "All About t-Tests"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+---
+
+```{=html}
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+/* Page header keeps its dark background */
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+div.sourceCode .co { color: #7a6a8a !important; }
+div.sourceCode .fu { color: #7b2fbe !important; }
+div.sourceCode .st { color: #b5440e !important; }
+div.sourceCode .dv { color: #0057ae !important; }
+div.sourceCode .ot { color: #b5440e !important; }
+div.sourceCode .kw { color: #7b2fbe !important; }
+div.sourceCode .va { color: #1a0a2e !important; }
+div.sourceCode .sc { color: #b5440e !important; }
+pre:not(.sourceCode) {
+  background: #ede8f2 !important;
+  color: #2a1a3a !important;
+  border-left: 3px solid #a89df5 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre:not(.sourceCode) code { background: transparent !important; color: inherit !important; }
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: #1a1320;
+  --bs-table-striped-color: #1a1320;
+  --bs-table-active-color: #1a1320;
+  --bs-table-hover-color: #1a1320;
+  --bs-table-border-color: #d8cee3;
+}
+table { color: #1a1320 !important; background: transparent !important; }
+tbody, tbody tr, tbody td, tbody th { background-color: transparent !important; color: #1a1320 !important; }
+thead, thead tr, thead th { background: #f0eaf7 !important; color: #2a1a3a !important; }
+td, th { color: #1a1320 !important; }
+.callout { background: #f5f0f7 !important; border-radius: 6px; }
+.callout-note { background: rgba(0,140,200,0.08) !important; border-left-color: #1a9fd4 !important; }
+.callout-note .callout-title, .callout-note p { color: #0a3a50 !important; }
+.callout-tip { background: rgba(0,150,80,0.08) !important; border-left-color: #009650 !important; }
+.callout-tip .callout-title, .callout-tip p { color: #00401f !important; }
+.callout-warning { background: rgba(180,100,0,0.08) !important; border-left-color: #b46400 !important; }
+.callout-warning .callout-title, .callout-warning p { color: #5a2f00 !important; }
+</style>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">All About t-Tests</h1>
+    <p class="page-header-subtitle">One-sample, independent samples, and paired t-tests — plus Levene's test, visualization, and the connection between t and z.</p>
+  </div>
+</div>
+```
+
+## Dataset
+
+This script uses a dataset of reading scores from 72 participants assigned to one of two intervention types. Download it and save it in the same folder as your R script before running any code.
+
+```{=html}
+<p>
+  <a href="scores.csv" download style="display:inline-flex; align-items:center; gap:8px; background:#f0eaf7; border:1px solid #c8b8d8; color:#7b2fbe; padding:8px 16px; border-radius:6px; font-weight:600; font-size:14px; text-decoration:none;">
+    ↓ scores.csv
+  </a>
+</p>
+<p style="font-size:14px; color:#5a4a6a; margin-top:0.5rem;">Variables: <code>scores</code> (reading score), <code>intervention</code> (1 or 2) &nbsp;·&nbsp; 72 observations, 36 per group</p>
+```
+
+---
+
+## Exploring the Data
+
+Always start by loading and inspecting the dataset before running any tests.
+
+```r
+library(readr)
+scores <- read_csv("scores.csv")
+
+head(scores)
+summary(scores)
+```
+```
+# A tibble: 6 × 2
+  scores intervention
+   <dbl>        <dbl>
+1    170            1
+2    175            1
+3    165            1
+4    180            1
+5    160            1
+6    158            1
+
+     scores       intervention
+ Min.   :152.0   Min.   :1.0
+ 1st Qu.:170.8   1st Qu.:1.0
+ Median :182.5   Median :1.5
+ Mean   :184.5   Mean   :1.5
+ 3rd Qu.:198.2   3rd Qu.:2.0
+ Max.   :228.0   Max.   :2.0
+```
+
+---
+
+## One-Sample t-Test
+
+A one-sample t-test asks whether a sample mean is significantly different from a known or hypothesized population mean ($\mu_0$). The test statistic is:
+
+$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
+
+The key difference from the z-test is that we use the **sample standard deviation** $s$ instead of a known population $\sigma$. This introduces more uncertainty, which is accounted for by the t-distribution (discussed further at the end of this script).
+
+### One-Tailed Test
+
+A **one-tailed** test has a directional alternative hypothesis: we predict the mean is either *greater than* or *less than* $\mu_0$.
+
+Is the sample mean significantly **higher** than a national average reading score of 150?
+
+```r
+## H0: mean = 150
+## H1: mean > 150  (one-tailed, upper)
+t.test(scores$scores, mu = 150, alternative = "greater")
+```
+```
+	One Sample t-test
+
+data:  scores$scores
+t = 16.41, df = 71, p-value < 2.2e-16
+alternative hypothesis: true mean is greater than 150
+95 percent confidence interval:
+ 180.9963      Inf
+sample estimates:
+mean of x
+    184.5
+```
+
+The t-statistic of 16.41 is far into the upper tail, and the p-value is essentially zero. We reject H₀ and conclude that the sample mean (184.5) is significantly higher than 150.
+
+### Two-Tailed Test
+
+A **two-tailed** test has a non-directional alternative: we only predict that the mean is *different* from $\mu_0$.
+
+```r
+## H0: mean = 150
+## H1: mean ≠ 150  (two-tailed)
+t.test(scores$scores, mu = 150, alternative = "two.sided")
+```
+```
+	One Sample t-test
+
+data:  scores$scores
+t = 16.41, df = 71, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 150
+95 percent confidence interval:
+ 180.3081 188.6919
+sample estimates:
+mean of x
+    184.5
+```
+
+The t-statistic is the same (16.41) — only the CI and p-value calculation differ. The 95% CI [180.31, 188.69] does not include 150, confirming the result.
+
+::: {.callout-note}
+## One-tailed vs. two-tailed: which to use?
+
+Use a **two-tailed** test unless you have a strong, pre-registered directional prediction. Two-tailed tests are more conservative and are the default in most psychological research. Switching to one-tailed after seeing your data inflates Type I error.
+:::
+
+---
+
+## Two-Sample t-Test (Independent Samples)
+
+A two-sample independent t-test compares the means of two separate, unrelated groups. We look at the **sampling distribution of the difference between means**.
+
+There are two versions depending on whether we assume the two groups have equal population variances.
+
+### Equal Variances Assumed
+
+```r
+## H0: mean(group 1) = mean(group 2)
+## H1: means are not equal
+t.test(scores$scores ~ scores$intervention, var.equal = TRUE)
+```
+```
+	Two Sample t-test
+
+data:  scores$scores by scores$intervention
+t = 4.5757, df = 70, p-value = 2e-05
+alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+95 percent confidence interval:
+  9.590143 24.409857
+sample estimates:
+mean in group 1 mean in group 2
+            193             176
+```
+
+### Unequal Variances (Welch's t-Test)
+
+```r
+## Welch correction: does not assume equal variances
+t.test(scores$scores ~ scores$intervention, var.equal = FALSE)
+```
+```
+	Welch Two Sample t-test
+
+data:  scores$scores by scores$intervention
+t = 4.5757, df = 66.636, p-value = 2.125e-05
+alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+95 percent confidence interval:
+  9.58356 24.41644
+sample estimates:
+mean in group 1 mean in group 2
+            193             176
+```
+
+::: {.callout-note}
+## Equal vs. unequal variances: Welch's correction
+
+When variances are unequal, the Welch version adjusts the degrees of freedom downward (here, from 70 to 66.636) to compensate for the additional uncertainty. The t-statistic stays the same, but the p-value changes slightly.
+
+**In practice:** Welch's t-test (`var.equal = FALSE`) is recommended as the default. It performs just as well as the equal-variance test when variances *are* equal, and it is more accurate when they are not. Always run Levene's test first (see below) to check the assumption.
+:::
+
+---
+
+## Paired Samples t-Test
+
+A **paired t-test** is used when the same participants (or matched pairs) provide scores under two conditions. Instead of comparing two independent groups, we compute the **difference score** for each participant and test whether the mean difference is zero.
+
+The formula is the same as the one-sample t-test, applied to the difference scores:
+
+$$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
+
+Here we use data from the mindfulness stress study on the slides. Stress was measured **before** and **after** one month of mindfulness practice for 10 participants.
+
+```r
+before <- c(195, 198, 201, 187, 205, 155, 187, 190, 234, 187)
+after  <- c(194, 190, 200, 200, 152, 185, 190, 220, 180, 180)
+
+## H0: mean difference = 0
+## H1: stress is higher before than after (one-tailed: before > after)
+t.test(before, after, alternative = "greater", paired = TRUE)
+```
+```
+	Paired t-test
+
+data:  before and after
+t = 0.52277, df = 9, p-value = 0.3069
+alternative hypothesis: true mean difference is greater than 0
+95 percent confidence interval:
+ -12.0314      Inf
+sample estimates:
+mean difference
+            4.8
+```
+
+The mean stress score dropped by 4.8 points on average, but this difference is not statistically significant (t = 0.52, p = .31). With only 10 participants and substantial variability in stress change across individuals, we do not have enough evidence to conclude that mindfulness reduced stress.
+
+---
+
+## Levene's Test: Can We Assume Equal Variances?
+
+Before choosing between the equal-variance and Welch versions of the independent t-test, check whether the two groups have similar variance using **Levene's test**.
+
+- **H₀:** The variances are equal (homogeneity of variance holds)
+- **H₁:** The variances are not equal
+
+A significant result means the equal-variance assumption is violated — use Welch's t-test.
+
+```r
+## Install lawstat once if you haven't already:
+## install.packages("lawstat")
+library(lawstat)
+
+levene.test(scores$scores, group = scores$intervention)
+```
+
+::: {.callout-tip}
+## Reading the Levene output
+
+Look at the **p-value**. If p > .05, you fail to reject H₀ and may proceed with the equal-variance t-test. If p < .05, variances differ significantly — use Welch's (`var.equal = FALSE`).
+
+For this dataset, the group SDs are 17.44 (Intervention 1) and 13.88 (Intervention 2). The groups have similar spreads, so we would expect the Levene test to be non-significant.
+:::
+
+---
+
+## Visualizing the Results
+
+### Box Plot
+
+A box plot shows the median, interquartile range, and any outliers for each group.
+
+```r
+with(scores, boxplot(scores ~ intervention,
+                     xlab = "Intervention Type",
+                     ylab = "Reading Scores",
+                     main = "Reading Scores by Intervention"))
+```
+
+### Bar Graph with Error Bars
+
+Bar graphs with error bars (showing ± 1 standard error) are standard for reporting group means in psychology.
+
+```r
+## First, compute the descriptive statistics needed for the plot
+aggregate(scores$scores, list(scores$intervention), FUN = mean)
+aggregate(scores$scores, list(scores$intervention), FUN = sd)
+table(scores$intervention)
+```
+```
+  Group.1   x
+1       1 193
+2       2 176
+
+  Group.1        x
+1       1 17.44379
+2       2 13.87907
+
+ 1  2
+36 36
+```
+
+```r
+## SE = SD / sqrt(n)
+17.44379 / sqrt(36)   # SE for Intervention 1
+13.87907 / sqrt(36)   # SE for Intervention 2
+```
+```
+[1] 2.907298
+[1] 2.313178
+```
+
+```r
+## Build the bar graph
+library(ggplot2)
+
+intervention.names <- c("Intervention 1", "Intervention 2")
+mean.scores        <- c(193, 176)
+se.scores          <- c(2.907298, 2.313178)
+scores.dataframe   <- data.frame(intervention.names, mean.scores, se.scores)
+
+ggplot(scores.dataframe, aes(x = intervention.names, y = mean.scores)) +
+  geom_bar(stat = "identity", width = 0.4, color = "black", fill = "white") +
+  geom_errorbar(aes(ymin = mean.scores - se.scores,
+                    ymax = mean.scores + se.scores),
+                width = 0.1) +
+  labs(x = "Intervention Type", y = "Reading Scores")
+```
+
+::: {.callout-tip}
+## Reading error bars
+
+Each error bar extends **±1 standard error** above and below the bar. When error bars from two groups do not overlap, this is a visual signal (though not a formal test) that the group means may differ significantly.
+:::
+
+---
+
+## t-Critical Values and the Link to z
+
+Use `qt()` to find the t-critical value for any combination of alpha and degrees of freedom — the value your t-statistic must exceed to reach significance.
+
+```r
+## qt(p, df, lower.tail = FALSE)
+## p = alpha/2 for a two-tailed test (0.025 at alpha = .05)
+## df = degrees of freedom
+
+qt(0.025,    5, lower.tail = FALSE)
+qt(0.025,   10, lower.tail = FALSE)
+qt(0.025,   25, lower.tail = FALSE)
+qt(0.025,   30, lower.tail = FALSE)
+qt(0.025,  100, lower.tail = FALSE)
+qt(0.025, 1000, lower.tail = FALSE)
+```
+```
+[1] 2.570582
+[1] 2.228139
+[1] 2.059539
+[1] 2.042272
+[1] 1.983972
+[1] 1.962339
+```
+
+::: {.callout-note}
+## As df increases, t approaches z
+
+Notice the pattern: as degrees of freedom grow, the t-critical value falls toward **1.96** — the familiar z-critical value for a two-tailed test at α = .05.
+
+| df | t-critical (α = .05, two-tailed) |
+|----|----------------------------------|
+| 5 | 2.571 |
+| 10 | 2.228 |
+| 25 | 2.060 |
+| 30 | 2.042 |
+| 100 | 1.984 |
+| 1000 | 1.962 |
+| ∞ (z) | **1.960** |
+
+This is not a coincidence. The t-distribution has heavier tails than the normal distribution to account for the extra uncertainty introduced by *estimating* the population SD from a small sample. As n (and therefore df) increases, that estimate becomes more precise and the t-distribution gradually narrows until it is indistinguishable from z.
+
+You can verify this with `qnorm()`:
+:::
+
+```r
+## The z-critical value (equivalent to t with infinite df)
+qnorm(0.025, lower.tail = FALSE)
+```
+```
+[1] 1.959964
+```
+
+With 1000 degrees of freedom the t-critical value (1.962) is already within 0.002 of the z-critical value (1.960). By the time you have a few hundred participants, the practical difference between a t-test and a z-test is negligible — the reason we use t is that for small samples, those extra decimal points matter.

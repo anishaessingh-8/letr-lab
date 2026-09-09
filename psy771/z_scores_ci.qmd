@@ -192,10 +192,10 @@ z_score <- (ozone_value - ozone_mean) / ozone_sd
 z_score
 ```
 ```
-[1] -0.07072
+[1] -0.03423409
 ```
 
-The first ozone reading is 0.07 standard deviations below the mean — close to average.
+The first ozone reading is 0.034 standard deviations below the mean — very close to average.
 
 ::: {.callout-note}
 ## Interpreting a z-score
@@ -220,13 +220,13 @@ ozone_z <- scale(airquality$Ozone)
 head(ozone_z)
 ```
 ```
-           [,1]
-[1,] -0.0707239
-[2,] -0.2768852
-[3,] -0.9950871
-[4,] -0.7203155
+            [,1]
+[1,] -0.03423409
+[2,] -0.18580489
+[3,] -0.91334473
+[4,] -0.73145977
 [5,]          NA
-[6,] -0.5143441
+[6,] -0.42831817
 ```
 
 `scale()` returns the same z-score as the manual calculation for the first row. Rows with `NA` in the original column remain `NA` in the output.
@@ -262,7 +262,7 @@ About 97.7% of scores fall below 350.
 pnorm(350, 300, 25, lower.tail = FALSE)
 ```
 ```
-[1] 0.02274987
+[1] 0.02275013
 ```
 
 About 2.3% of scores exceed 350.
@@ -317,8 +317,8 @@ lower80
 upper80
 ```
 ```
-[1] 26.37434
-[1] 27.62566
+[1] 26.37886
+[1] 27.62114
 ```
 
 ### 90% Confidence Interval
@@ -335,8 +335,8 @@ lower90
 upper90
 ```
 ```
-[1] 26.20331
-[1] 27.79669
+[1] 26.20277
+[1] 27.79723
 ```
 
 ### 95% Confidence Interval
@@ -353,8 +353,8 @@ lower95
 upper95
 ```
 ```
-[1] 26.05122
-[1] 27.94878
+[1] 26.05005
+[1] 27.94995
 ```
 
 ### 99% Confidence Interval
@@ -371,8 +371,8 @@ lower99
 upper99
 ```
 ```
-[1] 25.75208
-[1] 28.24792
+[1] 25.75155
+[1] 28.24845
 ```
 
 ::: {.callout-tip}

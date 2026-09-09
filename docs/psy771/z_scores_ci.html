@@ -387,8 +387,8 @@ td, th { color: #1a1320 !important; }
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>z_score <span class="ot">&lt;-</span> (ozone_value <span class="sc">-</span> ozone_mean) <span class="sc">/</span> ozone_sd</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>z_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] -0.07072</code></pre>
-<p>The first ozone reading is 0.07 standard deviations below the mean — close to average.</p>
+<pre><code>[1] -0.03423409</code></pre>
+<p>The first ozone reading is 0.034 standard deviations below the mean — very close to average.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -442,13 +442,13 @@ td, th { color: #1a1320 !important; }
 <p>Writing the formula by hand works for a single value, but <code>scale()</code> standardizes an entire column at once.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ozone_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(airquality<span class="sc">$</span>Ozone)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ozone_z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>           [,1]
-[1,] -0.0707239
-[2,] -0.2768852
-[3,] -0.9950871
-[4,] -0.7203155
+<pre><code>            [,1]
+[1,] -0.03423409
+[2,] -0.18580489
+[3,] -0.91334473
+[4,] -0.73145977
 [5,]          NA
-[6,] -0.5143441</code></pre>
+[6,] -0.42831817</code></pre>
 <p><code>scale()</code> returns the same z-score as the manual calculation for the first row. Rows with <code>NA</code> in the original column remain <code>NA</code> in the output.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -477,7 +477,7 @@ td, th { color: #1a1320 !important; }
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of a score GREATER than 350</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lower.tail = FALSE flips to the right-hand tail</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">350</span>, <span class="dv">300</span>, <span class="dv">25</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 0.02274987</code></pre>
+<pre><code>[1] 0.02275013</code></pre>
 <p>About 2.3% of scores exceed 350.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -529,8 +529,8 @@ td, th { color: #1a1320 !important; }
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>lower80</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>upper80</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 26.37434
-[1] 27.62566</code></pre>
+<pre><code>[1] 26.37886
+[1] 27.62114</code></pre>
 </section>
 <section id="confidence-interval-1" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-interval-1">90% Confidence Interval</h3>
@@ -542,8 +542,8 @@ td, th { color: #1a1320 !important; }
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>lower90</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>upper90</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 26.20331
-[1] 27.79669</code></pre>
+<pre><code>[1] 26.20277
+[1] 27.79723</code></pre>
 </section>
 <section id="confidence-interval-2" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-interval-2">95% Confidence Interval</h3>
@@ -555,8 +555,8 @@ td, th { color: #1a1320 !important; }
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>lower95</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>upper95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 26.05122
-[1] 27.94878</code></pre>
+<pre><code>[1] 26.05005
+[1] 27.94995</code></pre>
 </section>
 <section id="confidence-interval-3" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-interval-3">99% Confidence Interval</h3>
@@ -568,8 +568,8 @@ td, th { color: #1a1320 !important; }
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>lower99</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>upper99</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 25.75208
-[1] 28.24792</code></pre>
+<pre><code>[1] 25.75155
+[1] 28.24845</code></pre>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

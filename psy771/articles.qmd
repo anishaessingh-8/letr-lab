@@ -13,9 +13,9 @@ title: "PSY 771 — Research Article Examples"
 
 <div class="page-content">
 
-  <!-- Independent Samples t-test -->
+  <!-- Paired Samples t-test -->
   <div class="pub-year-group">
-    <div class="pub-year-header">Independent Samples t-test</div>
+    <div class="pub-year-header">Paired Samples t-test</div>
 
     <div class="pub-item">
       <div class="pub-authors">Zhang, T., Kim, T., Brooks, A. W., Gino, F., &amp; Norton, M. I. (2014).</div>
@@ -26,22 +26,15 @@ title: "PSY 771 — Research Article Examples"
 
   </div>
 
-  <!-- Paired Samples t-test -->
+  <!-- One-Sample t-test, Independent Samples t-test, and Regression -->
   <div class="pub-year-group">
-    <div class="pub-year-header">Paired Samples t-test</div>
+    <div class="pub-year-header">One-Sample t-test, Independent Samples t-test (Satterthwaite), and Regression</div>
 
     <div class="pub-item">
       <div class="pub-authors">Mehr, S. A., Song, L. A., &amp; Spelke, E. S. (2016).</div>
       <div class="pub-title"><a href="https://doi.org/10.1177/0956797615626691" target="_blank">For 5-month-old infants, melodies are social.</a></div>
       <div class="pub-venue"><em>Psychological Science, 27</em>(4), 486–501.</div>
       <div class="pub-tags"><a href="readings/MehrSongSpelke2016_melodies.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-authors">Störmer, V. S., &amp; Alvarez, G. A. (2016).</div>
-      <div class="pub-title">Attention alters perceived attractiveness.</div>
-      <div class="pub-venue"><em>Psychological Science.</em></div>
-      <div class="pub-tags"><a href="readings/StormerAlvarez2016_attractiveness.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
 
   </div>
@@ -57,18 +50,18 @@ title: "PSY 771 — Research Article Examples"
       <div class="pub-tags"><a href="readings/LoftusPalmer1974_automobile.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
 
+  </div>
+
+  <!-- Factorial ANOVA -->
+  <div class="pub-year-group">
+    <div class="pub-year-header">Factorial ANOVA</div>
+
     <div class="pub-item">
       <div class="pub-authors">Johns, M., Schmader, T., &amp; Martens, A. (2005).</div>
       <div class="pub-title"><a href="https://doi.org/10.1111/j.0956-7976.2005.00799.x" target="_blank">Knowing is half the battle: Teaching stereotype threat as a means of improving women's math performance.</a></div>
       <div class="pub-venue"><em>Psychological Science, 16</em>(3), 175–179.</div>
       <div class="pub-tags"><a href="readings/JohnsSchmaderMartens2005_stereotype.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
-
-  </div>
-
-  <!-- Factorial ANOVA -->
-  <div class="pub-year-group">
-    <div class="pub-year-header">Factorial ANOVA</div>
 
     <div class="pub-item">
       <div class="pub-authors">Maglio, S. J., &amp; Polman, E. (2014).</div>
@@ -77,11 +70,25 @@ title: "PSY 771 — Research Article Examples"
       <div class="pub-tags"><a href="readings/MaglioPolman2014_spatialdistance.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
 
+    <div class="pub-item">
+      <div class="pub-authors">Sidney, P. G., Hattikudur, S., &amp; Alibali, M. W. (2015).</div>
+      <div class="pub-title">How do contrasting cases and self-explanation promote learning? Evidence from fraction division.</div>
+      <div class="pub-venue"><em>Learning and Instruction, 40</em>, 29–38.</div>
+      <div class="pub-tags"><a href="readings/SidneyHattikudurAlibali2015_fractions.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
+    </div>
+
   </div>
 
   <!-- Repeated Measures ANOVA -->
   <div class="pub-year-group">
     <div class="pub-year-header">Repeated Measures ANOVA</div>
+
+    <div class="pub-item">
+      <div class="pub-authors">Störmer, V. S., &amp; Alvarez, G. A. (2016).</div>
+      <div class="pub-title">Attention alters perceived attractiveness.</div>
+      <div class="pub-venue"><em>Psychological Science, 27</em>(4), 563–571.</div>
+      <div class="pub-tags"><a href="readings/StormerAlvarez2016_attractiveness.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
+    </div>
 
     <div class="pub-item">
       <div class="pub-authors">Chen, T., et al. (2016).</div>
@@ -101,13 +108,6 @@ title: "PSY 771 — Research Article Examples"
       <div class="pub-title">Test-enhanced learning: Taking memory tests improves long-term retention.</div>
       <div class="pub-venue"><em>Psychological Science, 17</em>(3), 249–255.</div>
       <div class="pub-tags"><a href="readings/RoedigerKarpicke2006_testenhanced.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-authors">Sidney, P. G., Hattikudur, S., &amp; Alibali, M. W. (2015).</div>
-      <div class="pub-title">How do contrasting cases and self-explanation promote learning? Evidence from fraction division.</div>
-      <div class="pub-venue"><em>Learning and Instruction, 40</em>, 29–38.</div>
-      <div class="pub-tags"><a href="readings/SidneyHattikudurAlibali2015_fractions.pdf" class="pub-tag" target="_blank">↓ PDF</a></div>
     </div>
 
   </div>

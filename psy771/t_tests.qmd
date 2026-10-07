@@ -168,6 +168,66 @@ summary(scores)
  Max.   :228.0   Max.   :2.0
 ```
 
+`describeBy()` from the `psych` package gives a richer breakdown by group in one step:
+
+```r
+library(psych)
+describeBy(scores$scores, group = scores$intervention)
+```
+```
+ Descriptive statistics by group
+group: 1
+   vars  n mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 36  193 17.44    194  193.13 16.31 158 228    70 -0.11    -0.63 2.91
+------------------------------------------------------------
+group: 2
+   vars  n mean    sd median trimmed   mad min max range skew kurtosis   se
+X1    1 36  176 13.88  174.5  175.47 14.83 152 205    53 0.35    -0.76 2.31
+```
+
+Intervention 1 has a higher mean (193 vs 176) and slightly more spread (SD 17.44 vs 13.88). Both groups look roughly symmetric (skew near zero), which is a good sign for normality.
+
+---
+
+## Checking Assumptions
+
+Before running a t-test, check two key assumptions: **normality** of the data within each group, and **homogeneity of variance** (equal spreads) between groups.
+
+### Shapiro-Wilk Test of Normality
+
+The Shapiro-Wilk test assesses whether a variable is plausibly drawn from a normal distribution.
+
+- **H₀:** The data are normally distributed
+- **H₁:** The data are not normally distributed
+
+A non-significant result (p > .05) means we fail to reject normality — the data are consistent with a normal distribution. Subset by group before testing:
+
+```r
+## Test normality within each group
+shapiro.test(scores$scores[scores$intervention == 1])
+shapiro.test(scores$scores[scores$intervention == 2])
+```
+```
+	Shapiro-Wilk normality test
+
+data:  scores$scores[scores$intervention == 1]
+W = 0.98198, p-value = 0.8101
+
+
+	Shapiro-Wilk normality test
+
+data:  scores$scores[scores$intervention == 2]
+W = 0.9688, p-value = 0.3937
+```
+
+Both groups pass the normality test: W values close to 1 and p-values well above .05 indicate no evidence of departure from normality. We can proceed with confidence.
+
+::: {.callout-note}
+## When normality is violated
+
+If the Shapiro-Wilk test is significant (p < .05), the t-test is still reasonably robust with large samples (n ≥ 30 per group). For small samples with clear non-normality, consider a non-parametric alternative such as the Mann-Whitney U test (`wilcox.test()`).
+:::
+
 ---
 
 ## One-Sample t-Test
@@ -326,6 +386,90 @@ The mean stress score dropped by 4.8 points on average, but this difference is n
 
 ---
 
+## Effect Sizes
+
+Statistical significance tells you whether an effect is real — but not how big it is. **Effect sizes** are standardized measures that express the magnitude of a difference in units that can be compared across studies.
+
+### Cohen's d (Independent Samples)
+
+Cohen's d divides the mean difference by the pooled standard deviation:
+
+$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_\text{pooled}}$$
+
+Conventional benchmarks: small = 0.2, medium = 0.5, large = 0.8.
+
+```r
+## install.packages("effectsize")
+library(effectsize)
+
+cohens_d(scores$scores ~ scores$intervention)
+```
+```
+Cohen's d |       95% CI
+------------------------
+1.08      | [0.58, 1.57]
+
+- Estimated using pooled SD.
+```
+
+d = 1.08 is a **large effect** — the two interventions differ by more than one full standard deviation. Despite the non-significant Levene test (variances are fairly similar), the practical difference between groups is substantial.
+
+### Cohen's d (Paired Samples)
+
+For paired data, Cohen's d uses the standard deviation of the **difference scores**:
+
+$$d = \frac{\bar{d}}{s_d}$$
+
+You can also compute it manually before passing it to `cohens_d()`:
+
+```r
+before <- c(195, 198, 201, 187, 205, 155, 187, 190, 234, 187)
+after  <- c(194, 190, 200, 200, 152, 185, 190, 220, 180, 180)
+
+## Manual calculation
+m_D  <- mean(before - after)   # mean difference
+sd_D <- sd(before - after)     # SD of differences
+
+m_D                   # 4.8
+sd_D                  # 29.04
+m_D / sd_D            # Cohen's d = 0.165
+
+## Or let the package do it
+cohens_d(before, after, paired = TRUE)
+```
+```
+[1] 4.8
+[1] 29.03561
+[1] 0.1653142
+
+Cohen's d |        95% CI
+-------------------------
+0.17      | [-0.46, 0.79]
+```
+
+d = 0.17 is a **small effect** and the CI crosses zero, consistent with the non-significant t-test result.
+
+### Hedges' g (Corrected for Small Samples)
+
+For small samples (n < 20), Hedges' g applies a correction factor that shrinks Cohen's d slightly downward to reduce bias:
+
+```r
+hedges_g(before, after, paired = TRUE)
+```
+```
+Hedges' g |        95% CI
+-------------------------
+0.15      | [-0.42, 0.72]
+```
+
+::: {.callout-note}
+## Cohen's d vs. Hedges' g
+
+Both measure effect size, but Hedges' g is preferred when your sample is small (roughly n < 20). The correction is small but matters: here d = 0.17 shrinks to g = 0.15. With larger samples the two converge. When in doubt, report Hedges' g — it is the more conservative and unbiased estimate.
+:::
+
+---
+
 ## Levene's Test: Can We Assume Equal Variances?
 
 Before choosing between the equal-variance and Welch versions of the independent t-test, check whether the two groups have similar variance using **Levene's test**.
@@ -342,13 +486,20 @@ library(lawstat)
 
 levene.test(scores$scores, group = scores$intervention)
 ```
+```
+	Modified robust Brown-Forsythe Levene-type test based on the absolute
+	deviations from the median
+
+data:  scores$scores
+Test Statistic = 1.1056, p-value = 0.2966
+```
 
 ::: {.callout-tip}
 ## Reading the Levene output
 
 Look at the **p-value**. If p > .05, you fail to reject H₀ and may proceed with the equal-variance t-test. If p < .05, variances differ significantly — use Welch's (`var.equal = FALSE`).
 
-For this dataset, the group SDs are 17.44 (Intervention 1) and 13.88 (Intervention 2). The groups have similar spreads, so we would expect the Levene test to be non-significant.
+Here p = .297 — well above .05. The variances are not significantly different, so the equal-variance assumption holds. That said, Welch's t-test (`var.equal = FALSE`) is always a safe default because it performs equally well when variances *are* equal and is more accurate when they are not.
 :::
 
 ---

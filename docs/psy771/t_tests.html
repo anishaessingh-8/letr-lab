@@ -184,6 +184,10 @@ window.Quarto = {
   <ul>
   <li><a href="#dataset" id="toc-dataset" class="nav-link active" data-scroll-target="#dataset">Dataset</a></li>
   <li><a href="#exploring-the-data" id="toc-exploring-the-data" class="nav-link" data-scroll-target="#exploring-the-data">Exploring the Data</a></li>
+  <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions">Checking Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#shapiro-wilk-test-of-normality" id="toc-shapiro-wilk-test-of-normality" class="nav-link" data-scroll-target="#shapiro-wilk-test-of-normality">Shapiro-Wilk Test of Normality</a></li>
+  </ul></li>
   <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test">One-Sample t-Test</a>
   <ul class="collapse">
   <li><a href="#one-tailed-test" id="toc-one-tailed-test" class="nav-link" data-scroll-target="#one-tailed-test">One-Tailed Test</a></li>
@@ -195,6 +199,12 @@ window.Quarto = {
   <li><a href="#unequal-variances-welchs-t-test" id="toc-unequal-variances-welchs-t-test" class="nav-link" data-scroll-target="#unequal-variances-welchs-t-test">Unequal Variances (Welch’s t-Test)</a></li>
   </ul></li>
   <li><a href="#paired-samples-t-test" id="toc-paired-samples-t-test" class="nav-link" data-scroll-target="#paired-samples-t-test">Paired Samples t-Test</a></li>
+  <li><a href="#effect-sizes" id="toc-effect-sizes" class="nav-link" data-scroll-target="#effect-sizes">Effect Sizes</a>
+  <ul class="collapse">
+  <li><a href="#cohens-d-independent-samples" id="toc-cohens-d-independent-samples" class="nav-link" data-scroll-target="#cohens-d-independent-samples">Cohen’s d (Independent Samples)</a></li>
+  <li><a href="#cohens-d-paired-samples" id="toc-cohens-d-paired-samples" class="nav-link" data-scroll-target="#cohens-d-paired-samples">Cohen’s d (Paired Samples)</a></li>
+  <li><a href="#hedges-g-corrected-for-small-samples" id="toc-hedges-g-corrected-for-small-samples" class="nav-link" data-scroll-target="#hedges-g-corrected-for-small-samples">Hedges’ g (Corrected for Small Samples)</a></li>
+  </ul></li>
   <li><a href="#levenes-test-can-we-assume-equal-variances" id="toc-levenes-test-can-we-assume-equal-variances" class="nav-link" data-scroll-target="#levenes-test-can-we-assume-equal-variances">Levene’s Test: Can We Assume Equal Variances?</a></li>
   <li><a href="#visualizing-the-results" id="toc-visualizing-the-results" class="nav-link" data-scroll-target="#visualizing-the-results">Visualizing the Results</a>
   <ul class="collapse">
@@ -380,7 +390,60 @@ td, th { color: #1a1320 !important; }
  Mean   :184.5   Mean   :1.5
  3rd Qu.:198.2   3rd Qu.:2.0
  Max.   :228.0   Max.   :2.0</code></pre>
+<p><code>describeBy()</code> from the <code>psych</code> package gives a richer breakdown by group in one step:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(scores<span class="sc">$</span>scores, <span class="at">group =</span> scores<span class="sc">$</span>intervention)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code> Descriptive statistics by group
+group: 1
+   vars  n mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 36  193 17.44    194  193.13 16.31 158 228    70 -0.11    -0.63 2.91
+------------------------------------------------------------
+group: 2
+   vars  n mean    sd median trimmed   mad min max range skew kurtosis   se
+X1    1 36  176 13.88  174.5  175.47 14.83 152 205    53 0.35    -0.76 2.31</code></pre>
+<p>Intervention 1 has a higher mean (193 vs 176) and slightly more spread (SD 17.44 vs 13.88). Both groups look roughly symmetric (skew near zero), which is a good sign for normality.</p>
 <hr>
+</section>
+<section id="checking-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="checking-assumptions">Checking Assumptions</h2>
+<p>Before running a t-test, check two key assumptions: <strong>normality</strong> of the data within each group, and <strong>homogeneity of variance</strong> (equal spreads) between groups.</p>
+<section id="shapiro-wilk-test-of-normality" class="level3">
+<h3 class="anchored" data-anchor-id="shapiro-wilk-test-of-normality">Shapiro-Wilk Test of Normality</h3>
+<p>The Shapiro-Wilk test assesses whether a variable is plausibly drawn from a normal distribution.</p>
+<ul>
+<li><strong>H₀:</strong> The data are normally distributed</li>
+<li><strong>H₁:</strong> The data are not normally distributed</li>
+</ul>
+<p>A non-significant result (p &gt; .05) means we fail to reject normality — the data are consistent with a normal distribution. Subset by group before testing:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test normality within each group</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(scores<span class="sc">$</span>scores[scores<span class="sc">$</span>intervention <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(scores<span class="sc">$</span>scores[scores<span class="sc">$</span>intervention <span class="sc">==</span> <span class="dv">2</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>    Shapiro-Wilk normality test
+
+data:  scores$scores[scores$intervention == 1]
+W = 0.98198, p-value = 0.8101
+
+
+    Shapiro-Wilk normality test
+
+data:  scores$scores[scores$intervention == 2]
+W = 0.9688, p-value = 0.3937</code></pre>
+<p>Both groups pass the normality test: W values close to 1 and p-values well above .05 indicate no evidence of departure from normality. We can proceed with confidence.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>When normality is violated
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the Shapiro-Wilk test is significant (p &lt; .05), the t-test is still reasonably robust with large samples (n ≥ 30 per group). For small samples with clear non-normality, consider a non-parametric alternative such as the Mann-Whitney U test (<code>wilcox.test()</code>).</p>
+</div>
+</div>
+<hr>
+</section>
 </section>
 <section id="one-sample-t-test" class="level2">
 <h2 class="anchored" data-anchor-id="one-sample-t-test">One-Sample t-Test</h2>
@@ -391,9 +454,9 @@ td, th { color: #1a1320 !important; }
 <h3 class="anchored" data-anchor-id="one-tailed-test">One-Tailed Test</h3>
 <p>A <strong>one-tailed</strong> test has a directional alternative hypothesis: we predict the mean is either <em>greater than</em> or <em>less than</em> <span class="math inline">\(\mu_0\)</span>.</p>
 <p>Is the sample mean significantly <strong>higher</strong> than a national average reading score of 150?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean = 150</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: mean &gt; 150  (one-tailed, upper)</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores, <span class="at">mu =</span> <span class="dv">150</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean = 150</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: mean &gt; 150  (one-tailed, upper)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores, <span class="at">mu =</span> <span class="dv">150</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>    One Sample t-test
 
 data:  scores$scores
@@ -409,9 +472,9 @@ mean of x
 <section id="two-tailed-test" class="level3">
 <h3 class="anchored" data-anchor-id="two-tailed-test">Two-Tailed Test</h3>
 <p>A <strong>two-tailed</strong> test has a non-directional alternative: we only predict that the mean is <em>different</em> from <span class="math inline">\(\mu_0\)</span>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean = 150</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: mean ≠ 150  (two-tailed)</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores, <span class="at">mu =</span> <span class="dv">150</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean = 150</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: mean ≠ 150  (two-tailed)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores, <span class="at">mu =</span> <span class="dv">150</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>    One Sample t-test
 
 data:  scores$scores
@@ -445,9 +508,9 @@ mean of x
 <p>There are two versions depending on whether we assume the two groups have equal population variances.</p>
 <section id="equal-variances-assumed" class="level3">
 <h3 class="anchored" data-anchor-id="equal-variances-assumed">Equal Variances Assumed</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean(group 1) = mean(group 2)</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: means are not equal</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores <span class="sc">~</span> scores<span class="sc">$</span>intervention, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean(group 1) = mean(group 2)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: means are not equal</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores <span class="sc">~</span> scores<span class="sc">$</span>intervention, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>    Two Sample t-test
 
 data:  scores$scores by scores$intervention
@@ -461,8 +524,8 @@ mean in group 1 mean in group 2
 </section>
 <section id="unequal-variances-welchs-t-test" class="level3">
 <h3 class="anchored" data-anchor-id="unequal-variances-welchs-t-test">Unequal Variances (Welch’s t-Test)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Welch correction: does not assume equal variances</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores <span class="sc">~</span> scores<span class="sc">$</span>intervention, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Welch correction: does not assume equal variances</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(scores<span class="sc">$</span>scores <span class="sc">~</span> scores<span class="sc">$</span>intervention, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>    Welch Two Sample t-test
 
 data:  scores$scores by scores$intervention
@@ -496,12 +559,12 @@ mean in group 1 mean in group 2
 <p>The formula is the same as the one-sample t-test, applied to the difference scores:</p>
 <p><span class="math display">\[t = \frac{\bar{d}}{s_d / \sqrt{n}}\]</span></p>
 <p>Here we use data from the mindfulness stress study on the slides. Stress was measured <strong>before</strong> and <strong>after</strong> one month of mindfulness practice for 10 participants.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">195</span>, <span class="dv">198</span>, <span class="dv">201</span>, <span class="dv">187</span>, <span class="dv">205</span>, <span class="dv">155</span>, <span class="dv">187</span>, <span class="dv">190</span>, <span class="dv">234</span>, <span class="dv">187</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>after  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">194</span>, <span class="dv">190</span>, <span class="dv">200</span>, <span class="dv">200</span>, <span class="dv">152</span>, <span class="dv">185</span>, <span class="dv">190</span>, <span class="dv">220</span>, <span class="dv">180</span>, <span class="dv">180</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean difference = 0</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: stress is higher before than after (one-tailed: before &gt; after)</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(before, after, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">195</span>, <span class="dv">198</span>, <span class="dv">201</span>, <span class="dv">187</span>, <span class="dv">205</span>, <span class="dv">155</span>, <span class="dv">187</span>, <span class="dv">190</span>, <span class="dv">234</span>, <span class="dv">187</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>after  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">194</span>, <span class="dv">190</span>, <span class="dv">200</span>, <span class="dv">200</span>, <span class="dv">152</span>, <span class="dv">185</span>, <span class="dv">190</span>, <span class="dv">220</span>, <span class="dv">180</span>, <span class="dv">180</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## H0: mean difference = 0</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">## H1: stress is higher before than after (one-tailed: before &gt; after)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(before, after, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>    Paired t-test
 
 data:  before and after
@@ -515,6 +578,75 @@ mean difference
 <p>The mean stress score dropped by 4.8 points on average, but this difference is not statistically significant (t = 0.52, p = .31). With only 10 participants and substantial variability in stress change across individuals, we do not have enough evidence to conclude that mindfulness reduced stress.</p>
 <hr>
 </section>
+<section id="effect-sizes" class="level2">
+<h2 class="anchored" data-anchor-id="effect-sizes">Effect Sizes</h2>
+<p>Statistical significance tells you whether an effect is real — but not how big it is. <strong>Effect sizes</strong> are standardized measures that express the magnitude of a difference in units that can be compared across studies.</p>
+<section id="cohens-d-independent-samples" class="level3">
+<h3 class="anchored" data-anchor-id="cohens-d-independent-samples">Cohen’s d (Independent Samples)</h3>
+<p>Cohen’s d divides the mean difference by the pooled standard deviation:</p>
+<p><span class="math display">\[d = \frac{\bar{x}_1 - \bar{x}_2}{s_\text{pooled}}\]</span></p>
+<p>Conventional benchmarks: small = 0.2, medium = 0.5, large = 0.8.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages("effectsize")</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(scores<span class="sc">$</span>scores <span class="sc">~</span> scores<span class="sc">$</span>intervention)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Cohen's d |       95% CI
+------------------------
+1.08      | [0.58, 1.57]
+
+- Estimated using pooled SD.</code></pre>
+<p>d = 1.08 is a <strong>large effect</strong> — the two interventions differ by more than one full standard deviation. Despite the non-significant Levene test (variances are fairly similar), the practical difference between groups is substantial.</p>
+</section>
+<section id="cohens-d-paired-samples" class="level3">
+<h3 class="anchored" data-anchor-id="cohens-d-paired-samples">Cohen’s d (Paired Samples)</h3>
+<p>For paired data, Cohen’s d uses the standard deviation of the <strong>difference scores</strong>:</p>
+<p><span class="math display">\[d = \frac{\bar{d}}{s_d}\]</span></p>
+<p>You can also compute it manually before passing it to <code>cohens_d()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">195</span>, <span class="dv">198</span>, <span class="dv">201</span>, <span class="dv">187</span>, <span class="dv">205</span>, <span class="dv">155</span>, <span class="dv">187</span>, <span class="dv">190</span>, <span class="dv">234</span>, <span class="dv">187</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>after  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">194</span>, <span class="dv">190</span>, <span class="dv">200</span>, <span class="dv">200</span>, <span class="dv">152</span>, <span class="dv">185</span>, <span class="dv">190</span>, <span class="dv">220</span>, <span class="dv">180</span>, <span class="dv">180</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Manual calculation</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>m_D  <span class="ot">&lt;-</span> <span class="fu">mean</span>(before <span class="sc">-</span> after)   <span class="co"># mean difference</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>sd_D <span class="ot">&lt;-</span> <span class="fu">sd</span>(before <span class="sc">-</span> after)     <span class="co"># SD of differences</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>m_D                   <span class="co"># 4.8</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>sd_D                  <span class="co"># 29.04</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>m_D <span class="sc">/</span> sd_D            <span class="co"># Cohen's d = 0.165</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Or let the package do it</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(before, after, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 4.8
+[1] 29.03561
+[1] 0.1653142
+
+Cohen's d |        95% CI
+-------------------------
+0.17      | [-0.46, 0.79]</code></pre>
+<p>d = 0.17 is a <strong>small effect</strong> and the CI crosses zero, consistent with the non-significant t-test result.</p>
+</section>
+<section id="hedges-g-corrected-for-small-samples" class="level3">
+<h3 class="anchored" data-anchor-id="hedges-g-corrected-for-small-samples">Hedges’ g (Corrected for Small Samples)</h3>
+<p>For small samples (n &lt; 20), Hedges’ g applies a correction factor that shrinks Cohen’s d slightly downward to reduce bias:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hedges_g</span>(before, after, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Hedges' g |        95% CI
+-------------------------
+0.15      | [-0.42, 0.72]</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Cohen’s d vs.&nbsp;Hedges’ g
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Both measure effect size, but Hedges’ g is preferred when your sample is small (roughly n &lt; 20). The correction is small but matters: here d = 0.17 shrinks to g = 0.15. With larger samples the two converge. When in doubt, report Hedges’ g — it is the more conservative and unbiased estimate.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
 <section id="levenes-test-can-we-assume-equal-variances" class="level2">
 <h2 class="anchored" data-anchor-id="levenes-test-can-we-assume-equal-variances">Levene’s Test: Can We Assume Equal Variances?</h2>
 <p>Before choosing between the equal-variance and Welch versions of the independent t-test, check whether the two groups have similar variance using <strong>Levene’s test</strong>.</p>
@@ -523,11 +655,16 @@ mean difference
 <li><strong>H₁:</strong> The variances are not equal</li>
 </ul>
 <p>A significant result means the equal-variance assumption is violated — use Welch’s t-test.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Install lawstat once if you haven't already:</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages("lawstat")</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lawstat)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levene.test</span>(scores<span class="sc">$</span>scores, <span class="at">group =</span> scores<span class="sc">$</span>intervention)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Install lawstat once if you haven't already:</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages("lawstat")</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lawstat)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levene.test</span>(scores<span class="sc">$</span>scores, <span class="at">group =</span> scores<span class="sc">$</span>intervention)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>    Modified robust Brown-Forsythe Levene-type test based on the absolute
+    deviations from the median
+
+data:  scores$scores
+Test Statistic = 1.1056, p-value = 0.2966</code></pre>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -539,7 +676,7 @@ mean difference
 </div>
 <div class="callout-body-container callout-body">
 <p>Look at the <strong>p-value</strong>. If p &gt; .05, you fail to reject H₀ and may proceed with the equal-variance t-test. If p &lt; .05, variances differ significantly — use Welch’s (<code>var.equal = FALSE</code>).</p>
-<p>For this dataset, the group SDs are 17.44 (Intervention 1) and 13.88 (Intervention 2). The groups have similar spreads, so we would expect the Levene test to be non-significant.</p>
+<p>Here p = .297 — well above .05. The variances are not significantly different, so the equal-variance assumption holds. That said, Welch’s t-test (<code>var.equal = FALSE</code>) is always a safe default because it performs equally well when variances <em>are</em> equal and is more accurate when they are not.</p>
 </div>
 </div>
 <hr>
@@ -549,18 +686,18 @@ mean difference
 <section id="box-plot" class="level3">
 <h3 class="anchored" data-anchor-id="box-plot">Box Plot</h3>
 <p>A box plot shows the median, interquartile range, and any outliers for each group.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(scores, <span class="fu">boxplot</span>(scores <span class="sc">~</span> intervention,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xlab =</span> <span class="st">"Intervention Type"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ylab =</span> <span class="st">"Reading Scores"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">main =</span> <span class="st">"Reading Scores by Intervention"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(scores, <span class="fu">boxplot</span>(scores <span class="sc">~</span> intervention,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xlab =</span> <span class="st">"Intervention Type"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ylab =</span> <span class="st">"Reading Scores"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">main =</span> <span class="st">"Reading Scores by Intervention"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="bar-graph-with-error-bars" class="level3">
 <h3 class="anchored" data-anchor-id="bar-graph-with-error-bars">Bar Graph with Error Bars</h3>
 <p>Bar graphs with error bars (showing ± 1 standard error) are standard for reporting group means in psychology.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First, compute the descriptive statistics needed for the plot</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scores<span class="sc">$</span>scores, <span class="fu">list</span>(scores<span class="sc">$</span>intervention), <span class="at">FUN =</span> mean)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scores<span class="sc">$</span>scores, <span class="fu">list</span>(scores<span class="sc">$</span>intervention), <span class="at">FUN =</span> sd)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(scores<span class="sc">$</span>intervention)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First, compute the descriptive statistics needed for the plot</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scores<span class="sc">$</span>scores, <span class="fu">list</span>(scores<span class="sc">$</span>intervention), <span class="at">FUN =</span> mean)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scores<span class="sc">$</span>scores, <span class="fu">list</span>(scores<span class="sc">$</span>intervention), <span class="at">FUN =</span> sd)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(scores<span class="sc">$</span>intervention)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>  Group.1   x
 1       1 193
 2       2 176
@@ -571,25 +708,25 @@ mean difference
 
  1  2
 36 36</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SE = SD / sqrt(n)</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fl">17.44379</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">36</span>)   <span class="co"># SE for Intervention 1</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fl">13.87907</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">36</span>)   <span class="co"># SE for Intervention 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SE = SD / sqrt(n)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fl">17.44379</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">36</span>)   <span class="co"># SE for Intervention 1</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fl">13.87907</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">36</span>)   <span class="co"># SE for Intervention 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 2.907298
 [1] 2.313178</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Build the bar graph</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>intervention.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Intervention 1"</span>, <span class="st">"Intervention 2"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>mean.scores        <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">193</span>, <span class="dv">176</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>se.scores          <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.907298</span>, <span class="fl">2.313178</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>scores.dataframe   <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(intervention.names, mean.scores, se.scores)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(scores.dataframe, <span class="fu">aes</span>(<span class="at">x =</span> intervention.names, <span class="at">y =</span> mean.scores)) <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean.scores <span class="sc">-</span> se.scores,</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> mean.scores <span class="sc">+</span> se.scores),</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Intervention Type"</span>, <span class="at">y =</span> <span class="st">"Reading Scores"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Build the bar graph</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>intervention.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Intervention 1"</span>, <span class="st">"Intervention 2"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>mean.scores        <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">193</span>, <span class="dv">176</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>se.scores          <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.907298</span>, <span class="fl">2.313178</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>scores.dataframe   <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(intervention.names, mean.scores, se.scores)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(scores.dataframe, <span class="fu">aes</span>(<span class="at">x =</span> intervention.names, <span class="at">y =</span> mean.scores)) <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean.scores <span class="sc">-</span> se.scores,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> mean.scores <span class="sc">+</span> se.scores),</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Intervention Type"</span>, <span class="at">y =</span> <span class="st">"Reading Scores"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -609,16 +746,16 @@ mean difference
 <section id="t-critical-values-and-the-link-to-z" class="level2">
 <h2 class="anchored" data-anchor-id="t-critical-values-and-the-link-to-z">t-Critical Values and the Link to z</h2>
 <p>Use <code>qt()</code> to find the t-critical value for any combination of alpha and degrees of freedom — the value your t-statistic must exceed to reach significance.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## qt(p, df, lower.tail = FALSE)</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## p = alpha/2 for a two-tailed test (0.025 at alpha = .05)</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">## df = degrees of freedom</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,    <span class="dv">5</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,   <span class="dv">10</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,   <span class="dv">25</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,   <span class="dv">30</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,  <span class="dv">100</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="dv">1000</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## qt(p, df, lower.tail = FALSE)</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">## p = alpha/2 for a two-tailed test (0.025 at alpha = .05)</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="do">## df = degrees of freedom</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,    <span class="dv">5</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,   <span class="dv">10</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,   <span class="dv">25</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,   <span class="dv">30</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>,  <span class="dv">100</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="dv">1000</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 2.570582
 [1] 2.228139
 [1] 2.059539
@@ -678,8 +815,8 @@ mean difference
 <p>You can verify this with <code>qnorm()</code>:</p>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## The z-critical value (equivalent to t with infinite df)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## The z-critical value (equivalent to t with infinite df)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 1.959964</code></pre>
 <p>With 1000 degrees of freedom the t-critical value (1.962) is already within 0.002 of the z-critical value (1.960). By the time you have a few hundred participants, the practical difference between a t-test and a z-test is negligible — the reason we use t is that for small samples, those extra decimal points matter.</p>
 

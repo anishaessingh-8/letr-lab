@@ -58,11 +58,11 @@ title: "PSY 771 — R Scripts"
   </div>
 
   <div class="pub-year-group">
-    <div class="pub-year-header">Weekly Scripts</div>
+    <div class="pub-year-header">Script 5</div>
 
     <div class="pub-item">
-      <div class="pub-title" style="color: var(--ink-400); font-style: italic; font-size: 17px;">Coming soon</div>
-      <div class="pub-venue">Scripts for one-way ANOVA, factorial ANOVA, repeated measures ANOVA, and mixed ANOVA will be posted here as we progress through the course.</div>
+      <div class="pub-title"><a href="one_way_anova.html">One-Way Between-Subjects ANOVA</a></div>
+      <div class="pub-venue">Testing whether reading time differs across device types (phone, tablet, laptop). Covers assumption checking (Shapiro-Wilk, Levene's test), fitting the model with <code>lm()</code> and <code>aov()</code>, eta squared as an overall effect size, and post-hoc comparisons with Tukey's HSD and Cohen's <em>d</em>.</div>
     </div>
 
   </div>

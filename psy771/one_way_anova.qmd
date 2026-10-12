@@ -1,0 +1,364 @@
+---
+title: "One-Way Between-Subjects ANOVA"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+---
+
+```{=html}
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+/* Page header keeps its dark background */
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+.callout {
+  border-left: 4px solid #7b2fbe !important;
+  background: #f5f0f7 !important;
+}
+.callout-note { border-left-color: #7b2fbe !important; }
+.callout-tip { border-left-color: #2e7d32 !important; background: #f1f8f2 !important; }
+.callout-warning { border-left-color: #e65100 !important; background: #fff8f1 !important; }
+.callout-title { color: #1a1320 !important; }
+.callout-body p { color: #1a1320 !important; }
+</style>
+```
+
+The dataset for this week is `readtime.csv`. We will use this data to determine if **reading time** (in milliseconds) differs by type of **device** (1 = phone, 2 = tablet, 3 = laptop).
+
+## Packages
+
+```r
+# install.packages("psych")       # run once if needed
+# install.packages("lawstat")
+# install.packages("effectsize")
+# install.packages("emmeans")
+# install.packages("agricolae")
+
+library(psych)
+library(lawstat)
+library(effectsize)
+library(emmeans)
+library(agricolae)
+```
+
+## Load and Prepare the Data
+
+```r
+reader <- read.csv("readtime.csv")
+reader$Device <- as.factor(reader$Device)
+```
+
+## Exploring the Data
+
+Before fitting any model, get group-level descriptive statistics using `describeBy()`.
+
+```r
+describeBy(reader$ReadingTime, reader$Device)
+```
+
+```
+Descriptive statistics by group
+group: 1
+   vars  n    mean     sd  median trimmed    mad    min     max   range  skew kurtosis    se
+X1    1 20 1252.83 305.62 1233.12 1269.18 284.36 572.08 1797.21 1225.13 -0.29    -0.34 68.34
+------------------------------------------------------------
+group: 2
+   vars  n    mean     sd  median trimmed    mad    min     max   range skew kurtosis    se
+X1    1 20 1032.20 307.44 1085.92 1026.23 330.37 551.34 1588.64 1037.30 0.02    -1.18 68.75
+------------------------------------------------------------
+group: 3
+   vars  n    mean     sd  median trimmed    mad    min     max range skew kurtosis    se
+X1    1 20 1014.00 288.58  969.52 1009.07 244.22 543.75 1530.75   987 0.21    -1.16 64.53
+```
+
+Phone users had the longest average reading time (M = 1252.83 ms, SD = 305.62), followed by tablet (M = 1032.20 ms, SD = 307.44) and laptop (M = 1014.00 ms, SD = 288.58).
+
+## Checking Assumptions
+
+### Normality
+
+One-way ANOVA assumes that the residuals are normally distributed. We test this with a Shapiro-Wilk test on the **model residuals** (after fitting the model below) rather than on raw scores within each group.
+
+```r
+fit2 <- aov(ReadingTime ~ Device, data = reader)
+shapiro.test(fit2$residuals)
+```
+
+```
+    Shapiro-Wilk normality test
+
+data:  fit2$residuals
+W = 0.98523, p-value = 0.6822
+```
+
+The test is non-significant (p = .682), so we have no evidence against normality.
+
+### Homogeneity of Variance
+
+ANOVA assumes equal variances across groups (homoscedasticity). We test this with Levene's test.
+
+```r
+levene.test(reader$ReadingTime, reader$Device)
+```
+
+```
+    Modified robust Brown-Forsythe Levene-type test based on the
+    absolute deviations from the median
+
+data:  reader$ReadingTime
+Test Statistic = 0.061395, p-value = 0.9405
+```
+
+The test is non-significant (p = .941), confirming equal variances. The standard ANOVA is appropriate.
+
+::: {.callout-note}
+**If Levene's test is significant**, use a Welch one-way ANOVA instead:
+`oneway.test(ReadingTime ~ Device, data = reader, var.equal = FALSE)`
+This does not assume equal variances, analogous to Welch's correction for the independent-samples t-test.
+:::
+
+## Fitting the Model
+
+```r
+fit1 <- lm(ReadingTime ~ Device, data = reader)
+anova(fit1)
+```
+
+```
+Analysis of Variance Table
+
+Response: ReadingTime
+          Df  Sum Sq Mean Sq F value  Pr(>F)
+Device     2  706968  353484  3.9102 0.02562 *
+Residuals 57 5152810   90400
+```
+
+Device type has a statistically significant effect on reading time, F(2, 57) = 3.91, p = .026.
+
+### Alternative syntax: `aov()`
+
+Some post-hoc functions require an `aov` object. The results are identical.
+
+```r
+fit2 <- aov(ReadingTime ~ Device, data = reader)
+summary(fit2)
+```
+
+```
+            Df  Sum Sq Mean Sq F value Pr(>F)
+Device       2  706968  353484    3.91 0.0256 *
+Residuals   57 5152810   90400
+```
+
+### ANOVA and regression are the same model
+
+`summary(fit1)` returns regression output. The F-statistic and degrees of freedom are identical; the coefficients represent mean differences from the reference group (Device 1).
+
+```r
+summary(fit1)
+```
+
+```
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  1252.83      67.23  18.635   <2e-16 ***
+Device2      -220.63      95.08  -2.320   0.0239 *
+Device3      -238.83      95.08  -2.512   0.0149 *
+
+Residual standard error: 300.7 on 57 degrees of freedom
+Multiple R-squared:  0.1206,  Adjusted R-squared:  0.08979
+F-statistic:  3.91 on 2 and 57 DF,  p-value: 0.02562
+```
+
+Device 2 (tablet) read 220.63 ms faster than Device 1 (phone), and Device 3 (laptop) read 238.83 ms faster.
+
+## Overall Effect Size: Eta Squared
+
+Before drilling into which pairs differ, quantify the **overall** effect of device type. Eta squared (η²) is the proportion of total variance in reading time explained by device.
+
+```r
+eta_squared(fit1, partial = FALSE)
+```
+
+```
+# Effect Size for ANOVA (Type I)
+
+Parameter | Eta2 |       95% CI
+-------------------------------
+Device    | 0.12 | [0.01, 1.00]
+```
+
+η² = .12 — device type explains about 12% of the variance in reading time, a medium effect by Cohen's conventions (small ≈ .01, medium ≈ .06, large ≈ .14).
+
+::: {.callout-note}
+**η² vs. partial η²**: In a one-way design these are identical. In factorial designs (Week 10+) they diverge — partial η² measures the effect of one factor *after removing the other factors*, so values from different studies are not directly comparable. Always report which you computed.
+:::
+
+## Post-hoc Tests
+
+A significant ANOVA tells us that **at least one** group mean differs — but not which ones. Post-hoc tests make all pairwise comparisons while controlling the familywise Type I error rate.
+
+---
+
+### Tukey's HSD (Recommended)
+
+Tukey's Honest Significant Difference uses the *studentized range distribution* to test all pairwise comparisons simultaneously. It is designed specifically for this purpose and is the standard recommendation for balanced or near-balanced designs.
+
+```r
+TukeyHSD(fit2)
+```
+
+```
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+$Device
+         diff       lwr        upr     p adj
+2-1 -220.6260 -449.4258   8.173844 0.0610
+3-1 -238.8265 -467.6263 -10.026656 0.0389 *
+3-2  -18.2005 -247.0003 210.599344 0.9800
+```
+
+Laptop users read significantly faster than phone users (mean difference = −238.83 ms, p = .039). The tablet vs. phone comparison approached but did not reach significance (p = .061). Tablet and laptop did not differ (p = .980).
+
+---
+
+### Pairwise Effect Sizes: Cohen's *d*
+
+Statistical significance tells us *whether* groups differ; effect sizes tell us *how much*. Cohen's *d* is a standardized mean difference. For post-hoc comparisons after ANOVA, we use the **pooled error term from the model** (rather than just the two groups' SDs), which is more stable and consistent across comparisons.
+
+```r
+d_results <- eff_size(emmeans(fit2, pairwise ~ Device),
+                      sigma = sigma(fit2),
+                      edf = df.residual(fit2),
+                      ci = TRUE)
+d_results
+```
+
+```
+ contrast            effect.size    SE df lower.CL upper.CL
+ (Device1 - Device2)      0.7338 0.324 57   0.0858    1.382
+ (Device1 - Device3)      0.7943 0.325 57   0.1438    1.445
+ (Device2 - Device3)      0.0605 0.316 57  -0.5728    0.694
+
+sigma used for effect sizes: 300.7
+```
+
+Phone vs. tablet: d = 0.73 (medium-large); phone vs. laptop: d = 0.79 (large); tablet vs. laptop: d = 0.06 (negligible). The significant Tukey comparison (phone vs. laptop) corresponds to a large effect.
+
+---
+
+### Bonferroni Correction
+
+::: {.callout-warning}
+**Planned vs. exploratory comparisons**
+
+There are two fundamentally different situations for multiple comparisons:
+
+- **Planned (a priori) comparisons**: You specified exact hypotheses *before* collecting data. For example, "I predict phone will differ from laptop." In this case, Bonferroni is appropriate — you divide α by the number of tests you committed to in advance.
+
+- **Exploratory (post-hoc) comparisons**: You run all pairwise tests *after* finding a significant omnibus ANOVA, scanning for differences. This is the more common situation, and it is why we need stricter corrections. Bonferroni is overly conservative here — it was designed for a small set of independent tests, not the correlated structure of all-pairwise comparisons. **Use Tukey's HSD instead**, which is purpose-built for this scenario and offers better power with the same familywise error control.
+:::
+
+```r
+emmeans(fit2, pairwise ~ Device, adjust = "bonferroni")
+```
+
+```
+$contrasts
+ contrast          estimate   SE df t.ratio p.value
+ Device1 - Device2    220.6 95.1 57   2.320  0.0718
+ Device1 - Device3    238.8 95.1 57   2.512  0.0446
+ Device2 - Device3     18.2 95.1 57   0.191  1.0000
+
+P value adjustment: bonferroni method for 3 tests
+```
+
+The p-values shown are **already adjusted** — compare them to α = .05, not .0167. With Bonferroni, no comparison reaches significance. Compare this to Tukey's HSD, which identified phone vs. laptop as significant (p = .039): Tukey is the more appropriate tool for exploratory post-hoc comparisons, and it has better power.
+
+---
+
+### Fisher's LSD
+
+Fisher's LSD performs standard t-tests between all pairs using the pooled MSE. It appears frequently in older published literature but **does not adequately control the familywise error rate** when there are more than three groups. You may encounter it in papers, but Tukey's HSD is preferred for new analyses.
+
+```r
+# install.packages("agricolae")   # run once if needed
+library(agricolae)
+LSD.test(fit2, "Device", console = TRUE)
+```
+
+```
+Treatments with the same letter are not significantly different.
+
+  ReadingTime groups
+1    1252.825      a
+2    1032.199      b
+3    1013.999      b
+```

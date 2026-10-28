@@ -164,7 +164,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#marginal-means-by-light" id="toc-marginal-means-by-light" class="nav-link" data-scroll-target="#marginal-means-by-light">Marginal means by Light</a></li>
   <li><a href="#cell-means-device-light" id="toc-cell-means-device-light" class="nav-link" data-scroll-target="#cell-means-device-light">Cell means (Device × Light)</a></li>
   </ul></li>
-  <li><a href="#visualizing-the-interaction" id="toc-visualizing-the-interaction" class="nav-link" data-scroll-target="#visualizing-the-interaction">Visualizing the Interaction</a></li>
+  <li><a href="#visualizing-the-interaction" id="toc-visualizing-the-interaction" class="nav-link" data-scroll-target="#visualizing-the-interaction">Visualizing the Interaction</a>
+  <ul class="collapse">
+  <li><a href="#quick-check-interaction.plot" id="toc-quick-check-interaction.plot" class="nav-link" data-scroll-target="#quick-check-interaction.plot">Quick check: <code>interaction.plot()</code></a></li>
+  <li><a href="#publication-ready-plot-ggplot2" id="toc-publication-ready-plot-ggplot2" class="nav-link" data-scroll-target="#publication-ready-plot-ggplot2">Publication-ready plot: <code>ggplot2</code></a></li>
+  </ul></li>
   <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model">Fitting the Model</a></li>
   <li><a href="#overall-effect-sizes-eta-squared" id="toc-overall-effect-sizes-eta-squared" class="nav-link" data-scroll-target="#overall-effect-sizes-eta-squared">Overall Effect Sizes: Eta Squared</a></li>
   <li><a href="#when-the-interaction-is-not-significant" id="toc-when-the-interaction-is-not-significant" class="nav-link" data-scroll-target="#when-the-interaction-is-not-significant">When the Interaction Is Not Significant</a></li>
@@ -360,24 +364,68 @@ Laptop 1208.350 1102.146  904.400  841.100</code></pre>
 <section id="visualizing-the-interaction" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-the-interaction">Visualizing the Interaction</h2>
 <p>Before fitting the model, plot the cell means. If the lines are roughly <strong>parallel</strong>, it suggests no interaction — the effect of one factor is the same regardless of the level of the other.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.factor    =</span> reader<span class="sc">$</span>Light,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.factor =</span> reader<span class="sc">$</span>Device,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">response    =</span> reader<span class="sc">$</span>ReadingTime,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun         =</span> mean,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab        =</span> <span class="st">"Lighting Condition"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab        =</span> <span class="st">"Mean Reading Time (ms)"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.label =</span> <span class="st">"Device"</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">col         =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"darkorchid"</span>, <span class="st">"tomato"</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">lwd         =</span> <span class="dv">2</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="quick-check-interaction.plot" class="level3">
+<h3 class="anchored" data-anchor-id="quick-check-interaction.plot">Quick check: <code>interaction.plot()</code></h3>
+<p><code>interaction.plot()</code> is a base R function that requires no additional packages and is useful for a quick look at your data during analysis.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">8</span>))   <span class="co"># widen right margin so the legend is not cut off</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.factor     =</span> reader<span class="sc">$</span>Light,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.factor =</span> reader<span class="sc">$</span>Device,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">response     =</span> reader<span class="sc">$</span>ReadingTime,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun          =</span> mean,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab         =</span> <span class="st">"Lighting Condition"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab         =</span> <span class="st">"Mean Reading Time (ms)"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.label  =</span> <span class="st">"Device"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">col          =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"darkorchid"</span>, <span class="st">"tomato"</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">lwd          =</span> <span class="dv">2</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>))   <span class="co"># reset margins to default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Limitation of <code>interaction.plot()</code></strong></p>
+<p>Because this is a base R function, the legend is drawn outside the plot region and its placement depends on your window size — the device names can be cut off if the plot is too narrow. The overall appearance is also not publication-ready. Use <code>interaction.plot()</code> to get a fast visual check during your analysis, then switch to the <code>ggplot2</code> version below when you need a clean figure for a paper or presentation.</p>
+</div>
+</div>
+</section>
+<section id="publication-ready-plot-ggplot2" class="level3">
+<h3 class="anchored" data-anchor-id="publication-ready-plot-ggplot2">Publication-ready plot: <code>ggplot2</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ggplot2")   # run once if needed</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dplyr")</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>reader <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Device, Light) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_RT =</span> <span class="fu">mean</span>(ReadingTime), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Light, <span class="at">y =</span> mean_RT, <span class="at">color =</span> Device, <span class="at">group =</span> Device)) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Lighting Condition"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Mean Reading Time (ms)"</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Device"</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>ggplot2</code> reads the factor levels directly, so the legend will correctly label each line “Phone”, “Tablet”, and “Laptop” regardless of window size. The plot can be exported at any resolution with <code>ggsave()</code>.</p>
 <p>The three lines track closely together and run roughly parallel across all four lighting conditions — a visual cue that Device and Light are acting independently rather than interacting.</p>
+</section>
 </section>
 <section id="fitting-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-the-model">Fitting the Model</h2>
 <p>The <code>*</code> operator fits both main effects and their interaction in one step.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit2.way <span class="ot">&lt;-</span> <span class="fu">aov</span>(ReadingTime <span class="sc">~</span> Device <span class="sc">*</span> Light, <span class="at">data =</span> reader)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2.way)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit2.way <span class="ot">&lt;-</span> <span class="fu">aov</span>(ReadingTime <span class="sc">~</span> Device <span class="sc">*</span> Light, <span class="at">data =</span> reader)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2.way)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>             Df  Sum Sq Mean Sq F value   Pr(&gt;F)
 Device        2  706968  353484   4.648  0.01428 *
 Light         3 1481064  493688   6.492  0.00089 ***
@@ -407,7 +455,7 @@ Note
 <section id="overall-effect-sizes-eta-squared" class="level2">
 <h2 class="anchored" data-anchor-id="overall-effect-sizes-eta-squared">Overall Effect Sizes: Eta Squared</h2>
 <p>Eta squared (η²) is the proportion of <strong>total</strong> variance in reading time explained by each effect.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit2.way, <span class="at">partial =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit2.way, <span class="at">partial =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code># Effect Size for ANOVA (Type I)
 
 Parameter    |  Eta2 |       95% CI
@@ -460,9 +508,9 @@ Tip
 <section id="if-the-interaction-had-been-significant-simple-effects" class="level2">
 <h2 class="anchored" data-anchor-id="if-the-interaction-had-been-significant-simple-effects">If the Interaction Had Been Significant: Simple Effects</h2>
 <p>When an interaction <em>is</em> significant, interpreting the main effects alone is misleading — the effect of Device depends on which lighting level you are in, so averaging across lighting levels obscures what is actually happening. The correct next step is <strong>simple effects analysis</strong>: test Device differences separately within each level of Light (and/or Light differences within each level of Device).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated means for each Device × Light cell</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>simple <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device <span class="sc">|</span> Light)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>simple</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated means for each Device × Light cell</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>simple <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device <span class="sc">|</span> Light)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>simple</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Light = Blue:
  Device emmean  SE df lower.CL upper.CL
  Phone    1462 123 48     1214     1710
@@ -486,8 +534,8 @@ Light = Natural:
  Phone    1069 123 48      822     1317
  Tablet    868 123 48      620     1116
  Laptop    841 123 48      593     1089</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise Device comparisons within each Light level</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(simple, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise Device comparisons within each Light level</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(simple, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Light = Blue:
  contrast        estimate  SE df t.ratio p.value
  Phone - Tablet    211.97 174 48   1.215  0.4500
@@ -513,8 +561,8 @@ Light = Natural:
  Tablet - Laptop    26.91 174 48   0.154  0.9870
 
 P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confidence intervals for simple effects</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">pairs</span>(simple, <span class="at">adjust =</span> <span class="st">"tukey"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confidence intervals for simple effects</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">pairs</span>(simple, <span class="at">adjust =</span> <span class="st">"tukey"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Light = Blue:
  contrast        estimate  SE df lower.CL upper.CL
  Phone - Tablet    211.97 174 48     -210      634
@@ -557,9 +605,9 @@ Note
 <h2 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc Tests</h2>
 <section id="device-pairwise-comparisons" class="level3">
 <h3 class="anchored" data-anchor-id="device-pairwise-comparisons">Device: Pairwise Comparisons</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>em_device <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>device_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_device, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>device_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>em_device <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>device_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_device, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>device_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast        estimate   SE df t.ratio p.value
  Phone - Tablet     220.6 87.2 48   2.530  0.0385
  Phone - Laptop     238.8 87.2 48   2.739  0.0231
@@ -571,7 +619,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates</code></p
 </section>
 <section id="confidence-intervals-device" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals-device">Confidence Intervals: Device</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(device_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(device_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast        estimate   SE df lower.CL upper.CL
  Phone - Tablet     220.6 87.2 48      9.7      432
  Phone - Laptop     238.8 87.2 48     27.9      450
@@ -584,9 +632,9 @@ Conf-level adjustment: tukey method for comparing a family of 3 estimates</code>
 </section>
 <section id="light-pairwise-comparisons" class="level3">
 <h3 class="anchored" data-anchor-id="light-pairwise-comparisons">Light: Pairwise Comparisons</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>em_light <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Light)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>light_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_light, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>light_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>em_light <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Light)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>light_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_light, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>light_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast         estimate  SE df t.ratio p.value
  Blue - White        112.0 101 48   1.112  0.6838
  Blue - Yellow       336.2 101 48   3.339  0.0086
@@ -601,7 +649,7 @@ P value adjustment: tukey method for comparing a family of 4 estimates</code></p
 </section>
 <section id="confidence-intervals-light" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals-light">Confidence Intervals: Light</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(light_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(light_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast         estimate  SE df lower.CL upper.CL
  Blue - White        112.0 101 48   -156.0      380
  Blue - Yellow       336.2 101 48     68.2      604
@@ -620,9 +668,9 @@ Conf-level adjustment: tukey method for comparing a family of 4 estimates</code>
 <p>Cohen’s <em>d</em> quantifies how large each mean difference is in standard deviation units, independent of sample size. We use the pooled model error (<code>sigma(fit2.way)</code>) as the standardizer.</p>
 <section id="device-pairwise-d" class="level3">
 <h3 class="anchored" data-anchor-id="device-pairwise-d">Device pairwise <em>d</em></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Device),</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Device),</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast          effect.size    SE df lower.CL upper.CL
  (Phone - Tablet)        0.800 0.327 48    0.143    1.457
  (Phone - Laptop)        0.866 0.328 48    0.206    1.526
@@ -634,9 +682,9 @@ sigma used for effect sizes: 275.8</code></pre>
 </section>
 <section id="light-pairwise-d" class="level3">
 <h3 class="anchored" data-anchor-id="light-pairwise-d">Light pairwise <em>d</em></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Light),</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Light),</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast           effect.size    SE df lower.CL upper.CL
  (Blue - White)           0.406 0.367 48   -0.333    1.145
  (Blue - Yellow)          1.219 0.386 48    0.444    1.995

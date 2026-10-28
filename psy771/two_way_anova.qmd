@@ -175,19 +175,58 @@ Reading time is highest under blue light for all three devices, and lowest under
 
 Before fitting the model, plot the cell means. If the lines are roughly **parallel**, it suggests no interaction — the effect of one factor is the same regardless of the level of the other.
 
+### Quick check: `interaction.plot()`
+
+`interaction.plot()` is a base R function that requires no additional packages and is useful for a quick look at your data during analysis.
+
 ```r
+par(mar = c(5, 4, 4, 8))   # widen right margin so the legend is not cut off
+
 interaction.plot(
-  x.factor    = reader$Light,
+  x.factor     = reader$Light,
   trace.factor = reader$Device,
-  response    = reader$ReadingTime,
-  fun         = mean,
-  xlab        = "Lighting Condition",
-  ylab        = "Mean Reading Time (ms)",
-  trace.label = "Device",
-  col         = c("steelblue", "darkorchid", "tomato"),
-  lwd         = 2
+  response     = reader$ReadingTime,
+  fun          = mean,
+  xlab         = "Lighting Condition",
+  ylab         = "Mean Reading Time (ms)",
+  trace.label  = "Device",
+  col          = c("steelblue", "darkorchid", "tomato"),
+  lwd          = 2
 )
+
+par(mar = c(5, 4, 4, 2))   # reset margins to default
 ```
+
+::: {.callout-note}
+**Limitation of `interaction.plot()`**
+
+Because this is a base R function, the legend is drawn outside the plot region and its placement depends on your window size — the device names can be cut off if the plot is too narrow. The overall appearance is also not publication-ready. Use `interaction.plot()` to get a fast visual check during your analysis, then switch to the `ggplot2` version below when you need a clean figure for a paper or presentation.
+:::
+
+### Publication-ready plot: `ggplot2`
+
+```r
+# install.packages("ggplot2")   # run once if needed
+# install.packages("dplyr")
+
+library(ggplot2)
+library(dplyr)
+
+reader %>%
+  group_by(Device, Light) %>%
+  summarise(mean_RT = mean(ReadingTime), .groups = "drop") %>%
+  ggplot(aes(x = Light, y = mean_RT, color = Device, group = Device)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  labs(
+    x     = "Lighting Condition",
+    y     = "Mean Reading Time (ms)",
+    color = "Device"
+  ) +
+  theme_minimal()
+```
+
+`ggplot2` reads the factor levels directly, so the legend will correctly label each line "Phone", "Tablet", and "Laptop" regardless of window size. The plot can be exported at any resolution with `ggsave()`.
 
 The three lines track closely together and run roughly parallel across all four lighting conditions — a visual cue that Device and Light are acting independently rather than interacting.
 

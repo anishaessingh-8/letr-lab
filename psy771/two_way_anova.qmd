@@ -1,0 +1,400 @@
+---
+title: "Two-Factor Between-Subjects ANOVA"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+---
+
+```{=html}
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
+:root {
+  --quarto-hl-al-color: #e53935; --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae; --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe; --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a; --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae; --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae; --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a; --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae; --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe; --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a; --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e; --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe; --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e; --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e; --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e; --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+.callout { border-left: 4px solid #7b2fbe !important; background: #f5f0f7 !important; }
+.callout-note { border-left-color: #7b2fbe !important; }
+.callout-tip { border-left-color: #2e7d32 !important; background: #f1f8f2 !important; }
+.callout-warning { border-left-color: #e65100 !important; background: #fff8f1 !important; }
+.callout-title { color: #1a1320 !important; }
+.callout-body p { color: #1a1320 !important; }
+</style>
+```
+
+We continue working with `readtime.csv`, but now we add a second independent variable. In addition to **Device** (Phone, Tablet, Laptop), participants read under different **lighting conditions** (Blue, White, Yellow, Natural). Each participant was assigned to exactly one device type and one lighting condition, making this a **3 × 4 between-subjects factorial design** (12 groups, 5 participants per group, N = 60).
+
+::: {.callout-note}
+**Why use a factorial design?**
+
+Instead of running two separate one-way ANOVAs — one for Device, one for Light — a factorial ANOVA tests both factors simultaneously. This is more efficient, uses the full sample for each test, and most importantly lets us test whether the two factors **interact**: does the effect of device type depend on what lighting is used? A one-way ANOVA can never answer that question.
+:::
+
+## Packages
+
+```r
+# install.packages("psych")
+# install.packages("emmeans")
+# install.packages("effectsize")
+
+library(psych)
+library(emmeans)
+library(effectsize)
+```
+
+## Load and Prepare the Data
+
+```r
+reader <- read.csv("readtime.csv")
+```
+
+### Recoding factor levels
+
+The variables `Device` and `Light` are stored as numbers. We need to tell R they are categorical and give them meaningful labels. The cleanest way is with `factor()`, which sets levels and labels in a single line — no extra packages needed.
+
+```r
+reader$Device <- factor(reader$Device,
+                        levels = 1:3,
+                        labels = c("Phone", "Tablet", "Laptop"))
+
+reader$Light  <- factor(reader$Light,
+                        levels = 1:4,
+                        labels = c("Blue", "White", "Yellow", "Natural"))
+```
+
+::: {.callout-tip}
+**Why `factor()` instead of `recode()`?**
+
+The `dplyr::mutate(recode(...))` approach works but requires multiple lines and the `dplyr` package. Using `factor()` with a `labels` argument is a base-R one-liner that does the same thing: it converts the numeric variable to a factor and attaches readable names to each level simultaneously.
+:::
+
+## Exploring the Data
+
+### Marginal means by Device
+
+```r
+describeBy(reader$ReadingTime, reader$Device)
+```
+
+```
+group: Phone
+   vars  n    mean     sd  median  min     max   range
+X1    1 20 1252.83 305.62 1233.12  572.08 1797.21 1225.13
+
+group: Tablet
+   vars  n    mean     sd  median   min     max   range
+X1    1 20 1032.20 307.44 1085.92  551.34 1588.64 1037.30
+
+group: Laptop
+   vars  n    mean     sd  median   min     max  range
+X1    1 20 1014.00 288.58  969.52  543.75 1530.75  987.00
+```
+
+### Marginal means by Light
+
+```r
+describeBy(reader$ReadingTime, reader$Light)
+```
+
+```
+group: Blue
+   vars  n   mean     sd  median   min     max   range
+X1    1 15 1306.90 276.55 1295.44  862.69 1797.21  934.52
+
+group: White
+   vars  n    mean     sd  median   min     max   range
+X1    1 15 1194.90 276.74 1233.46  741.65 1667.19  925.54
+
+group: Yellow
+   vars  n   mean     sd  median   min     max   range
+X1    1 15  970.70 279.57  991.76  543.75 1494.78  951.03
+
+group: Natural
+   vars  n   mean     sd  median   min     max   range
+X1    1 15  926.20 285.55  894.61  551.34 1304.63  753.29
+```
+
+### Cell means (Device × Light)
+
+```r
+tapply(reader$ReadingTime, list(reader$Device, reader$Light), mean)
+```
+
+```
+           Blue    White   Yellow  Natural
+Phone  1462.158 1385.960 1093.694 1069.490
+Tablet 1250.188 1096.594  914.006  868.010
+Laptop 1208.350 1102.146  904.400  841.100
+```
+
+Reading time is highest under blue light for all three devices, and lowest under natural light. Phones are consistently slower than tablets and laptops across all lighting conditions.
+
+## Visualizing the Interaction
+
+Before fitting the model, plot the cell means. If the lines are roughly **parallel**, it suggests no interaction — the effect of one factor is the same regardless of the level of the other.
+
+```r
+interaction.plot(
+  x.factor    = reader$Light,
+  trace.factor = reader$Device,
+  response    = reader$ReadingTime,
+  fun         = mean,
+  xlab        = "Lighting Condition",
+  ylab        = "Mean Reading Time (ms)",
+  trace.label = "Device",
+  col         = c("steelblue", "darkorchid", "tomato"),
+  lwd         = 2
+)
+```
+
+The three lines track closely together and run roughly parallel across all four lighting conditions — a visual cue that Device and Light are acting independently rather than interacting.
+
+## Fitting the Model
+
+The `*` operator fits both main effects and their interaction in one step.
+
+```r
+fit2.way <- aov(ReadingTime ~ Device * Light, data = reader)
+summary(fit2.way)
+```
+
+```
+             Df  Sum Sq Mean Sq F value   Pr(>F)
+Device        2  706968  353484   4.648  0.01428 *
+Light         3 1481064  493688   6.492  0.00089 ***
+Device:Light  6   21543    3591   0.047  0.99953
+Residuals    48 3650203   76046
+```
+
+::: {.callout-note}
+**Reading the factorial ANOVA table**
+
+There are three tests:
+
+- **Device main effect**: Does reading time differ by device type, *averaging across* all lighting conditions? F(2, 48) = 4.65, p = .014 — yes.
+- **Light main effect**: Does reading time differ by lighting condition, *averaging across* all devices? F(3, 48) = 6.49, p < .001 — yes.
+- **Device × Light interaction**: Does the *effect of device* change depending on *which light is used* (or vice versa)? F(6, 48) = 0.047, p = .9995 — no.
+
+The near-zero F for the interaction (0.047) with a p-value of .9995 tells us the two factors act completely independently. The advantage of phones over tablets is essentially the same under blue light, white light, yellow light, and natural light. This is what statisticians call an **additive** relationship.
+:::
+
+## Overall Effect Sizes: Partial Eta Squared
+
+```r
+eta_squared(fit2.way, partial = TRUE)
+```
+
+```
+# Effect Size for ANOVA (Type I)
+
+Parameter    | Eta2 (partial) |       95% CI
+--------------------------------------------
+Device       |           0.16 | [0.02, 1.00]
+Light        |           0.29 | [0.10, 1.00]
+Device:Light |       0.006    | [0.00, 1.00]
+```
+
+- **Device**: partial η² = .16 — a medium-to-large effect. Device type accounts for 16% of the variance in reading time after removing Light's contribution.
+- **Light**: partial η² = .29 — a large effect. Lighting condition accounts for 29% of the variance after removing Device's contribution.
+- **Interaction**: partial η² < .01 — negligible. Essentially none of the variance is explained by the interaction.
+
+::: {.callout-note}
+**Why partial η² in a factorial design?**
+
+In a one-way ANOVA, η² and partial η² are identical. In a factorial design they differ: partial η² estimates each effect's contribution *relative to its own error*, not relative to the total variance. This makes partial η² values from different studies comparable even when the designs have different numbers of factors.
+:::
+
+## When the Interaction Is Not Significant
+
+::: {.callout-tip}
+**The interaction guides your next step**
+
+In a factorial ANOVA, always look at the interaction first:
+
+- **If the interaction IS significant**: the main effects are misleading on their own. You must decompose the interaction using *simple effects* — for example, testing Device differences separately within each level of Light. The main effect averages across conditions that behave differently, which obscures what is really happening.
+
+- **If the interaction is NOT significant** (as here): the two factors act independently and additively. It is safe — and correct — to interpret the main effects directly. The effect of Device is the same across all lighting levels, so averaging across them gives an accurate picture.
+
+Because our interaction is not significant, we proceed to main-effect post-hoc tests for Device and Light separately.
+:::
+
+## Post-hoc Tests
+
+### Device: Pairwise Comparisons
+
+```r
+em_device <- emmeans(fit2.way, ~ Device)
+device_pairs <- pairs(em_device, adjust = "tukey")
+device_pairs
+```
+
+```
+ contrast        estimate   SE df t.ratio p.value
+ Phone - Tablet     220.6 87.2 48   2.530  0.0385
+ Phone - Laptop     238.8 87.2 48   2.739  0.0231
+ Tablet - Laptop     18.2 87.2 48   0.209  0.9763
+
+Results are averaged over the levels of: Light
+P value adjustment: tukey method for comparing a family of 3 estimates
+```
+
+Phone users read significantly slower than both Tablet (p = .039) and Laptop users (p = .023). Tablet and Laptop do not differ from each other (p = .976).
+
+### Confidence Intervals: Device
+
+```r
+confint(device_pairs)
+```
+
+```
+ contrast        estimate   SE df lower.CL upper.CL
+ Phone - Tablet     220.6 87.2 48      9.7      432
+ Phone - Laptop     238.8 87.2 48     27.9      450
+ Tablet - Laptop     18.2 87.2 48   -192.7      229
+
+Confidence level used: 0.95
+Conf-level adjustment: tukey method for comparing a family of 3 estimates
+```
+
+Both Phone − Tablet [9.7, 432] and Phone − Laptop [27.9, 450] have confidence intervals that exclude 0, confirming significant differences. The Tablet − Laptop interval [−192.7, 229] includes 0.
+
+---
+
+### Light: Pairwise Comparisons
+
+```r
+em_light <- emmeans(fit2.way, ~ Light)
+light_pairs <- pairs(em_light, adjust = "tukey")
+light_pairs
+```
+
+```
+ contrast         estimate  SE df t.ratio p.value
+ Blue - White        112.0 101 48   1.112  0.6838
+ Blue - Yellow       336.2 101 48   3.339  0.0086
+ Blue - Natural      380.7 101 48   3.781  0.0024
+ White - Yellow      224.2 101 48   2.227  0.1307
+ White - Natural     268.7 101 48   2.668  0.0492
+ Yellow - Natural     44.5 101 48   0.442  0.9709
+
+Results are averaged over the levels of: Device
+P value adjustment: tukey method for comparing a family of 4 estimates
+```
+
+Blue light produced significantly longer reading times than Yellow (p = .009) and Natural (p = .002). White light was significantly slower than Natural (p = .049). Blue vs. White, White vs. Yellow, and Yellow vs. Natural did not reach significance after Tukey correction.
+
+### Confidence Intervals: Light
+
+```r
+confint(light_pairs)
+```
+
+```
+ contrast         estimate  SE df lower.CL upper.CL
+ Blue - White        112.0 101 48   -156.0      380
+ Blue - Yellow       336.2 101 48     68.2      604
+ Blue - Natural      380.7 101 48    112.7      649
+ White - Yellow      224.2 101 48    -43.8      492
+ White - Natural     268.7 101 48      0.7      537
+ Yellow - Natural     44.5 101 48   -223.5      312
+
+Confidence level used: 0.95
+Conf-level adjustment: tukey method for comparing a family of 4 estimates
+```
+
+The Blue − Yellow [68.2, 604] and Blue − Natural [112.7, 649] intervals exclude 0 comfortably. The White − Natural interval [0.7, 537] just clears 0, consistent with its marginal p = .049.
+
+## Effect Sizes for Pairwise Comparisons
+
+Cohen's *d* quantifies how large each mean difference is in standard deviation units, independent of sample size. We use the pooled model error (`sigma(fit2.way)`) as the standardizer.
+
+### Device pairwise *d*
+
+```r
+eff_size(emmeans(fit2.way, pairwise ~ Device),
+         sigma = sigma(fit2.way),
+         edf   = df.residual(fit2.way))
+```
+
+```
+ contrast          effect.size    SE df lower.CL upper.CL
+ (Phone - Tablet)        0.800 0.327 48    0.143    1.457
+ (Phone - Laptop)        0.866 0.328 48    0.206    1.526
+ (Tablet - Laptop)       0.066 0.316 48   -0.570    0.702
+
+Results are averaged over the levels of: Light
+sigma used for effect sizes: 275.8
+```
+
+Phone vs. Tablet: d = 0.80 (large). Phone vs. Laptop: d = 0.87 (large). Tablet vs. Laptop: d = 0.07 (negligible).
+
+### Light pairwise *d*
+
+```r
+eff_size(emmeans(fit2.way, pairwise ~ Light),
+         sigma = sigma(fit2.way),
+         edf   = df.residual(fit2.way))
+```
+
+```
+ contrast           effect.size    SE df lower.CL upper.CL
+ (Blue - White)           0.406 0.367 48   -0.333    1.145
+ (Blue - Yellow)          1.219 0.386 48    0.444    1.995
+ (Blue - Natural)         1.381 0.391 48    0.594    2.167
+ (White - Yellow)         0.813 0.374 48    0.060    1.566
+ (White - Natural)        0.974 0.378 48    0.214    1.735
+ (Yellow - Natural)       0.161 0.366 48   -0.574    0.896
+
+Results are averaged over the levels of: Device
+sigma used for effect sizes: 275.8
+```
+
+The largest effects involve blue light: Blue vs. Natural d = 1.38 (very large) and Blue vs. Yellow d = 1.22 (very large). White vs. Natural d = 0.97 (large) and White vs. Yellow d = 0.81 (large). Comparisons involving only adjacent conditions (Blue vs. White; Yellow vs. Natural) show small, non-significant effects.

@@ -166,8 +166,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#visualizing-the-interaction" id="toc-visualizing-the-interaction" class="nav-link" data-scroll-target="#visualizing-the-interaction">Visualizing the Interaction</a></li>
   <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model">Fitting the Model</a></li>
-  <li><a href="#overall-effect-sizes-partial-eta-squared" id="toc-overall-effect-sizes-partial-eta-squared" class="nav-link" data-scroll-target="#overall-effect-sizes-partial-eta-squared">Overall Effect Sizes: Partial Eta Squared</a></li>
+  <li><a href="#overall-effect-sizes-eta-squared" id="toc-overall-effect-sizes-eta-squared" class="nav-link" data-scroll-target="#overall-effect-sizes-eta-squared">Overall Effect Sizes: Eta Squared</a></li>
   <li><a href="#when-the-interaction-is-not-significant" id="toc-when-the-interaction-is-not-significant" class="nav-link" data-scroll-target="#when-the-interaction-is-not-significant">When the Interaction Is Not Significant</a></li>
+  <li><a href="#if-the-interaction-had-been-significant-simple-effects" id="toc-if-the-interaction-had-been-significant-simple-effects" class="nav-link" data-scroll-target="#if-the-interaction-had-been-significant-simple-effects">If the Interaction Had Been Significant: Simple Effects</a></li>
   <li><a href="#post-hoc-tests" id="toc-post-hoc-tests" class="nav-link" data-scroll-target="#post-hoc-tests">Post-hoc Tests</a>
   <ul class="collapse">
   <li><a href="#device-pairwise-comparisons" id="toc-device-pairwise-comparisons" class="nav-link" data-scroll-target="#device-pairwise-comparisons">Device: Pairwise Comparisons</a></li>
@@ -308,20 +309,6 @@ Note
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>reader<span class="sc">$</span>Light  <span class="ot">&lt;-</span> <span class="fu">factor</span>(reader<span class="sc">$</span>Light,</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Blue"</span>, <span class="st">"White"</span>, <span class="st">"Yellow"</span>, <span class="st">"Natural"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Why <code>factor()</code> instead of <code>recode()</code>?</strong></p>
-<p>The <code>dplyr::mutate(recode(...))</code> approach works but requires multiple lines and the <code>dplyr</code> package. Using <code>factor()</code> with a <code>labels</code> argument is a base-R one-liner that does the same thing: it converts the numeric variable to a factor and attaches readable names to each level simultaneously.</p>
-</div>
-</div>
 </section>
 </section>
 <section id="exploring-the-data" class="level2">
@@ -417,20 +404,21 @@ Note
 </div>
 </div>
 </section>
-<section id="overall-effect-sizes-partial-eta-squared" class="level2">
-<h2 class="anchored" data-anchor-id="overall-effect-sizes-partial-eta-squared">Overall Effect Sizes: Partial Eta Squared</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit2.way, <span class="at">partial =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="overall-effect-sizes-eta-squared" class="level2">
+<h2 class="anchored" data-anchor-id="overall-effect-sizes-eta-squared">Overall Effect Sizes: Eta Squared</h2>
+<p>Eta squared (η²) is the proportion of <strong>total</strong> variance in reading time explained by each effect.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit2.way, <span class="at">partial =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code># Effect Size for ANOVA (Type I)
 
-Parameter    | Eta2 (partial) |       95% CI
---------------------------------------------
-Device       |           0.16 | [0.02, 1.00]
-Light        |           0.29 | [0.10, 1.00]
-Device:Light |       0.006    | [0.00, 1.00]</code></pre>
+Parameter    |  Eta2 |       95% CI
+------------------------------------
+Device       |  0.12 | [0.00, 1.00]
+Light        |  0.25 | [0.07, 1.00]
+Device:Light |  0.004| [0.00, 1.00]</code></pre>
 <ul>
-<li><strong>Device</strong>: partial η² = .16 — a medium-to-large effect. Device type accounts for 16% of the variance in reading time after removing Light’s contribution.</li>
-<li><strong>Light</strong>: partial η² = .29 — a large effect. Lighting condition accounts for 29% of the variance after removing Device’s contribution.</li>
-<li><strong>Interaction</strong>: partial η² &lt; .01 — negligible. Essentially none of the variance is explained by the interaction.</li>
+<li><strong>Device</strong>: η² = .12 — device type explains 12% of the total variance in reading time.</li>
+<li><strong>Light</strong>: η² = .25 — lighting condition explains 25% of the total variance. This is the stronger of the two main effects.</li>
+<li><strong>Interaction</strong>: η² &lt; .01 — the Device × Light combination explains essentially none of the variance.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -442,8 +430,8 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Why partial η² in a factorial design?</strong></p>
-<p>In a one-way ANOVA, η² and partial η² are identical. In a factorial design they differ: partial η² estimates each effect’s contribution <em>relative to its own error</em>, not relative to the total variance. This makes partial η² values from different studies comparable even when the designs have different numbers of factors.</p>
+<p><strong>η² vs.&nbsp;partial η²</strong></p>
+<p>In a one-way ANOVA, η² and partial η² are identical. In a factorial design they differ: partial η² estimates each effect’s share of variance <em>after removing the other effects</em>, which inflates the values (e.g., Device partial η² = .16 vs.&nbsp;full η² = .12). Full η² is more conservative and directly interpretable as a proportion of total variance. Partial η² is commonly reported in published articles when comparing across studies with different designs.</p>
 </div>
 </div>
 </section>
@@ -469,13 +457,109 @@ Tip
 </div>
 </div>
 </section>
+<section id="if-the-interaction-had-been-significant-simple-effects" class="level2">
+<h2 class="anchored" data-anchor-id="if-the-interaction-had-been-significant-simple-effects">If the Interaction Had Been Significant: Simple Effects</h2>
+<p>When an interaction <em>is</em> significant, interpreting the main effects alone is misleading — the effect of Device depends on which lighting level you are in, so averaging across lighting levels obscures what is actually happening. The correct next step is <strong>simple effects analysis</strong>: test Device differences separately within each level of Light (and/or Light differences within each level of Device).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated means for each Device × Light cell</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>simple <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device <span class="sc">|</span> Light)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>simple</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Light = Blue:
+ Device emmean  SE df lower.CL upper.CL
+ Phone    1462 123 48     1214     1710
+ Tablet   1250 123 48     1002     1498
+ Laptop   1208 123 48      960     1456
+
+Light = White:
+ Device emmean  SE df lower.CL upper.CL
+ Phone    1386 123 48     1138     1634
+ Tablet   1097 123 48      849     1345
+ Laptop   1102 123 48      854     1350
+
+Light = Yellow:
+ Device emmean  SE df lower.CL upper.CL
+ Phone    1094 123 48      846     1342
+ Tablet    914 123 48      666     1162
+ Laptop    904 123 48      656     1152
+
+Light = Natural:
+ Device emmean  SE df lower.CL upper.CL
+ Phone    1069 123 48      822     1317
+ Tablet    868 123 48      620     1116
+ Laptop    841 123 48      593     1089</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise Device comparisons within each Light level</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(simple, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Light = Blue:
+ contrast        estimate  SE df t.ratio p.value
+ Phone - Tablet    211.97 174 48   1.215  0.4500
+ Phone - Laptop    253.81 174 48   1.455  0.3213
+ Tablet - Laptop    41.84 174 48   0.240  0.9688
+
+Light = White:
+ contrast        estimate  SE df t.ratio p.value
+ Phone - Tablet    289.37 174 48   1.659  0.2314
+ Phone - Laptop    283.81 174 48   1.627  0.2441
+ Tablet - Laptop    -5.55 174 48  -0.032  0.9994
+
+Light = Yellow:
+ contrast        estimate  SE df t.ratio p.value
+ Phone - Tablet    179.69 174 48   1.030  0.5616
+ Phone - Laptop    189.29 174 48   1.085  0.5277
+ Tablet - Laptop     9.61 174 48   0.055  0.9983
+
+Light = Natural:
+ contrast        estimate  SE df t.ratio p.value
+ Phone - Tablet    201.48 174 48   1.155  0.4854
+ Phone - Laptop    228.39 174 48   1.310  0.3969
+ Tablet - Laptop    26.91 174 48   0.154  0.9870
+
+P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confidence intervals for simple effects</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">pairs</span>(simple, <span class="at">adjust =</span> <span class="st">"tukey"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Light = Blue:
+ contrast        estimate  SE df lower.CL upper.CL
+ Phone - Tablet    211.97 174 48     -210      634
+ Phone - Laptop    253.81 174 48     -168      676
+ Tablet - Laptop    41.84 174 48     -380      464
+
+Light = White:
+ contrast        estimate  SE df lower.CL upper.CL
+ Phone - Tablet    289.37 174 48     -132      711
+ Phone - Laptop    283.81 174 48     -138      706
+ Tablet - Laptop    -5.55 174 48     -427      416
+
+Light = Yellow:
+ contrast        estimate  SE df lower.CL upper.CL
+ Phone - Tablet    179.69 174 48     -242      601
+ Phone - Laptop    189.29 174 48     -233      611
+ Tablet - Laptop     9.61 174 48     -412      431
+
+Light = Natural:
+ contrast        estimate  SE df lower.CL upper.CL
+ Phone - Tablet    201.48 174 48     -220      623
+ Phone - Laptop    228.39 174 48     -193      650
+ Tablet - Laptop    26.91 174 48     -395      449</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Why are the simple effects CIs wider than the main-effect CIs?</strong></p>
+<p>When testing Device at each level of Light separately, each comparison uses only the 5 participants per cell rather than the 20 per device collapsed across all lighting conditions. Smaller cell n means larger standard errors and wider confidence intervals. This is the cost of decomposing an interaction — you gain specificity (knowing <em>where</em> the effect occurs) but lose precision.</p>
+</div>
+</div>
+</section>
 <section id="post-hoc-tests" class="level2">
 <h2 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc Tests</h2>
 <section id="device-pairwise-comparisons" class="level3">
 <h3 class="anchored" data-anchor-id="device-pairwise-comparisons">Device: Pairwise Comparisons</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>em_device <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>device_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_device, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>device_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>em_device <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Device)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>device_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_device, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>device_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast        estimate   SE df t.ratio p.value
  Phone - Tablet     220.6 87.2 48   2.530  0.0385
  Phone - Laptop     238.8 87.2 48   2.739  0.0231
@@ -487,7 +571,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates</code></p
 </section>
 <section id="confidence-intervals-device" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals-device">Confidence Intervals: Device</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(device_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(device_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast        estimate   SE df lower.CL upper.CL
  Phone - Tablet     220.6 87.2 48      9.7      432
  Phone - Laptop     238.8 87.2 48     27.9      450
@@ -500,9 +584,9 @@ Conf-level adjustment: tukey method for comparing a family of 3 estimates</code>
 </section>
 <section id="light-pairwise-comparisons" class="level3">
 <h3 class="anchored" data-anchor-id="light-pairwise-comparisons">Light: Pairwise Comparisons</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>em_light <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Light)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>light_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_light, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>light_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>em_light <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit2.way, <span class="sc">~</span> Light)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>light_pairs <span class="ot">&lt;-</span> <span class="fu">pairs</span>(em_light, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>light_pairs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast         estimate  SE df t.ratio p.value
  Blue - White        112.0 101 48   1.112  0.6838
  Blue - Yellow       336.2 101 48   3.339  0.0086
@@ -517,7 +601,7 @@ P value adjustment: tukey method for comparing a family of 4 estimates</code></p
 </section>
 <section id="confidence-intervals-light" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals-light">Confidence Intervals: Light</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(light_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(light_pairs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast         estimate  SE df lower.CL upper.CL
  Blue - White        112.0 101 48   -156.0      380
  Blue - Yellow       336.2 101 48     68.2      604
@@ -536,9 +620,9 @@ Conf-level adjustment: tukey method for comparing a family of 4 estimates</code>
 <p>Cohen’s <em>d</em> quantifies how large each mean difference is in standard deviation units, independent of sample size. We use the pooled model error (<code>sigma(fit2.way)</code>) as the standardizer.</p>
 <section id="device-pairwise-d" class="level3">
 <h3 class="anchored" data-anchor-id="device-pairwise-d">Device pairwise <em>d</em></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Device),</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Device),</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast          effect.size    SE df lower.CL upper.CL
  (Phone - Tablet)        0.800 0.327 48    0.143    1.457
  (Phone - Laptop)        0.866 0.328 48    0.206    1.526
@@ -550,9 +634,9 @@ sigma used for effect sizes: 275.8</code></pre>
 </section>
 <section id="light-pairwise-d" class="level3">
 <h3 class="anchored" data-anchor-id="light-pairwise-d">Light pairwise <em>d</em></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Light),</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Light),</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast           effect.size    SE df lower.CL upper.CL
  (Blue - White)           0.406 0.367 48   -0.333    1.145
  (Blue - Yellow)          1.219 0.386 48    0.444    1.995

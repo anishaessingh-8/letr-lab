@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Anisha Singh">
+
+<title>Repeated Measures (Within-Subjects) ANOVA – LETR Lab</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fd96403ee8ccd2558595a75084e5703b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">LETR Lab</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../team.html"> 
+<span class="menu-text">Team</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:asingh56@sfsu.edu"> <i class="bi bi-envelope" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#packages" id="toc-packages" class="nav-link active" data-scroll-target="#packages">Packages</a></li>
+  <li><a href="#load-and-prepare-the-data" id="toc-load-and-prepare-the-data" class="nav-link" data-scroll-target="#load-and-prepare-the-data">Load and Prepare the Data</a></li>
+  <li><a href="#exploring-the-data" id="toc-exploring-the-data" class="nav-link" data-scroll-target="#exploring-the-data">Exploring the Data</a></li>
+  <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions">Checking Assumptions</a></li>
+  <li><a href="#visualizing-residuals" id="toc-visualizing-residuals" class="nav-link" data-scroll-target="#visualizing-residuals">Visualizing Residuals</a></li>
+  <li><a href="#fitting-the-repeated-measures-model" id="toc-fitting-the-repeated-measures-model" class="nav-link" data-scroll-target="#fitting-the-repeated-measures-model">Fitting the Repeated Measures Model</a></li>
+  <li><a href="#overall-effect-size-partial-eta-squared" id="toc-overall-effect-size-partial-eta-squared" class="nav-link" data-scroll-target="#overall-effect-size-partial-eta-squared">Overall Effect Size: Partial Eta Squared</a></li>
+  <li><a href="#post-hoc-tests-tukeys-hsd" id="toc-post-hoc-tests-tukeys-hsd" class="nav-link" data-scroll-target="#post-hoc-tests-tukeys-hsd">Post-hoc Tests: Tukey’s HSD</a></li>
+  <li><a href="#confidence-intervals-for-pairwise-differences" id="toc-confidence-intervals-for-pairwise-differences" class="nav-link" data-scroll-target="#confidence-intervals-for-pairwise-differences">Confidence Intervals for Pairwise Differences</a></li>
+  <li><a href="#pairwise-effect-sizes-cohens-d" id="toc-pairwise-effect-sizes-cohens-d" class="nav-link" data-scroll-target="#pairwise-effect-sizes-cohens-d">Pairwise Effect Sizes: Cohen’s <em>d</em></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Repeated Measures (Within-Subjects) ANOVA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Anisha Singh </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+.callout {
+  border-left: 4px solid #7b2fbe !important;
+  background: #f5f0f7 !important;
+}
+.callout-note { border-left-color: #7b2fbe !important; }
+.callout-tip { border-left-color: #2e7d32 !important; background: #f1f8f2 !important; }
+.callout-warning { border-left-color: #e65100 !important; background: #fff8f1 !important; }
+.callout-title { color: #1a1320 !important; }
+.callout-body p { color: #1a1320 !important; }
+</style>
+<p>The dataset for this week is <code>mind.csv</code>. Ten participants had their blood pressure (BP) measured at four time points: <strong>Before</strong> an intervention, at <strong>One Month</strong>, <strong>Three Months</strong>, and <strong>Six Months</strong> post-intervention. Because the <em>same</em> participants were measured at every time point, this is a <strong>within-subjects (repeated measures)</strong> design.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Between-subjects vs.&nbsp;within-subjects</strong></p>
+<p>In a <strong>between-subjects</strong> design (Script 5), different people are in each group — the groups are independent. In a <strong>within-subjects</strong> design, the <em>same</em> people contribute data to every condition. This has two key consequences: (1) individual differences are removed from the error term, giving the test more power; (2) the data structure changes — each person’s scores across time points are correlated, which must be accounted for in the model.</p>
+</div>
+</div>
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("reshape2")    # run once if needed</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("psych")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("emmeans")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("effectsize")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="load-and-prepare-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-and-prepare-the-data">Load and Prepare the Data</h2>
+<p>The data arrive in <strong>wide format</strong> — one row per person, one column per time point.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mind <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"mind.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>       Person Before OneMonth ThreeMonth SixMonth
+1       Harry    116      112        109      106
+2    Hermione    119      121        118      114
+3         Ron    128      118        110      106
+4      George    103      101         98       96
+5        Fred    122      118        113      109
+6     Parvati     74       71         68       63
+7      Hagrid     85       84         85       84
+8  Dumbledore    115      115        113      110
+9       Draco    138      133        127      123
+10       Luna    104      102         97       93</code></pre>
+<p>R’s repeated measures <code>aov()</code> requires <strong>long format</strong> — one row per observation, with separate columns for Person, Time, and BP. We reshape with <code>melt()</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mind.melt <span class="ot">&lt;-</span> <span class="fu">melt</span>(mind, <span class="at">id =</span> <span class="st">"Person"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mind.melt) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Person"</span>, <span class="st">"Time"</span>, <span class="st">"BP"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>mind.melt<span class="sc">$</span>Person <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mind.melt<span class="sc">$</span>Person)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mind.melt<span class="sc">$</span>Time   <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mind.melt<span class="sc">$</span>Time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>      Person   Time  BP
+1      Harry Before 116
+2   Hermione Before 119
+3        Ron Before 128
+4     George Before 103
+5       Fred Before 122
+6    Parvati Before  74
+...</code></pre>
+</section>
+<section id="exploring-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-data">Exploring the Data</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(mind.melt<span class="sc">$</span>BP, mind.melt<span class="sc">$</span>Time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>group: Before
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 110.4 19.43  115.5  111.50 17.79  74 138    64 -0.50    -0.98 6.14
+------------------------------------------------------------
+group: OneMonth
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 107.5 18.52  113.5  108.88 14.08  71 133    62 -0.63    -0.82 5.86
+------------------------------------------------------------
+group: ThreeMonth
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 103.8 17.29  109.5  105.38 14.83  68 127    59 -0.69    -0.63 5.47
+------------------------------------------------------------
+group: SixMonth
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 100.4 17.21  106.0  102.25 13.34  63 123    60 -0.81    -0.33 5.44</code></pre>
+<p>Mean BP decreased at each time point: Before (M = 110.4), One Month (M = 107.5), Three Months (M = 103.8), Six Months (M = 100.4).</p>
+</section>
+<section id="checking-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="checking-assumptions">Checking Assumptions</h2>
+<p>The key normality assumption for repeated measures ANOVA is that the <strong>difference scores</strong> between pairs of time points are normally distributed — not the raw scores themselves.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute difference scores relative to baseline</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>d_1mo  <span class="ot">&lt;-</span> mind<span class="sc">$</span>Before <span class="sc">-</span> mind<span class="sc">$</span>OneMonth</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>d_3mo  <span class="ot">&lt;-</span> mind<span class="sc">$</span>Before <span class="sc">-</span> mind<span class="sc">$</span>ThreeMonth</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>d_6mo  <span class="ot">&lt;-</span> mind<span class="sc">$</span>Before <span class="sc">-</span> mind<span class="sc">$</span>SixMonth</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(d_1mo)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(d_3mo)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(d_6mo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Before - OneMonth:    W = 0.94264, p-value = 0.5827
+Before - ThreeMonth:  W = 0.93256, p-value = 0.4735
+Before - SixMonth:    W = 0.96621, p-value = 0.8537</code></pre>
+<p>All three tests are non-significant, so there is no evidence against normality of the difference scores.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Sphericity</strong></p>
+<p>Repeated measures ANOVA also assumes <strong>sphericity</strong> — that the variances of all pairwise difference scores are equal. This is tested with Mauchly’s test. If sphericity is violated, apply a Greenhouse-Geisser or Huynh-Feldt correction (both are available in SPSS; in R, the <code>ez</code> package provides them). For this small dataset we proceed with the standard model.</p>
+</div>
+</div>
+</section>
+<section id="visualizing-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-residuals">Visualizing Residuals</h2>
+<p>These plots help check the independence and constant-variance assumptions visually. Run them and look for random scatter (no patterns or fans).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit_check <span class="ot">&lt;-</span> <span class="fu">lm</span>(BP <span class="sc">~</span> Time, <span class="at">data =</span> mind.melt)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(fit_check<span class="sc">$</span>residuals)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Independence: residuals in observation order</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span>N, fit_check<span class="sc">$</span>residuals,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Observation order"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs. Order"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Homoscedasticity: residuals vs. fitted values</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_check<span class="sc">$</span>fitted.values, fit_check<span class="sc">$</span>residuals,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Fitted values"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs. Fitted"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality: Q-Q plot</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(fit_check<span class="sc">$</span>residuals, <span class="at">main =</span> <span class="st">"Normal Q-Q Plot"</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(fit_check<span class="sc">$</span>residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="fitting-the-repeated-measures-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-the-repeated-measures-model">Fitting the Repeated Measures Model</h2>
+<p>The <code>Error(Person/Time)</code> term tells R that Time is nested within Person — each person contributes one score at each time point.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit.ws <span class="ot">&lt;-</span> <span class="fu">aov</span>(BP <span class="sc">~</span> Time <span class="sc">+</span> <span class="fu">Error</span>(Person<span class="sc">/</span>Time), <span class="at">data =</span> mind.melt)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.ws)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Error: Person
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals  9  11632    1292
+
+Error: Person:Time
+          Df Sum Sq Mean Sq F value  Pr(&gt;F)
+Time       3  569.1   189.7   24.48 7.3e-08 ***
+Residuals 27  209.2     7.8</code></pre>
+<p>Time has a statistically significant effect on blood pressure, F(3, 27) = 24.48, p &lt; .001.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Reading the output</strong></p>
+<p>The ANOVA table is split into two error strata. The <strong>Person</strong> stratum captures between-person variability (individual differences in average BP). The <strong>Person:Time</strong> stratum is where the test lives: it compares variance attributable to Time against the Person × Time interaction (the within-person error). Because individual differences are absorbed into the Person stratum rather than the error term, the test is more powerful than a between-subjects design would be.</p>
+</div>
+</div>
+</section>
+<section id="overall-effect-size-partial-eta-squared" class="level2">
+<h2 class="anchored" data-anchor-id="overall-effect-size-partial-eta-squared">Overall Effect Size: Partial Eta Squared</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit.ws)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code># Effect Size for ANOVA (Type I)
+
+Group       | Parameter | Eta2 (partial) |       95% CI
+-------------------------------------------------------
+Person:Time |      Time |           0.73 | [0.56, 1.00]</code></pre>
+<p>Partial η² = .73 — time accounts for 73% of the within-person variance in blood pressure. By Cohen’s conventions (small ≈ .01, medium ≈ .06, large ≈ .14), this is a very large effect.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Partial eta squared in repeated measures</strong></p>
+<p><code>eta_squared()</code> returns <strong>partial</strong> η² for repeated measures models, because it partitions variance relative to the within-person error (Person:Time) rather than total variance. This is the standard convention for within-subjects effects.</p>
+</div>
+</div>
+</section>
+<section id="post-hoc-tests-tukeys-hsd" class="level2">
+<h2 class="anchored" data-anchor-id="post-hoc-tests-tukeys-hsd">Post-hoc Tests: Tukey’s HSD</h2>
+<p>A significant omnibus F tells us that BP changed over time, but not <em>when</em> the changes occurred. We use Tukey’s HSD via <code>emmeans</code> to make all pairwise comparisons.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit.ws, <span class="sc">~</span> Time)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(emm, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code> contrast              estimate   SE df t.ratio p.value
+ Before - OneMonth          2.9 1.24 27   2.330  0.1162
+ Before - ThreeMonth        6.6 1.24 27   5.302  &lt;.0001
+ Before - SixMonth         10.0 1.24 27   8.034  &lt;.0001
+ OneMonth - ThreeMonth      3.7 1.24 27   2.972  0.0295
+ OneMonth - SixMonth        7.1 1.24 27   5.704  &lt;.0001
+ ThreeMonth - SixMonth      3.4 1.24 27   2.731  0.0506
+
+P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>BP did not significantly change from Before to One Month (p = .116), but all comparisons involving Three Month or Six Month against an earlier time point were significant or near-significant. By Six Months, BP had dropped 10 points from baseline (p &lt; .001).</p>
+</section>
+<section id="confidence-intervals-for-pairwise-differences" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-for-pairwise-differences">Confidence Intervals for Pairwise Differences</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">pairs</span>(emm, <span class="at">adjust =</span> <span class="st">"tukey"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code> contrast              estimate   SE df lower.CL upper.CL
+ Before - OneMonth          2.9 1.24 27  -0.506    6.306
+ Before - ThreeMonth        6.6 1.24 27   3.194   10.006
+ Before - SixMonth         10.0 1.24 27   6.594   13.406
+ OneMonth - ThreeMonth      3.7 1.24 27   0.294    7.106
+ OneMonth - SixMonth        7.1 1.24 27   3.694   10.506
+ ThreeMonth - SixMonth      3.4 1.24 27  -0.006    6.806
+
+Confidence level used: 0.95
+Conf-level adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>Confidence intervals that do not include 0 indicate a significant difference. The Before – Six Month interval [6.59, 13.41] is the widest and clearest, reflecting the largest and most certain reduction.</p>
+</section>
+<section id="pairwise-effect-sizes-cohens-d" class="level2">
+<h2 class="anchored" data-anchor-id="pairwise-effect-sizes-cohens-d">Pairwise Effect Sizes: Cohen’s <em>d</em></h2>
+<p><code>cohens_d()</code> with <code>paired = TRUE</code> computes the standardized mean difference using the standard deviation of the difference scores.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(mind<span class="sc">$</span>Before, mind<span class="sc">$</span>OneMonth,    <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(mind<span class="sc">$</span>Before, mind<span class="sc">$</span>ThreeMonth,  <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(mind<span class="sc">$</span>Before, mind<span class="sc">$</span>SixMonth,    <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Before vs. One Month:
+  Cohen's d |       95% CI
+  0.89      | [0.13, 1.62]
+
+Before vs. Three Months:
+  Cohen's d |       95% CI
+  1.24      | [0.38, 2.06]
+
+Before vs. Six Months:
+  Cohen's d |       95% CI
+  1.68      | [0.68, 2.64]</code></pre>
+<p>Effect sizes grow steadily across time: One Month d = 0.89 (large), Three Months d = 1.24 (very large), Six Months d = 1.68 (very large). Even the comparison that was not statistically significant (Before vs.&nbsp;One Month, p = .116) showed a large effect — a reminder that significance depends on sample size, while effect size does not.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 LETR Lab · Department of Psychology, San Francisco State University</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="mailto:asingh56@sfsu.edu">asingh56@sfsu.edu</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,354 @@
+---
+title: "Repeated Measures (Within-Subjects) ANOVA"
+author: "Dr. Anisha Singh"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+---
+
+```{=html}
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+.callout {
+  border-left: 4px solid #7b2fbe !important;
+  background: #f5f0f7 !important;
+}
+.callout-note { border-left-color: #7b2fbe !important; }
+.callout-tip { border-left-color: #2e7d32 !important; background: #f1f8f2 !important; }
+.callout-warning { border-left-color: #e65100 !important; background: #fff8f1 !important; }
+.callout-title { color: #1a1320 !important; }
+.callout-body p { color: #1a1320 !important; }
+</style>
+```
+
+The dataset for this week is `mind.csv`. Ten participants had their blood pressure (BP) measured at four time points: **Before** an intervention, at **One Month**, **Three Months**, and **Six Months** post-intervention. Because the *same* participants were measured at every time point, this is a **within-subjects (repeated measures)** design.
+
+::: {.callout-note}
+**Between-subjects vs. within-subjects**
+
+In a **between-subjects** design (Script 5), different people are in each group — the groups are independent. In a **within-subjects** design, the *same* people contribute data to every condition. This has two key consequences: (1) individual differences are removed from the error term, giving the test more power; (2) the data structure changes — each person's scores across time points are correlated, which must be accounted for in the model.
+:::
+
+## Packages
+
+```r
+# install.packages("reshape2")    # run once if needed
+# install.packages("psych")
+# install.packages("emmeans")
+# install.packages("effectsize")
+
+library(reshape2)
+library(psych)
+library(emmeans)
+library(effectsize)
+```
+
+## Load and Prepare the Data
+
+The data arrive in **wide format** — one row per person, one column per time point.
+
+```r
+mind <- read.csv("mind.csv")
+```
+
+```
+       Person Before OneMonth ThreeMonth SixMonth
+1       Harry    116      112        109      106
+2    Hermione    119      121        118      114
+3         Ron    128      118        110      106
+4      George    103      101         98       96
+5        Fred    122      118        113      109
+6     Parvati     74       71         68       63
+7      Hagrid     85       84         85       84
+8  Dumbledore    115      115        113      110
+9       Draco    138      133        127      123
+10       Luna    104      102         97       93
+```
+
+R's repeated measures `aov()` requires **long format** — one row per observation, with separate columns for Person, Time, and BP. We reshape with `melt()`.
+
+```r
+mind.melt <- melt(mind, id = "Person")
+colnames(mind.melt) <- c("Person", "Time", "BP")
+
+mind.melt$Person <- as.factor(mind.melt$Person)
+mind.melt$Time   <- as.factor(mind.melt$Time)
+```
+
+```
+      Person   Time  BP
+1      Harry Before 116
+2   Hermione Before 119
+3        Ron Before 128
+4     George Before 103
+5       Fred Before 122
+6    Parvati Before  74
+...
+```
+
+## Exploring the Data
+
+```r
+describeBy(mind.melt$BP, mind.melt$Time)
+```
+
+```
+group: Before
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 110.4 19.43  115.5  111.50 17.79  74 138    64 -0.50    -0.98 6.14
+------------------------------------------------------------
+group: OneMonth
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 107.5 18.52  113.5  108.88 14.08  71 133    62 -0.63    -0.82 5.86
+------------------------------------------------------------
+group: ThreeMonth
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 103.8 17.29  109.5  105.38 14.83  68 127    59 -0.69    -0.63 5.47
+------------------------------------------------------------
+group: SixMonth
+   vars  n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+X1    1 10 100.4 17.21  106.0  102.25 13.34  63 123    60 -0.81    -0.33 5.44
+```
+
+Mean BP decreased at each time point: Before (M = 110.4), One Month (M = 107.5), Three Months (M = 103.8), Six Months (M = 100.4).
+
+## Checking Assumptions
+
+The key normality assumption for repeated measures ANOVA is that the **difference scores** between pairs of time points are normally distributed — not the raw scores themselves.
+
+```r
+# Compute difference scores relative to baseline
+d_1mo  <- mind$Before - mind$OneMonth
+d_3mo  <- mind$Before - mind$ThreeMonth
+d_6mo  <- mind$Before - mind$SixMonth
+
+shapiro.test(d_1mo)
+shapiro.test(d_3mo)
+shapiro.test(d_6mo)
+```
+
+```
+Before - OneMonth:    W = 0.94264, p-value = 0.5827
+Before - ThreeMonth:  W = 0.93256, p-value = 0.4735
+Before - SixMonth:    W = 0.96621, p-value = 0.8537
+```
+
+All three tests are non-significant, so there is no evidence against normality of the difference scores.
+
+::: {.callout-note}
+**Sphericity**
+
+Repeated measures ANOVA also assumes **sphericity** — that the variances of all pairwise difference scores are equal. This is tested with Mauchly's test. If sphericity is violated, apply a Greenhouse-Geisser or Huynh-Feldt correction (both are available in SPSS; in R, the `ez` package provides them). For this small dataset we proceed with the standard model.
+:::
+
+## Visualizing Residuals
+
+These plots help check the independence and constant-variance assumptions visually. Run them and look for random scatter (no patterns or fans).
+
+```r
+fit_check <- lm(BP ~ Time, data = mind.melt)
+N <- length(fit_check$residuals)
+
+# Independence: residuals in observation order
+plot(1:N, fit_check$residuals,
+     xlab = "Observation order", ylab = "Residual",
+     main = "Residuals vs. Order")
+abline(h = 0, lty = 2)
+
+# Homoscedasticity: residuals vs. fitted values
+plot(fit_check$fitted.values, fit_check$residuals,
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs. Fitted")
+abline(h = 0, lty = 2)
+
+# Normality: Q-Q plot
+qqnorm(fit_check$residuals, main = "Normal Q-Q Plot")
+qqline(fit_check$residuals)
+```
+
+## Fitting the Repeated Measures Model
+
+The `Error(Person/Time)` term tells R that Time is nested within Person — each person contributes one score at each time point.
+
+```r
+fit.ws <- aov(BP ~ Time + Error(Person/Time), data = mind.melt)
+summary(fit.ws)
+```
+
+```
+Error: Person
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals  9  11632    1292
+
+Error: Person:Time
+          Df Sum Sq Mean Sq F value  Pr(>F)
+Time       3  569.1   189.7   24.48 7.3e-08 ***
+Residuals 27  209.2     7.8
+```
+
+Time has a statistically significant effect on blood pressure, F(3, 27) = 24.48, p < .001.
+
+::: {.callout-note}
+**Reading the output**
+
+The ANOVA table is split into two error strata. The **Person** stratum captures between-person variability (individual differences in average BP). The **Person:Time** stratum is where the test lives: it compares variance attributable to Time against the Person × Time interaction (the within-person error). Because individual differences are absorbed into the Person stratum rather than the error term, the test is more powerful than a between-subjects design would be.
+:::
+
+## Overall Effect Size: Partial Eta Squared
+
+```r
+eta_squared(fit.ws)
+```
+
+```
+# Effect Size for ANOVA (Type I)
+
+Group       | Parameter | Eta2 (partial) |       95% CI
+-------------------------------------------------------
+Person:Time |      Time |           0.73 | [0.56, 1.00]
+```
+
+Partial η² = .73 — time accounts for 73% of the within-person variance in blood pressure. By Cohen's conventions (small ≈ .01, medium ≈ .06, large ≈ .14), this is a very large effect.
+
+::: {.callout-note}
+**Partial eta squared in repeated measures**
+
+`eta_squared()` returns **partial** η² for repeated measures models, because it partitions variance relative to the within-person error (Person:Time) rather than total variance. This is the standard convention for within-subjects effects.
+:::
+
+## Post-hoc Tests: Tukey's HSD
+
+A significant omnibus F tells us that BP changed over time, but not *when* the changes occurred. We use Tukey's HSD via `emmeans` to make all pairwise comparisons.
+
+```r
+emm <- emmeans(fit.ws, ~ Time)
+pairs(emm, adjust = "tukey")
+```
+
+```
+ contrast              estimate   SE df t.ratio p.value
+ Before - OneMonth          2.9 1.24 27   2.330  0.1162
+ Before - ThreeMonth        6.6 1.24 27   5.302  <.0001
+ Before - SixMonth         10.0 1.24 27   8.034  <.0001
+ OneMonth - ThreeMonth      3.7 1.24 27   2.972  0.0295
+ OneMonth - SixMonth        7.1 1.24 27   5.704  <.0001
+ ThreeMonth - SixMonth      3.4 1.24 27   2.731  0.0506
+
+P value adjustment: tukey method for comparing a family of 4 estimates
+```
+
+BP did not significantly change from Before to One Month (p = .116), but all comparisons involving Three Month or Six Month against an earlier time point were significant or near-significant. By Six Months, BP had dropped 10 points from baseline (p < .001).
+
+## Confidence Intervals for Pairwise Differences
+
+```r
+confint(pairs(emm, adjust = "tukey"))
+```
+
+```
+ contrast              estimate   SE df lower.CL upper.CL
+ Before - OneMonth          2.9 1.24 27  -0.506    6.306
+ Before - ThreeMonth        6.6 1.24 27   3.194   10.006
+ Before - SixMonth         10.0 1.24 27   6.594   13.406
+ OneMonth - ThreeMonth      3.7 1.24 27   0.294    7.106
+ OneMonth - SixMonth        7.1 1.24 27   3.694   10.506
+ ThreeMonth - SixMonth      3.4 1.24 27  -0.006    6.806
+
+Confidence level used: 0.95
+Conf-level adjustment: tukey method for comparing a family of 4 estimates
+```
+
+Confidence intervals that do not include 0 indicate a significant difference. The Before – Six Month interval [6.59, 13.41] is the widest and clearest, reflecting the largest and most certain reduction.
+
+## Pairwise Effect Sizes: Cohen's *d*
+
+`cohens_d()` with `paired = TRUE` computes the standardized mean difference using the standard deviation of the difference scores.
+
+```r
+cohens_d(mind$Before, mind$OneMonth,    paired = TRUE)
+cohens_d(mind$Before, mind$ThreeMonth,  paired = TRUE)
+cohens_d(mind$Before, mind$SixMonth,    paired = TRUE)
+```
+
+```
+Before vs. One Month:
+  Cohen's d |       95% CI
+  0.89      | [0.13, 1.62]
+
+Before vs. Three Months:
+  Cohen's d |       95% CI
+  1.24      | [0.38, 2.06]
+
+Before vs. Six Months:
+  Cohen's d |       95% CI
+  1.68      | [0.68, 2.64]
+```
+
+Effect sizes grow steadily across time: One Month d = 0.89 (large), Three Months d = 1.24 (very large), Six Months d = 1.68 (very large). Even the comparison that was not statistically significant (Before vs. One Month, p = .116) showed a large effect — a reminder that significance depends on sample size, while effect size does not.

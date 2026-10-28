@@ -287,6 +287,28 @@ $Device
 
 Laptop users read significantly faster than phone users (mean difference = −238.83 ms, p = .039). The tablet vs. phone comparison approached but did not reach significance (p = .061). Tablet and laptop did not differ (p = .980).
 
+### Confidence Intervals for Tukey Pairwise Differences
+
+`TukeyHSD()` already includes confidence intervals in its output. We can also obtain them using the `emmeans` workflow, which integrates cleanly with pairwise comparisons and effect size calculations.
+
+```r
+em_fit <- emmeans(fit2, ~ Device)
+tukey_results <- pairs(em_fit, adjust = "tukey")
+confint(tukey_results, adjust = "tukey")
+```
+
+```
+ contrast          estimate   SE df lower.CL upper.CL
+ Device1 - Device2    220.6 95.1 57    -8.17      449
+ Device1 - Device3    238.8 95.1 57    10.03      468
+ Device2 - Device3     18.2 95.1 57  -210.60      247
+
+Confidence level used: 0.95
+Conf-level adjustment: tukey method for comparing a family of 3 estimates
+```
+
+The 95% CI for Device 1 − Device 3 [10.03, 468] does not include 0, confirming a significant difference. The CI for Device 1 − Device 2 [−8.17, 449] just crosses 0, consistent with the marginal p = .061.
+
 ---
 
 ### Pairwise Effect Sizes: Cohen's *d*
@@ -341,6 +363,25 @@ P value adjustment: bonferroni method for 3 tests
 ```
 
 The p-values shown are **already adjusted** — compare them to α = .05, not .0167. With Bonferroni, no comparison reaches significance. Compare this to Tukey's HSD, which identified phone vs. laptop as significant (p = .039): Tukey is the more appropriate tool for exploratory post-hoc comparisons, and it has better power.
+
+To get confidence intervals for the Bonferroni-adjusted comparisons:
+
+```r
+bonf_results <- pairs(em_fit, adjust = "bonferroni")
+confint(bonf_results, adjust = "bonferroni")
+```
+
+```
+ contrast          estimate   SE df lower.CL upper.CL
+ Device1 - Device2    220.6 95.1 57    -13.9      455
+ Device1 - Device3    238.8 95.1 57      4.3      473
+ Device2 - Device3     18.2 95.1 57   -216.3      253
+
+Confidence level used: 0.95
+Conf-level adjustment: bonferroni method for 3 estimates
+```
+
+Notice that the Bonferroni CI for Device 1 − Device 3 [4.3, 473] is slightly wider than the Tukey CI [10.03, 468], and its lower bound is closer to 0. This reflects the added conservatism of the Bonferroni correction — it requires a larger observed difference before excluding 0 from the interval.
 
 ---
 

@@ -500,9 +500,7 @@ Cohen's *d* quantifies how large each mean difference is in standard deviation u
 ### Device pairwise *d*
 
 ```r
-eff_size(emmeans(fit2.way, pairwise ~ Device),
-         sigma = sigma(fit2.way),
-         edf   = df.residual(fit2.way))
+eff_size(em_device, sigma = sigma(fit2.way), edf = df.residual(fit2.way))
 ```
 
 ```
@@ -520,9 +518,7 @@ Phone vs. Tablet: d = 0.80 (large). Phone vs. Laptop: d = 0.87 (large). Tablet v
 ### Light pairwise *d*
 
 ```r
-eff_size(emmeans(fit2.way, pairwise ~ Light),
-         sigma = sigma(fit2.way),
-         edf   = df.residual(fit2.way))
+eff_size(em_light, sigma = sigma(fit2.way), edf = df.residual(fit2.way))
 ```
 
 ```

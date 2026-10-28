@@ -668,9 +668,7 @@ Conf-level adjustment: tukey method for comparing a family of 4 estimates</code>
 <p>Cohen’s <em>d</em> quantifies how large each mean difference is in standard deviation units, independent of sample size. We use the pooled model error (<code>sigma(fit2.way)</code>) as the standardizer.</p>
 <section id="device-pairwise-d" class="level3">
 <h3 class="anchored" data-anchor-id="device-pairwise-d">Device pairwise <em>d</em></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Device),</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(em_device, <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way), <span class="at">edf =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast          effect.size    SE df lower.CL upper.CL
  (Phone - Tablet)        0.800 0.327 48    0.143    1.457
  (Phone - Laptop)        0.866 0.328 48    0.206    1.526
@@ -682,9 +680,7 @@ sigma used for effect sizes: 275.8</code></pre>
 </section>
 <section id="light-pairwise-d" class="level3">
 <h3 class="anchored" data-anchor-id="light-pairwise-d">Light pairwise <em>d</em></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(<span class="fu">emmeans</span>(fit2.way, pairwise <span class="sc">~</span> Light),</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way),</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edf   =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(em_light, <span class="at">sigma =</span> <span class="fu">sigma</span>(fit2.way), <span class="at">edf =</span> <span class="fu">df.residual</span>(fit2.way))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> contrast           effect.size    SE df lower.CL upper.CL
  (Blue - White)           0.406 0.367 48   -0.333    1.145
  (Blue - Yellow)          1.219 0.386 48    0.444    1.995

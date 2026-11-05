@@ -87,5 +87,15 @@ title: "PSY 771 — R Scripts"
 
   </div>
 
+  <div class="pub-year-group">
+    <div class="pub-year-header">Script 8</div>
+
+    <div class="pub-item">
+      <div class="pub-title"><a href="assumption_testing.html">Assumption Testing in ANOVA</a></div>
+      <div class="pub-venue">Verifying the four assumptions that underlie ANOVA — independence, homoscedasticity, normality, and (for repeated-measures designs) sphericity. Covers residual diagnostic plots, likelihood ratio tests for unequal variance using <code>lme()</code> from the <code>nlme</code> package, Q-Q plots, and Mauchly's test with Greenhouse-Geisser and Huynh-Feldt corrections via the <code>car</code> package.</div>
+    </div>
+
+  </div>
+
 </div>
 ```

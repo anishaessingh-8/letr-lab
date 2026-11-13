@@ -1,0 +1,248 @@
+---
+title: "PSY 771 — Script 9: Mixed Factorial ANOVA"
+---
+
+```{=html}
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">Script 9: Mixed Factorial ANOVA</h1>
+    <p class="page-header-subtitle">Analyzing designs that combine a between-subjects factor and a within-subjects factor in a single model.</p>
+  </div>
+</div>
+
+<div class="page-content">
+```
+
+## What Is a Mixed ANOVA?
+
+A **mixed factorial ANOVA** — sometimes called a split-plot ANOVA — combines features of the two designs you have already seen:
+
+- A **between-subjects factor**: different participants appear in each level (like the two-way ANOVA in Script 7)
+- A **within-subjects factor**: the *same* participants appear at every level (like the repeated-measures ANOVA in Script 6)
+
+The word "mixed" refers to the fact that the design is a *mixture* of these two structures — not to any mixing of data values.
+
+---
+
+## The Study
+
+Researchers examined how **reading medium** (book vs. e-book) and **text genre** (narrative, expository, mixed) affect reading comprehension scores. Eight participants were randomly assigned to read either physical books (*book*) or e-readers (*ebook*). Each participant then read and was tested on all three genre types.
+
+| Factor | Type | Levels |
+|---|---|---|
+| Medium | Between-subjects | book, ebook |
+| Genre | Within-subjects | narrative, expository, mixed |
+
+Because medium is between-subjects, the four book readers are entirely different people from the four ebook readers. Because genre is within-subjects, every participant was tested on all three genre types.
+
+---
+
+## Setup
+
+```{r}
+library(psych)
+library(emmeans)
+library(effectsize)
+```
+
+```{r}
+mixed.data <- read.csv("mixed.data.csv")
+
+mixed.data$medium   <- factor(mixed.data$medium)
+mixed.data$genre    <- factor(mixed.data$genre)
+mixed.data$subjects <- factor(mixed.data$subjects)
+
+str(mixed.data)
+```
+
+The dataset is in **long format**: each row is one observation (one participant at one genre condition). With 8 participants × 3 genre conditions, there are 24 rows total.
+
+---
+
+## Descriptive Statistics
+
+```{r}
+# Cell means: medium × genre
+desc <- describeBy(score ~ medium + genre, data = mixed.data, mat = TRUE)
+desc[, c("group1", "group2", "n", "mean", "sd", "se")]
+```
+
+```{r}
+# Marginal means
+describeBy(score ~ medium, data = mixed.data, mat = TRUE)[, c("group1", "n", "mean", "sd")]
+describeBy(score ~ genre,  data = mixed.data, mat = TRUE)[, c("group1", "n", "mean", "sd")]
+```
+
+Ebook readers scored slightly higher on average (*M* = 51.83) than book readers (*M* = 47.58). Among genres, narrative texts had the highest average scores (*M* = 51.50), followed by mixed (*M* = 49.13) and expository (*M* = 48.50). But the interaction plot below will show that these averages tell only part of the story.
+
+---
+
+## Interaction Plot
+
+```{r}
+interaction.plot(mixed.data$genre, mixed.data$medium, mixed.data$score,
+                 type = "b", lwd = 3, pch = c(16, 17), lty = 1,
+                 col = c("#ED7D31", "#262626"),
+                 xlab = "Genre",
+                 ylab = "Mean comprehension score",
+                 trace.label = "Medium")
+```
+
+The two lines are **not parallel** — the gap between book and ebook readers is much larger for some genre conditions than others. Book readers score noticeably lower on expository and mixed texts compared to ebook readers, but the two groups are more similar on narrative texts. This non-parallel pattern is the visual signature of an interaction.
+
+---
+
+## The Mixed ANOVA Model
+
+The model formula includes both the main effects and their interaction. The `Error()` term is the key addition for mixed designs. It tells R about the two separate error strata:
+
+- `subjects` — the between-subjects error (variance among individuals assigned to different media)
+- `subjects:genre` — the within-subjects error (how much a person's scores vary across genre conditions)
+
+```{r}
+mixed.anova <- aov(score ~ medium * genre + Error(subjects/genre),
+                   data = mixed.data)
+summary(mixed.anova)
+```
+
+::: {.callout-note}
+**Reading the two error tables:** The output shows two sections. The `Error: subjects` table tests the between-subjects effect (medium). The `Error: subjects:genre` table tests the within-subjects effects (genre and the medium × genre interaction). Each effect is tested against the appropriate error term for its design type.
+:::
+
+### Interpreting the Results
+
+| Effect | *F* | *df* | *p* |
+|---|---|---|---|
+| Medium (between) | 1.23 | 1, 6 | .31 |
+| Genre (within) | 5.68 | 2, 12 | .018 |
+| Medium × Genre | 17.04 | 2, 12 | < .001 |
+
+The main effect of **medium** is not significant — book and ebook readers do not differ overall. The main effect of **genre** is significant — comprehension scores differ across text types on average. But both of these main effects are qualified by the significant **medium × genre interaction**, *F*(2, 12) = 17.04, *p* < .001. When an interaction is significant, the main effects cannot be interpreted in isolation. We need to examine the simple effects: how genre operates separately within each medium, and how medium operates separately within each genre.
+
+---
+
+## Effect Sizes: Generalized Eta Squared
+
+```{r}
+eta_squared(mixed.anova, generalized = TRUE)
+```
+
+For mixed designs, **generalized eta squared** (η²_G) is the preferred effect size. Unlike partial eta squared, it accounts for variability from all sources in the design and is comparable across studies that use different designs. Here, the interaction accounts for approximately 17% of the total variance in comprehension scores.
+
+---
+
+## Simple Effects: Genre Within Each Medium
+
+Because the interaction is significant, we follow up by examining how genre affects scores separately for book readers and for ebook readers.
+
+### Book Readers
+
+```{r}
+book.data <- subset(mixed.data, medium == "book")
+post.book <- aov(score ~ genre + Error(subjects/genre), data = book.data)
+summary(post.book)
+eta_squared(post.book, generalized = TRUE)
+```
+
+```{r}
+emm.book <- emmeans(post.book, "genre")
+emm.book
+summary(pairs(emm.book, adjust = "tukey"), infer = TRUE)
+```
+
+For book readers, genre has a significant effect, *F*(2, 6) = 11.41, *p* = .009, η²_G = .29. The pairwise comparisons reveal:
+
+- **Narrative vs. expository**: book readers scored significantly higher on narrative (*M* = 52.5) than expository (*M* = 45.2) texts, *p* = .016
+- **Narrative vs. mixed**: book readers scored significantly higher on narrative (*M* = 52.5) than mixed (*M* = 45.0) texts, *p* = .013
+- **Expository vs. mixed**: no significant difference, *p* = .989
+
+For book readers, narrative texts led to better comprehension; expository and mixed formats were indistinguishable from each other.
+
+### E-Book Readers
+
+```{r}
+ebook.data <- subset(mixed.data, medium == "ebook")
+post.ebook <- aov(score ~ genre + Error(subjects/genre), data = ebook.data)
+summary(post.ebook)
+eta_squared(post.ebook, generalized = TRUE)
+```
+
+```{r}
+emm.ebook <- emmeans(post.ebook, "genre")
+emm.ebook
+summary(pairs(emm.ebook, adjust = "tukey"), infer = TRUE)
+```
+
+For ebook readers, genre also has a significant effect, *F*(2, 6) = 10.92, *p* = .010, but the effect size is smaller (η²_G = .06). The pairwise comparisons show:
+
+- **Mixed vs. narrative**: ebook readers scored significantly higher on mixed (*M* = 53.2) than narrative (*M* = 50.5) texts, *p* = .008
+- **Expository vs. mixed**: marginally non-significant, *p* = .096
+- **Expository vs. narrative**: not significant, *p* = .166
+
+The pattern for ebook readers is essentially the reverse of the pattern for book readers — mixed texts led to the highest comprehension scores, and narrative texts were lowest.
+
+::: {.callout-tip}
+This reversal in the direction of the genre effect across the two medium conditions is exactly what the significant interaction was telling us. Book readers comprehend narrative texts best; ebook readers comprehend mixed texts best. No single "best genre" exists when the interaction is present.
+:::
+
+---
+
+## Simple Effects: Medium Within Each Genre
+
+We can also flip the analysis and examine how medium affects scores separately within each genre. Because genre is the within-subjects factor, isolating a single genre level gives us a simple between-subjects comparison — we use `lm()` for this.
+
+### Narrative Texts
+
+```{r}
+narrative <- subset(mixed.data, genre == "narrative")
+fit.narr  <- lm(score ~ medium, data = narrative)
+anova(fit.narr)
+confint(fit.narr)
+eta_squared(fit.narr, generalized = TRUE)
+```
+
+For narrative texts, medium has no significant effect, *F*(1, 6) = 0.21, *p* = .667, η²_G = .03. Book and ebook readers performed similarly on narrative comprehension.
+
+### Expository Texts
+
+```{r}
+expository <- subset(mixed.data, genre == "expository")
+fit.expo   <- lm(score ~ medium, data = expository)
+anova(fit.expo)
+confint(fit.expo)
+eta_squared(fit.expo, generalized = TRUE)
+```
+
+For expository texts, the medium effect is not significant, *F*(1, 6) = 3.03, *p* = .133, though the effect size is moderate (η²_G = .34). Ebook readers (*M* = 51.8) scored higher than book readers (*M* = 45.2), but this difference is not statistically reliable with this sample size.
+
+### Mixed-Genre Texts
+
+```{r}
+mixed.genre <- subset(mixed.data, genre == "mixed")
+fit.mixed   <- lm(score ~ medium, data = mixed.genre)
+anova(fit.mixed)
+confint(fit.mixed)
+eta_squared(fit.mixed, generalized = TRUE)
+```
+
+For mixed-genre texts, the medium difference is marginal, *F*(1, 6) = 4.78, *p* = .071, η²_G = .44. Ebook readers (*M* = 53.2) outperformed book readers (*M* = 45.0), and the confidence interval for the ebook–book difference includes zero (95% CI [−1.0, 17.5]), meaning the data are consistent with no difference — but also consistent with a difference as large as 17.5 points. The large effect size despite the non-significant *p*-value reflects the small sample size (4 per group).
+
+::: {.callout-note}
+**Why use `lm()` here instead of `aov()` with an `Error()` term?** When we subset to a single genre level, there is no longer a within-subjects structure — each participant appears in only one row. This is a standard between-subjects comparison, so ordinary `lm()` is correct. The `Error()` term is only needed when the same participants appear across multiple rows of the same analysis.
+:::
+
+---
+
+## Summary
+
+The mixed factorial ANOVA found a significant medium × genre interaction, *F*(2, 12) = 17.04, *p* < .001, η²_G = .17. The effect of genre on comprehension differed depending on reading medium:
+
+- **Book readers** comprehended narrative texts significantly better than expository or mixed texts
+- **Ebook readers** comprehended mixed texts best, with narrative texts producing the lowest scores among ebook readers
+
+The main effect of medium was not significant overall, but the interaction reveals that ebook readers had an advantage specifically for expository and mixed texts, while book and ebook readers performed similarly on narrative texts.
+
+```{=html}
+</div>
+```

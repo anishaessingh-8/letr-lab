@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PSY 771 — Script 9: Mixed Factorial ANOVA</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="mixed_anova_files/libs/clipboard/clipboard.min.js"></script>
+<script src="mixed_anova_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="mixed_anova_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="mixed_anova_files/libs/quarto-html/popper.min.js"></script>
+<script src="mixed_anova_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="mixed_anova_files/libs/quarto-html/anchor.min.js"></script>
+<link href="mixed_anova_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="mixed_anova_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="mixed_anova_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="mixed_anova_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="mixed_anova_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PSY 771 — Script 9: Mixed Factorial ANOVA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
+    <h1 class="page-header-title">Script 9: Mixed Factorial ANOVA</h1>
+    <p class="page-header-subtitle">Analyzing designs that combine a between-subjects factor and a within-subjects factor in a single model.</p>
+  </div>
+</div>
+
+<div class="page-content">
+<section id="what-is-a-mixed-anova" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-mixed-anova">What Is a Mixed ANOVA?</h2>
+<p>A <strong>mixed factorial ANOVA</strong> — sometimes called a split-plot ANOVA — combines features of the two designs you have already seen:</p>
+<ul>
+<li>A <strong>between-subjects factor</strong>: different participants appear in each level (like the two-way ANOVA in Script 7)</li>
+<li>A <strong>within-subjects factor</strong>: the <em>same</em> participants appear at every level (like the repeated-measures ANOVA in Script 6)</li>
+</ul>
+<p>The word “mixed” refers to the fact that the design is a <em>mixture</em> of these two structures — not to any mixing of data values.</p>
+<hr>
+</section>
+<section id="the-study" class="level2">
+<h2 class="anchored" data-anchor-id="the-study">The Study</h2>
+<p>Researchers examined how <strong>reading medium</strong> (book vs.&nbsp;e-book) and <strong>text genre</strong> (narrative, expository, mixed) affect reading comprehension scores. Eight participants were randomly assigned to read either physical books (<em>book</em>) or e-readers (<em>ebook</em>). Each participant then read and was tested on all three genre types.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Factor</th>
+<th>Type</th>
+<th>Levels</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Medium</td>
+<td>Between-subjects</td>
+<td>book, ebook</td>
+</tr>
+<tr class="even">
+<td>Genre</td>
+<td>Within-subjects</td>
+<td>narrative, expository, mixed</td>
+</tr>
+</tbody>
+</table>
+<p>Because medium is between-subjects, the four book readers are entirely different people from the four ebook readers. Because genre is within-subjects, every participant was tested on all three genre types.</p>
+<hr>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'effectsize'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    phi</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mixed.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"mixed.data.csv"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mixed.data<span class="sc">$</span>medium   <span class="ot">&lt;-</span> <span class="fu">factor</span>(mixed.data<span class="sc">$</span>medium)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>mixed.data<span class="sc">$</span>genre    <span class="ot">&lt;-</span> <span class="fu">factor</span>(mixed.data<span class="sc">$</span>genre)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>mixed.data<span class="sc">$</span>subjects <span class="ot">&lt;-</span> <span class="fu">factor</span>(mixed.data<span class="sc">$</span>subjects)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mixed.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   24 obs. of  5 variables:
+ $ X       : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ medium  : Factor w/ 2 levels "book","ebook": 1 1 1 1 1 1 1 1 1 1 ...
+ $ genre   : Factor w/ 3 levels "expository","mixed",..: 3 3 3 3 1 1 1 1 2 2 ...
+ $ score   : int  48 55 46 61 40 43 45 53 38 45 ...
+ $ subjects: Factor w/ 8 levels "Arya","Brienne",..: 1 2 3 4 1 2 3 4 1 2 ...</code></pre>
+</div>
+</div>
+<p>The dataset is in <strong>long format</strong>: each row is one observation (one participant at one genre condition). With 8 participants × 3 genre conditions, there are 24 rows total.</p>
+<hr>
+</section>
+<section id="descriptive-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell means: medium × genre</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>desc <span class="ot">&lt;-</span> <span class="fu">describeBy</span>(score <span class="sc">~</span> medium <span class="sc">+</span> genre, <span class="at">data =</span> mixed.data, <span class="at">mat =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>desc[, <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>, <span class="st">"n"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"se"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       group1     group2 n  mean       sd       se
+score1   book expository 4 45.25 5.560276 2.780138
+score2  ebook expository 4 51.75 4.991660 2.495830
+score3   book      mixed 4 45.00 6.164414 3.082207
+score4  ebook      mixed 4 53.25 4.349329 2.174665
+score5   book  narrative 4 52.50 6.855655 3.427827
+score6  ebook  narrative 4 50.50 5.567764 2.783882</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal means</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(score <span class="sc">~</span> medium, <span class="at">data =</span> mixed.data, <span class="at">mat =</span> <span class="cn">TRUE</span>)[, <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"n"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       group1  n     mean       sd
+score1   book 12 47.58333 6.694072
+score2  ebook 12 51.83333 4.667749</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(score <span class="sc">~</span> genre,  <span class="at">data =</span> mixed.data, <span class="at">mat =</span> <span class="cn">TRUE</span>)[, <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"n"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           group1 n   mean       sd
+score1 expository 8 48.500 6.000000
+score2      mixed 8 49.125 6.621124
+score3  narrative 8 51.500 5.879747</code></pre>
+</div>
+</div>
+<p>Ebook readers scored slightly higher on average (<em>M</em> = 51.83) than book readers (<em>M</em> = 47.58). Among genres, narrative texts had the highest average scores (<em>M</em> = 51.50), followed by mixed (<em>M</em> = 49.13) and expository (<em>M</em> = 48.50). But the interaction plot below will show that these averages tell only part of the story.</p>
+<hr>
+</section>
+<section id="interaction-plot" class="level2">
+<h2 class="anchored" data-anchor-id="interaction-plot">Interaction Plot</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(mixed.data<span class="sc">$</span>genre, mixed.data<span class="sc">$</span>medium, mixed.data<span class="sc">$</span>score,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#ED7D31"</span>, <span class="st">"#262626"</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Genre"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ylab =</span> <span class="st">"Mean comprehension score"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Medium"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mixed_anova_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The two lines are <strong>not parallel</strong> — the gap between book and ebook readers is much larger for some genre conditions than others. Book readers score noticeably lower on expository and mixed texts compared to ebook readers, but the two groups are more similar on narrative texts. This non-parallel pattern is the visual signature of an interaction.</p>
+<hr>
+</section>
+<section id="the-mixed-anova-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-mixed-anova-model">The Mixed ANOVA Model</h2>
+<p>The model formula includes both the main effects and their interaction. The <code>Error()</code> term is the key addition for mixed designs. It tells R about the two separate error strata:</p>
+<ul>
+<li><code>subjects</code> — the between-subjects error (variance among individuals assigned to different media)</li>
+<li><code>subjects:genre</code> — the within-subjects error (how much a person’s scores vary across genre conditions)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mixed.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(score <span class="sc">~</span> medium <span class="sc">*</span> genre <span class="sc">+</span> <span class="fu">Error</span>(subjects<span class="sc">/</span>genre),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> mixed.data)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mixed.anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: subjects
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+medium     1  108.4  108.37   1.227   0.31
+Residuals  6  529.9   88.32               
+
+Error: subjects:genre
+             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+genre         2  40.08   20.04   5.681 0.018366 *  
+medium:genre  2 120.25   60.13  17.043 0.000312 ***
+Residuals    12  42.33    3.53                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Reading the two error tables:</strong> The output shows two sections. The <code>Error: subjects</code> table tests the between-subjects effect (medium). The <code>Error: subjects:genre</code> table tests the within-subjects effects (genre and the medium × genre interaction). Each effect is tested against the appropriate error term for its design type.</p>
+</div>
+</div>
+<section id="interpreting-the-results" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-results">Interpreting the Results</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Effect</th>
+<th><em>F</em></th>
+<th><em>df</em></th>
+<th><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Medium (between)</td>
+<td>1.23</td>
+<td>1, 6</td>
+<td>.31</td>
+</tr>
+<tr class="even">
+<td>Genre (within)</td>
+<td>5.68</td>
+<td>2, 12</td>
+<td>.018</td>
+</tr>
+<tr class="odd">
+<td>Medium × Genre</td>
+<td>17.04</td>
+<td>2, 12</td>
+<td>&lt; .001</td>
+</tr>
+</tbody>
+</table>
+<p>The main effect of <strong>medium</strong> is not significant — book and ebook readers do not differ overall. The main effect of <strong>genre</strong> is significant — comprehension scores differ across text types on average. But both of these main effects are qualified by the significant <strong>medium × genre interaction</strong>, <em>F</em>(2, 12) = 17.04, <em>p</em> &lt; .001. When an interaction is significant, the main effects cannot be interpreted in isolation. We need to examine the simple effects: how genre operates separately within each medium, and how medium operates separately within each genre.</p>
+<hr>
+</section>
+</section>
+<section id="effect-sizes-generalized-eta-squared" class="level2">
+<h2 class="anchored" data-anchor-id="effect-sizes-generalized-eta-squared">Effect Sizes: Generalized Eta Squared</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(mixed.anova, <span class="at">generalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA (Type I)
+
+Group          |    Parameter | Eta2 (generalized) |       95% CI
+-----------------------------------------------------------------
+subjects       |       medium |               0.16 | [0.00, 1.00]
+subjects:genre |        genre |               0.07 | [0.00, 1.00]
+subjects:genre | medium:genre |               0.17 | [0.00, 1.00]
+
+- Observed variables: All
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+<p>For mixed designs, <strong>generalized eta squared</strong> (η²_G) is the preferred effect size. Unlike partial eta squared, it accounts for variability from all sources in the design and is comparable across studies that use different designs. Here, the interaction accounts for approximately 17% of the total variance in comprehension scores.</p>
+<hr>
+</section>
+<section id="simple-effects-genre-within-each-medium" class="level2">
+<h2 class="anchored" data-anchor-id="simple-effects-genre-within-each-medium">Simple Effects: Genre Within Each Medium</h2>
+<p>Because the interaction is significant, we follow up by examining how genre affects scores separately for book readers and for ebook readers.</p>
+<section id="book-readers" class="level3">
+<h3 class="anchored" data-anchor-id="book-readers">Book Readers</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>book.data <span class="ot">&lt;-</span> <span class="fu">subset</span>(mixed.data, medium <span class="sc">==</span> <span class="st">"book"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>post.book <span class="ot">&lt;-</span> <span class="fu">aov</span>(score <span class="sc">~</span> genre <span class="sc">+</span> <span class="fu">Error</span>(subjects<span class="sc">/</span>genre), <span class="at">data =</span> book.data)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(post.book)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: subjects
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals  3  309.6   103.2               
+
+Error: subjects:genre
+          Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+genre      2 145.17   72.58   11.41 0.00902 **
+Residuals  6  38.17    6.36                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(post.book, <span class="at">generalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA (Type I)
+
+Group          | Parameter | Eta2 (generalized) |       95% CI
+--------------------------------------------------------------
+subjects:genre |     genre |               0.29 | [0.00, 1.00]
+
+- Observed variables: All
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>emm.book <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(post.book, <span class="st">"genre"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Note: re-fitting model with sum-to-zero contrasts</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>emm.book</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> genre      emmean   SE   df lower.CL upper.CL
+ expository   45.2 3.11 3.76     36.4     54.1
+ mixed        45.0 3.11 3.76     36.1     53.9
+ narrative    52.5 3.11 3.76     43.6     61.4
+
+Warning: EMMs are biased unless design is perfectly balanced 
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pairs</span>(emm.book, <span class="at">adjust =</span> <span class="st">"tukey"</span>), <span class="at">infer =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast               estimate   SE df lower.CL upper.CL t.ratio p.value
+ expository - mixed         0.25 1.78  6    -5.22     5.72   0.140  0.9892
+ expository - narrative    -7.25 1.78  6   -12.72    -1.78  -4.065  0.0156
+ mixed - narrative         -7.50 1.78  6   -12.97    -2.03  -4.205  0.0134
+
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 3 estimates 
+P value adjustment: tukey method for comparing a family of 3 estimates </code></pre>
+</div>
+</div>
+<p>For book readers, genre has a significant effect, <em>F</em>(2, 6) = 11.41, <em>p</em> = .009, η²_G = .29. The pairwise comparisons reveal:</p>
+<ul>
+<li><strong>Narrative vs.&nbsp;expository</strong>: book readers scored significantly higher on narrative (<em>M</em> = 52.5) than expository (<em>M</em> = 45.2) texts, <em>p</em> = .016</li>
+<li><strong>Narrative vs.&nbsp;mixed</strong>: book readers scored significantly higher on narrative (<em>M</em> = 52.5) than mixed (<em>M</em> = 45.0) texts, <em>p</em> = .013</li>
+<li><strong>Expository vs.&nbsp;mixed</strong>: no significant difference, <em>p</em> = .989</li>
+</ul>
+<p>For book readers, narrative texts led to better comprehension; expository and mixed formats were indistinguishable from each other.</p>
+</section>
+<section id="e-book-readers" class="level3">
+<h3 class="anchored" data-anchor-id="e-book-readers">E-Book Readers</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ebook.data <span class="ot">&lt;-</span> <span class="fu">subset</span>(mixed.data, medium <span class="sc">==</span> <span class="st">"ebook"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>post.ebook <span class="ot">&lt;-</span> <span class="fu">aov</span>(score <span class="sc">~</span> genre <span class="sc">+</span> <span class="fu">Error</span>(subjects<span class="sc">/</span>genre), <span class="at">data =</span> ebook.data)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(post.ebook)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: subjects
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals  3  220.3   73.44               
+
+Error: subjects:genre
+          Df Sum Sq Mean Sq F value Pr(&gt;F)  
+genre      2 15.167   7.583   10.92   0.01 *
+Residuals  6  4.167   0.694                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(post.ebook, <span class="at">generalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA (Type I)
+
+Group          | Parameter | Eta2 (generalized) |       95% CI
+--------------------------------------------------------------
+subjects:genre |     genre |               0.06 | [0.00, 1.00]
+
+- Observed variables: All
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>emm.ebook <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(post.ebook, <span class="st">"genre"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Note: re-fitting model with sum-to-zero contrasts</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>emm.ebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> genre      emmean  SE   df lower.CL upper.CL
+ expository   51.8 2.5 3.11     44.0     59.5
+ mixed        53.2 2.5 3.11     45.5     61.0
+ narrative    50.5 2.5 3.11     42.7     58.3
+
+Warning: EMMs are biased unless design is perfectly balanced 
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pairs</span>(emm.ebook, <span class="at">adjust =</span> <span class="st">"tukey"</span>), <span class="at">infer =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast               estimate    SE df lower.CL upper.CL t.ratio p.value
+ expository - mixed        -1.50 0.589  6   -3.308    0.308  -2.546  0.0963
+ expository - narrative     1.25 0.589  6   -0.558    3.058   2.121  0.1655
+ mixed - narrative          2.75 0.589  6    0.942    4.558   4.667  0.0082
+
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 3 estimates 
+P value adjustment: tukey method for comparing a family of 3 estimates </code></pre>
+</div>
+</div>
+<p>For ebook readers, genre also has a significant effect, <em>F</em>(2, 6) = 10.92, <em>p</em> = .010, but the effect size is smaller (η²_G = .06). The pairwise comparisons show:</p>
+<ul>
+<li><strong>Mixed vs.&nbsp;narrative</strong>: ebook readers scored significantly higher on mixed (<em>M</em> = 53.2) than narrative (<em>M</em> = 50.5) texts, <em>p</em> = .008</li>
+<li><strong>Expository vs.&nbsp;mixed</strong>: marginally non-significant, <em>p</em> = .096</li>
+<li><strong>Expository vs.&nbsp;narrative</strong>: not significant, <em>p</em> = .166</li>
+</ul>
+<p>The pattern for ebook readers is essentially the reverse of the pattern for book readers — mixed texts led to the highest comprehension scores, and narrative texts were lowest.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This reversal in the direction of the genre effect across the two medium conditions is exactly what the significant interaction was telling us. Book readers comprehend narrative texts best; ebook readers comprehend mixed texts best. No single “best genre” exists when the interaction is present.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="simple-effects-medium-within-each-genre" class="level2">
+<h2 class="anchored" data-anchor-id="simple-effects-medium-within-each-genre">Simple Effects: Medium Within Each Genre</h2>
+<p>We can also flip the analysis and examine how medium affects scores separately within each genre. Because genre is the within-subjects factor, isolating a single genre level gives us a simple between-subjects comparison — we use <code>lm()</code> for this.</p>
+<section id="narrative-texts" class="level3">
+<h3 class="anchored" data-anchor-id="narrative-texts">Narrative Texts</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>narrative <span class="ot">&lt;-</span> <span class="fu">subset</span>(mixed.data, genre <span class="sc">==</span> <span class="st">"narrative"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fit.narr  <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> medium, <span class="at">data =</span> narrative)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit.narr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: score
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+medium     1      8       8  0.2051 0.6665
+Residuals  6    234      39               </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit.narr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept)  44.85952 60.14048
+mediumebook -12.80527  8.80527</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit.narr, <span class="at">generalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For one-way between subjects designs, generalized eta squared is
+  equivalent to eta squared. Returning eta squared.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA
+
+Parameter | Eta2 (generalized) |       95% CI
+---------------------------------------------
+medium    |               0.03 | [0.00, 1.00]
+
+- Observed variables: All
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+<p>For narrative texts, medium has no significant effect, <em>F</em>(1, 6) = 0.21, <em>p</em> = .667, η²_G = .03. Book and ebook readers performed similarly on narrative comprehension.</p>
+</section>
+<section id="expository-texts" class="level3">
+<h3 class="anchored" data-anchor-id="expository-texts">Expository Texts</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>expository <span class="ot">&lt;-</span> <span class="fu">subset</span>(mixed.data, genre <span class="sc">==</span> <span class="st">"expository"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>fit.expo   <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> medium, <span class="at">data =</span> expository)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit.expo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: score
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+medium     1   84.5  84.500  3.0269 0.1325
+Residuals  6  167.5  27.917               </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit.expo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept) 38.785721 51.71428
+mediumebook -2.641871 15.64187</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit.expo, <span class="at">generalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For one-way between subjects designs, generalized eta squared is
+  equivalent to eta squared. Returning eta squared.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA
+
+Parameter | Eta2 (generalized) |       95% CI
+---------------------------------------------
+medium    |               0.34 | [0.00, 1.00]
+
+- Observed variables: All
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+<p>For expository texts, the medium effect is not significant, <em>F</em>(1, 6) = 3.03, <em>p</em> = .133, though the effect size is moderate (η²_G = .34). Ebook readers (<em>M</em> = 51.8) scored higher than book readers (<em>M</em> = 45.2), but this difference is not statistically reliable with this sample size.</p>
+</section>
+<section id="mixed-genre-texts" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-genre-texts">Mixed-Genre Texts</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mixed.genre <span class="ot">&lt;-</span> <span class="fu">subset</span>(mixed.data, genre <span class="sc">==</span> <span class="st">"mixed"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>fit.mixed   <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> medium, <span class="at">data =</span> mixed.genre)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit.mixed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: score
+          Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+medium     1 136.12 136.125  4.7833 0.07136 .
+Residuals  6 170.75  28.458                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit.mixed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %   97.5 %
+(Intercept) 38.4733089 51.52669
+mediumebook -0.9801351 17.48014</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(fit.mixed, <span class="at">generalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For one-way between subjects designs, generalized eta squared is
+  equivalent to eta squared. Returning eta squared.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA
+
+Parameter | Eta2 (generalized) |       95% CI
+---------------------------------------------
+medium    |               0.44 | [0.00, 1.00]
+
+- Observed variables: All
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+<p>For mixed-genre texts, the medium difference is marginal, <em>F</em>(1, 6) = 4.78, <em>p</em> = .071, η²_G = .44. Ebook readers (<em>M</em> = 53.2) outperformed book readers (<em>M</em> = 45.0), and the confidence interval for the ebook–book difference includes zero (95% CI [−1.0, 17.5]), meaning the data are consistent with no difference — but also consistent with a difference as large as 17.5 points. The large effect size despite the non-significant <em>p</em>-value reflects the small sample size (4 per group).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Why use <code>lm()</code> here instead of <code>aov()</code> with an <code>Error()</code> term?</strong> When we subset to a single genre level, there is no longer a within-subjects structure — each participant appears in only one row. This is a standard between-subjects comparison, so ordinary <code>lm()</code> is correct. The <code>Error()</code> term is only needed when the same participants appear across multiple rows of the same analysis.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>The mixed factorial ANOVA found a significant medium × genre interaction, <em>F</em>(2, 12) = 17.04, <em>p</em> &lt; .001, η²_G = .17. The effect of genre on comprehension differed depending on reading medium:</p>
+<ul>
+<li><strong>Book readers</strong> comprehended narrative texts significantly better than expository or mixed texts</li>
+<li><strong>Ebook readers</strong> comprehended mixed texts best, with narrative texts producing the lowest scores among ebook readers</li>
+</ul>
+<p>The main effect of medium was not significant overall, but the interaction reveals that ebook readers had an advantage specifically for expository and mixed texts, while book and ebook readers performed similarly on narrative texts.</p>
+</section></div>
+
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

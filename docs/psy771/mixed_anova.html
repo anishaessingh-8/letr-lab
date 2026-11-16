@@ -97,7 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -147,7 +147,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-mixed-anova" id="toc-what-is-a-mixed-anova" class="nav-link active" data-scroll-target="#what-is-a-mixed-anova">What Is a Mixed ANOVA?</a></li>
+  <li><a href="#the-study" id="toc-the-study" class="nav-link" data-scroll-target="#the-study">The Study</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a></li>
+  <li><a href="#interaction-plot" id="toc-interaction-plot" class="nav-link" data-scroll-target="#interaction-plot">Interaction Plot</a></li>
+  <li><a href="#the-mixed-anova-model" id="toc-the-mixed-anova-model" class="nav-link" data-scroll-target="#the-mixed-anova-model">The Mixed ANOVA Model</a>
+  <ul class="collapse">
+  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results">Interpreting the Results</a></li>
+  </ul></li>
+  <li><a href="#effect-sizes-generalized-eta-squared" id="toc-effect-sizes-generalized-eta-squared" class="nav-link" data-scroll-target="#effect-sizes-generalized-eta-squared">Effect Sizes: Generalized Eta Squared</a></li>
+  <li><a href="#simple-effects-genre-within-each-medium" id="toc-simple-effects-genre-within-each-medium" class="nav-link" data-scroll-target="#simple-effects-genre-within-each-medium">Simple Effects: Genre Within Each Medium</a>
+  <ul class="collapse">
+  <li><a href="#book-readers" id="toc-book-readers" class="nav-link" data-scroll-target="#book-readers">Book Readers</a></li>
+  <li><a href="#e-book-readers" id="toc-e-book-readers" class="nav-link" data-scroll-target="#e-book-readers">E-Book Readers</a></li>
+  </ul></li>
+  <li><a href="#simple-effects-medium-within-each-genre" id="toc-simple-effects-medium-within-each-genre" class="nav-link" data-scroll-target="#simple-effects-medium-within-each-genre">Simple Effects: Medium Within Each Genre</a>
+  <ul class="collapse">
+  <li><a href="#narrative-texts" id="toc-narrative-texts" class="nav-link" data-scroll-target="#narrative-texts">Narrative Texts</a></li>
+  <li><a href="#expository-texts" id="toc-expository-texts" class="nav-link" data-scroll-target="#expository-texts">Expository Texts</a></li>
+  <li><a href="#mixed-genre-texts" id="toc-mixed-genre-texts" class="nav-link" data-scroll-target="#mixed-genre-texts">Mixed-Genre Texts</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -170,6 +199,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<style>
+/* Light theme override for this page only */
+body, #quarto-content, main, .quarto-title-block {
+  background: #ffffff !important;
+  color: #1a1320 !important;
+}
+#quarto-document-content, .page-content-wrapper {
+  background: #ffffff !important;
+}
+#quarto-sidebar, #quarto-margin-sidebar {
+  background: #f5f0f7 !important;
+  border-right: 1px solid #e0d8e8 !important;
+}
+#quarto-sidebar .sidebar-title, #quarto-sidebar a,
+#quarto-margin-sidebar .sidebar-title, #quarto-margin-sidebar a {
+  color: #2a1a3a !important;
+}
+h1, h2, h3, h4, p, li, td, th { color: #1a1320 !important; }
+h2 { border-bottom: 1px solid #e0d8e8; padding-bottom: 0.3rem; }
+hr { border-color: #d8cee3 !important; }
+a { color: #7b2fbe !important; }
+a:hover { color: #ff5ea8 !important; }
+p code, li code, td code { color: #7b2fbe !important; background: #f0eaf7 !important; }
+/* Page header keeps its dark background */
+.page-header-title { color: #f3eaf0 !important; border-left: 4px solid #ff5ea8; padding-left: 0.75rem; }
+.page-header-eyebrow { color: #ff5ea8 !important; }
+.page-header-subtitle { color: rgba(243,234,240,0.75) !important; }
+:root {
+  --quarto-hl-al-color: #e53935;
+  --quarto-hl-an-color: #5a4a6a;
+  --quarto-hl-at-color: #0057ae;
+  --quarto-hl-bn-color: #0057ae;
+  --quarto-hl-bu-color: #7b2fbe;
+  --quarto-hl-ch-color: #b5440e;
+  --quarto-hl-co-color: #7a6a8a;
+  --quarto-hl-cv-color: #5a4a6a;
+  --quarto-hl-cn-color: #0057ae;
+  --quarto-hl-cf-color: #7b2fbe;
+  --quarto-hl-dt-color: #0057ae;
+  --quarto-hl-dv-color: #0057ae;
+  --quarto-hl-do-color: #5a4a6a;
+  --quarto-hl-er-color: #e53935;
+  --quarto-hl-ex-color: #0057ae;
+  --quarto-hl-fl-color: #0057ae;
+  --quarto-hl-fu-color: #7b2fbe;
+  --quarto-hl-im-color: #7b2fbe;
+  --quarto-hl-in-color: #5a4a6a;
+  --quarto-hl-kw-color: #7b2fbe;
+  --quarto-hl-op-color: #1a0a2e;
+  --quarto-hl-ot-color: #b5440e;
+  --quarto-hl-pp-color: #7b2fbe;
+  --quarto-hl-re-color: #1a0a2e;
+  --quarto-hl-sc-color: #b5440e;
+  --quarto-hl-ss-color: #b5440e;
+  --quarto-hl-st-color: #b5440e;
+  --quarto-hl-va-color: #1a0a2e;
+  --quarto-hl-vs-color: #b5440e;
+  --quarto-hl-wa-color: #b46400;
+}
+div.sourceCode, pre.sourceCode {
+  background: #f5f0f7 !important;
+  border: 1px solid #c8b8d8 !important;
+}
+pre.sourceCode, pre.sourceCode code, pre.sourceCode span,
+div.sourceCode, div.sourceCode code, div.sourceCode span,
+div.sourceCode pre, div.sourceCode pre code, div.sourceCode pre span {
+  color: #1a0a2e !important;
+}
+.callout {
+  border-left: 4px solid #7b2fbe !important;
+  background: #f5f0f7 !important;
+}
+.callout-note { border-left-color: #7b2fbe !important; }
+.callout-tip { border-left-color: #2e7d32 !important; background: #f1f8f2 !important; }
+.callout-warning { border-left-color: #e65100 !important; background: #fff8f1 !important; }
+.callout-title { color: #1a1320 !important; }
+.callout-body p { color: #1a1320 !important; }
+</style>
 <div class="page-header">
   <div class="page-header-inner">
     <p class="page-header-eyebrow">PSY 771 · ANOVA and Experimental Design</p>
